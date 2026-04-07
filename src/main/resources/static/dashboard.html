@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pruebas de Seguridad</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 30px; }
+        .btn { padding: 12px 20px; margin: 10px 5px; cursor: pointer; color: white; border: none; border-radius: 5px; font-weight: bold;}
+        .btn-admin { background-color: #d9534f; }
+        .btn-recep { background-color: #f0ad4e; }
+        .btn-dentista { background-color: #5bc0de; }
+        .btn-logout { background-color: #333; margin-top: 20px;}
+        #resultado { margin-top: 20px; padding: 15px; border: 2px dashed #ccc; background: #f9f9f9; min-height: 60px; font-size: 16px; white-space: pre-wrap;}
+    </style>
+</head>
+<body>
+
+    <h2 id="bienvenida">Cargando usuario...</h2>
+    <p>Haz clic en los botones para probar si el cadenero (Spring Security) te deja pasar o te bloquea.</p>
+
+    <div>
+        <button id="btnAdmin" class="btn btn-admin">Ruta Admin (GET /api/usuarios/)</button>
+        <button id="btnRecep" class="btn btn-recep">Ruta Recepción (POST /api/pacientes/crear)</button>
+        <button id="btnDentista" class="btn btn-dentista">Ruta Dentista (GET /api/citas/mis-citas)</button>
+    </div>
+
+    <button onclick="logout()" class="btn btn-logout">Cerrar Sesión y probar otro usuario</button>
+
+    <h3>Consola de Resultados:</h3>
+    <pre id="resultado">Esperando acción...</pre>
+
+    <script src="js/utils.js"></script>
+    <script src="js/dashboard.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+body {
+font-family: Arial;
+background: #f4f4f4;
+display: flex;
+justify-content: center;
+margin-top: 100px;
+}
+
+.container {
+background: white;
+padding: 20px;
+border-radius: 10px;
+width: 300px;
+text-align: center;
+}
+
+input {
+width: 100%;
+padding: 10px;
+margin: 10px 0;
+}
+
+button {
+width: 100%;
+padding: 10px;
+background: #2c7;
+border: none;
+color: white;
+font-weight: bold;
+}
+
+#mensaje {
+margin-top: 10px;
+color: red;
+}

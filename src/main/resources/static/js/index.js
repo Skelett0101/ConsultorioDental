@@ -1,3 +1,4 @@
+
 document.getElementById("loginForm").addEventListener("submit", async function(e) {
     e.preventDefault();
 
@@ -8,47 +9,35 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
     btnSubmit.textContent = "Cargando...";
     msjError.textContent = "";
 
-    const baseUrl = window.location.origin;
     const datos = {
         email: document.getElementById("email").value,
         password: document.getElementById("password").value
     };
 
     try {
-        const response = await fetch(`${baseUrl}/auth/login`, {
+        const response = await fetch("http://localhost:8080/auth/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(datos)
         });
 
-        // 🔥 Leer la respuesta como texto primero
-        const textResponse = await response.text();
-        console.log("Respuesta cruda:", textResponse);
-        
-        let data;
-        try {
-            data = JSON.parse(textResponse);
-        } catch(e) {
-            console.error("No es JSON:", textResponse);
-            throw new Error("Error del servidor: " + textResponse);
-        }
-
         if (!response.ok) {
-            // 🔥 Mostrar el mensaje de error del backend
-            const errorMsg = data.error || "Credenciales incorrectas";
-            throw new Error(errorMsg);
+            throw new Error("Credenciales incorrectas o error en el servidor");
         }
 
-        // Guardar token y datos
+        const data = await response.json();
+        
+        // Separamos el token del resto de los datos
         const { token, ...datosUsuario } = data;
+
+        // Guardamos en local
         localStorage.setItem("token", token);
         localStorage.setItem("usuario", JSON.stringify(datosUsuario));
 
-        // Redirigir
+        // Redirigir a las pruebas
         window.location.href = "dashboard.html";
 
     } catch (error) {
-        console.error("Error:", error);
         msjError.textContent = error.message;
     } finally {
         btnSubmit.disabled = false;

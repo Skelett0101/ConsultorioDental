@@ -40,12 +40,9 @@ public class SecurityConfig {
 
                 // donde se puede entrar sin credencial 
                 .requestMatchers(
-                		"/",
                     "/registro.html",
                     "/index.html",
                     "/assets/**",
-                    "/calendario.html",
-                    "/personal.html",
                     "/dashboard.html",
                     "/css/**",
                     "/js/**",

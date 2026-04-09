@@ -1,52 +1,72 @@
 package mx.com.ubam.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import mx.com.ubam.dto.*;
 import mx.com.ubam.model.*;
 import mx.com.ubam.repository.*;
 import mx.com.ubam.security.JwtUtil;
+import java.util.HashMap;
+import java.util.Map;
 
-@RestController  //  clase que expone endpoints las rest pues
-@RequestMapping("/auth")  // prefijo de la ruta /
+@RestController
+@RequestMapping("/auth")
 @CrossOrigin(origins = "*")
 public class AuthController {
     
-	
-	// inyeccion de otras clases para su manejo 
     @Autowired
-    private UsuarioRepository usuarioRepository; // accede a la bd busca el user 
+    private UsuarioRepository usuarioRepository;
     
     @Autowired
-    private PasswordEncoder passwordEncoder; // compara contraseñas como: tovarEslaOnda123
+    private PasswordEncoder passwordEncoder;
     
     @Autowired
-    private JwtUtil jwtUtil; // genera y valida el token de jwt jijija
-    
+    private JwtUtil jwtUtil;
     
     @PostMapping("/login")
-    public LoginResponse login(@RequestBody LoginRequest request) {
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         
-    	//valida si el usuario esta en la bd 
-        Usuario usuario = usuarioRepository.findByEmail(request.getEmail())
-            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-        
-        if(!usuario.getActivo()) {
-            throw new RuntimeException("Usuario desactivado");
-        }
-        
-        
-        if(passwordEncoder.matches(request.getPassword(), usuario.getPassword())) {
+        try {
+            // Validar que los datos no sean nulos
+            if (request.getEmail() == null || request.getPassword() == null) {
+                Map<String, String> error = new HashMap<>();
+                error.put("error", "Email y contraseña son requeridos");
+                return ResponseEntity.badRequest().body(error);
+            }
             
-        	// genera el token para la respuetas
+            // Buscar usuario
+            Usuario usuario = usuarioRepository.findByEmail(request.getEmail())
+                .orElse(null);
+            
+            if (usuario == null) {
+                Map<String, String> error = new HashMap<>();
+                error.put("error", "Usuario no encontrado");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+            }
+            
+            if (!usuario.getActivo()) {
+                Map<String, String> error = new HashMap<>();
+                error.put("error", "Usuario desactivado");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+            }
+            
+            if (!passwordEncoder.matches(request.getPassword(), usuario.getPassword())) {
+                Map<String, String> error = new HashMap<>();
+                error.put("error", "Contraseña incorrecta");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+            }
+            
+            // Generar token
             String token = jwtUtil.generarToken(
                 usuario.getEmail(),
                 usuario.getRol().getNombre(),
                 usuario.getIdUsuario()
             );
             
-            //genera la respuesta para el back 
+            // Respuesta exitosa
             LoginResponse response = new LoginResponse();
             response.setToken(token);
             response.setEmail(usuario.getEmail());
@@ -56,9 +76,12 @@ public class AuthController {
             response.setIdUsuario(usuario.getIdUsuario());
             response.setExpiraEn(8 * 60 * 60L);
             
-            return response;
+            return ResponseEntity.ok(response);
+            
+        } catch (Exception e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("error", "Error interno del servidor: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
         }
-        
-        throw new RuntimeException("Contraseña incorrecta");
     }
 }

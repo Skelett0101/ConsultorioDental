@@ -8,9 +8,9 @@ import mx.com.ubam.model.Servicio;
 
 public interface ServicioRepository extends JpaRepository<Servicio, Long>{
 
-	//buscar todos los servicios donde activo sea true
-    List<Servicio> findByActivoTrue();
+    //buscar todos los servicios donde activoServicio sea true
+    List<Servicio> findByActivoServicioTrue();
     
-    //buscar un servicio por su nombre
-    List<Servicio> findByNombreContaining(String nombre);
+    //buscar un servicio por su nombreServicio
+    List<Servicio> findByNombreServicioContaining(String nombreServicio);
 }

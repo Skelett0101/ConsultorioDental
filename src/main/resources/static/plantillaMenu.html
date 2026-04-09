@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Clinical Atelier | Dashboard</title>
+
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/menu.css">
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <script>
+     tailwind.config = {
+    darkMode: "class",
+    theme: {
+        extend: {
+            colors: {
+                "on-primary-fixed-variant": "#004b74", "tertiary-fixed": "#ffdcc0", "tertiary": "#864a00", "primary-fixed": "#cde5ff", "on-primary-fixed": "#001d32", "secondary-fixed": "#8ef4e9", "on-surface": "#191c1d", "surface-tint": "#006399", "background": "#f8fafb", "surface-container": "#eceeef", "on-tertiary": "#ffffff", "tertiary-container": "#a95f00", "error-container": "#ffdad6", "surface-container-high": "#e6e8e9", "primary": "#005d90", "on-primary-container": "#f3f7ff", "on-background": "#191c1d", "on-error": "#ffffff", "on-secondary": "#ffffff", "inverse-surface": "#2e3132", "on-error-container": "#93000a", "on-secondary-container": "#006f67", "surface-container-lowest": "#ffffff", "secondary-container": "#8bf1e6", "surface-container-highest": "#e1e3e4", "on-tertiary-fixed": "#2e1600", "secondary": "#006a63", "on-primary": "#ffffff", "surface-container-low": "#f2f4f5", "inverse-on-surface": "#eff1f2", "on-secondary-fixed": "#00201d", "primary-fixed-dim": "#94ccff", "surface-variant": "#e1e3e4", "on-surface-variant": "#404850", "tertiary-fixed-dim": "#ffb877", "inverse-primary": "#94ccff", "surface-bright": "#f8fafb", "primary-container": "#0077b6", "on-secondary-fixed-variant": "#00504a", "outline": "#707881", "surface-dim": "#d8dadb", "on-tertiary-container": "#fff6f1", "on-tertiary-fixed-variant": "#6c3a00", "surface": "#f8fafb", "secondary-fixed-dim": "#71d7cd", "outline-variant": "#bfc7d1", "error": "#ba1a1a"
+            },
+            borderRadius: {
+                "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"
+            },
+            fontFamily: {
+                "headline": ["Manrope"], "body": ["Inter"], "label": ["Inter"]
+            }
+        }
+    }
+};
+    </script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body class="bg-background text-on-surface">
+    <div class="flex h-screen overflow-hidden">
+
+        <aside class="hidden md:flex flex-col h-full py-6 px-4 bg-slate-50 h-screen w-64 border-r-0 font-['Manrope'] antialiased">
+            
+            <div class="flex items-center gap-3 px-2 mb-10">
+                <div class="w-8 h-8 rounded-xl bg-primary flex items-center justify-center text-white font-bold">C</div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight text-sky-900 leading-tight">Clinical Atelier</h1>
+                    <p class="text-[10px] uppercase tracking-widest text-slate-400 font-medium">Gestión Dental</p>
+                </div>
+            </div>
+
+            <nav class="flex-1 space-y-1">
+                <a href="dashboard.html">
+                    <span class="material-symbols-outlined">dashboard</span>
+                    <span class="text-sm">Panel de Control</span>
+                </a>
+                <a href="calendario.html">
+                    <span class="material-symbols-outlined">calendar_month</span>
+                    <span class="text-sm">Calendario</span>
+                </a>
+                <a id="navPersonal" href="personal.html">
+                    <span class="material-symbols-outlined">badge</span>
+                    <span class="text-sm">Personal</span>
+                </a>
+                <a href="servicios.html">
+                    <span class="material-symbols-outlined">payments</span>
+                    <span class="text-sm">Servicios</span>
+                </a>
+                <a href="pacientes.html">
+                    <span class="material-symbols-outlined">person</span>
+                    <span class="text-sm">Pacientes</span>
+                </a>
+            </nav>
+
+            <div class="mt-auto space-y-1 pt-6 border-t border-slate-200">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-xl transition-colors text-slate-500 hover:bg-white/60 font-medium" href="configuracion.html">
+                    <span class="material-symbols-outlined">settings</span>
+                    <span class="text-sm font-medium">Configuración</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-xl transition-colors text-slate-500 hover:bg-white/60 font-medium" href="soporte.html">
+                    <span class="material-symbols-outlined">help</span>
+                    <span class="text-sm font-medium">Soporte</span>
+                </a>
+            </div>
+        </aside>
+
+        <main class="flex-1 flex flex-col overflow-hidden">
+
+           <header class="w-full h-16 sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-100/50 flex items-center justify-between px-8 font-['Manrope'] font-medium">
+                
+                <div class="flex items-center gap-4 flex-1">
+                    <div class="relative w-full max-w-md group">
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm group-hover:text-primary transition-colors">search</span>
+                        <input class="w-full pl-10 pr-4 py-2 bg-surface-container-high rounded-xl border-none text-sm focus:ring-2 focus:ring-primary/20 transition-all outline-none" placeholder="Buscar pacientes, registros..." type="text" />
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-6">
+                    <div class="flex items-center gap-4">
+                        <button class="relative p-2 text-slate-400 hover:bg-surface-container-high transition-colors rounded-full">
+                            <span class="material-symbols-outlined">notifications</span>
+                            <span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-white"></span>
+                        </button>
+                        <button class="p-2 text-slate-400 hover:bg-surface-container-high transition-colors rounded-full">
+                            <span class="material-symbols-outlined">chat_bubble</span>
+                        </button>
+                    </div>
+                    
+                    <div class="h-8 w-[1px] bg-slate-200"></div>
+
+                    <div class="relative cursor-pointer" id="perfilDropdownBtn">
+                        <div class="flex items-center gap-3 hover:bg-slate-50 p-2 rounded-xl transition-colors">
+                            <div class="text-right hidden sm:block">
+                                <p id="uiNombreNav" class="text-sm font-bold text-on-surface">Cargando...</p>
+                                <p id="uiRolNav" class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">...</p>
+                            </div>
+                            <div class="w-10 h-10 rounded-xl bg-primary-fixed border-[1.5px] border-primary flex items-center justify-center text-primary font-bold">
+                                <span class="material-symbols-outlined">person</span>
+                            </div>
+                        </div>
+
+                        <div id="perfilMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-slate-100 overflow-hidden z-50">
+                            <a href="perfil.html" class="block px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-3 transition-colors">
+                                <span class="material-symbols-outlined text-lg">account_circle</span> Mi Perfil
+                            </a>
+                            <div class="border-t border-slate-100"></div>
+                            <a href="#" onclick="logout()" class="block px-4 py-3 text-sm text-red-600 hover:bg-red-50 flex items-center gap-3 transition-colors">
+                                <span class="material-symbols-outlined text-lg">logout</span> Cerrar Sesión
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="flex-1 overflow-y-auto bg-background p-8 space-y-8">
+                
+                <h2 class="text-2xl font-bold">Aquí va el contenido</h2>
+                
+            </div>
+            
+        </main>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/menu.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Nosotros | The Clinical Atelier</title>
+    
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#005d90", "primary-container": "#0077b6", "primary-fixed": "#cde5ff",
+                        "on-primary": "#ffffff", "surface": "#f8fafb", "on-surface": "#191c1d", 
+                        "on-surface-variant": "#404850", "outline-variant": "#bfc7d1",
+                        "secondary": "#006a63", "secondary-container": "#8bf1e6", "secondary-fixed": "#8ef4e9",
+                        "on-secondary-container": "#006f67", "tertiary": "#864a00",
+                        "surface-container-lowest": "#ffffff", "surface-container-low": "#f2f4f5", "surface-container-high": "#e6e8e9"
+                    },
+                    fontFamily: { "headline": ["Manrope"], "body": ["Inter"] }
+                }
+            }
+        };
+    </script>
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+        .cloud-shadow { box-shadow: 0 12px 32px -4px rgba(0, 93, 144, 0.08); }
+    </style>
+</head>
+
+<body class="bg-surface text-on-surface font-body antialiased selection:bg-[#cde5ff] selection:text-[#005d90]">
+    
+      <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-slate-100 transition-colors duration-300">
+        <div class="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold">C</div>
+                <span class="text-xl font-extrabold tracking-tight text-primary font-headline">Clinical Atelier</span>
+            </div>
+            <div class="hidden md:flex gap-8 items-center">
+                <a class="font-headline text-sm font-bold text-slate-500 hover:text-primary transition-all" href="nosotros.html">Nosotros</a>
+                <a class="font-headline text-sm font-bold text-slate-500 hover:text-primary transition-all" href="serviciosIndex.html">Servicios</a>
+ 
+                <a class="font-headline text-sm font-bold text-primary border-b-2 border-primary pb-1" href="index_paciente.html">Agendar Cita</a>
+            </div>
+            <button class="md:hidden text-primary">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="pt-20">
+        <section class="relative overflow-hidden py-24 md:py-32 bg-surface">
+            <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="relative z-10">
+                    <span class="inline-block py-1 px-3 rounded-full bg-secondary-container text-on-secondary-container text-xs font-bold mb-6 tracking-wider uppercase">Excelencia Odontológica</span>
+                    <h1 class="text-5xl md:text-7xl font-extrabold font-headline text-slate-800 leading-tight mb-6 tracking-tight">
+                        La odontología como un <span class="text-primary italic">arte clínico</span>.
+                    </h1>
+                    <p class="text-lg text-slate-500 max-w-lg mb-10 leading-relaxed">
+                        Experimente un nuevo estándar en cuidado dental donde la precisión médica se encuentra con la armonía estética en un entorno de serenidad absoluta.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="agendar_cita.html" class="bg-primary text-white px-8 py-4 rounded-xl font-bold font-headline cloud-shadow hover:bg-primary-container transition-all">
+                            Programar Consulta
+                        </a>
+                        <button class="bg-white text-primary px-8 py-4 rounded-xl font-bold font-headline border border-slate-200 hover:bg-slate-50 transition-all">
+                            Ver Instalaciones
+                        </button>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="aspect-square rounded-[2rem] overflow-hidden cloud-shadow relative">
+                        <img class="w-full h-full object-cover" data-alt="Modern high-end dental treatment room" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHNngXyuyAaNXJTKFX8KjwbqpVnNe7aYf7Glc9Cns2oZ2jBozMHat9u3DY9DFPF7agCmH97zPx8EEuU8iT9Ahn8iBGieuHIoB0MVOZR40m5KB2rZl-yyKa0TJTfPQmcmi2E5mGiKGd6QM3LGAzOlXyji8Gb4e9yyPzO3CP6eTtvdt8USe8aIzbCyPuttM-jwUgeybkP3PTxI0FnO5pw7DXuiXdUqe2oMyzDQo04EekZdBN9Ku2B9QdWCvqCLWXZJeJhT2HB1xR_gk"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent"></div>
+                    </div>
+                    <div class="absolute -bottom-6 -left-6 bg-white/95 backdrop-blur-md p-6 rounded-2xl cloud-shadow border border-slate-100 max-w-xs">
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-10 h-10 rounded-full bg-[#8ef4e9] flex items-center justify-center">
+                                <span class="material-symbols-outlined text-[#00504a] text-sm">verified</span>
+                            </div>
+                            <div class="text-sm font-bold font-headline text-slate-800">Certificación Elite</div>
+                        </div>
+                        <p class="text-xs text-slate-500 leading-tight">Reconocidos por la excelencia en rehabilitación estética y biomimética dental.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="absolute top-0 right-0 -z-10 w-1/3 h-full bg-gradient-to-l from-primary-fixed/40 to-transparent blur-3xl"></div>
+        </section>
+
+        <section class="py-24 bg-surface-container-low">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    <div class="lg:col-span-5">
+                        <h2 class="text-sm font-bold text-primary uppercase tracking-[0.2em] mb-4">Nuestro Manifiesto</h2>
+                        <h3 class="text-3xl md:text-4xl font-extrabold font-headline text-slate-800 mb-8">Redefiniendo la experiencia del paciente.</h3>
+                        <p class="text-slate-500 leading-relaxed mb-6">
+                            En The Clinical Atelier, entendemos que una sonrisa saludable es el resultado de un equilibrio perfecto entre la ciencia rigurosa y el diseño personalizado. No tratamos casos; cuidamos personas.
+                        </p>
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-4">
+                                <span class="material-symbols-outlined text-secondary mt-1">check_circle</span>
+                                <div>
+                                    <h4 class="font-bold text-slate-800">Mínima Invasión</h4>
+                                    <p class="text-sm text-slate-500">Preservamos la estructura natural del diente mediante técnicas de vanguardia.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <span class="material-symbols-outlined text-secondary mt-1">check_circle</span>
+                                <div>
+                                    <h4 class="font-bold text-slate-800">Arquitectura de Sonrisa</h4>
+                                    <p class="text-sm text-slate-500">Diseños digitales personalizados que armonizan con tus rasgos faciales.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-7 grid grid-cols-2 gap-4">
+                        <div class="space-y-4 mt-8">
+                            <img class="rounded-2xl w-full aspect-[4/5] object-cover cloud-shadow" data-alt="Dental instruments" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbmvZYJLLi54mej2nsR7IcWyqdXzM5_bnFgeP-id4kXyT0h9wyh9V2Hpa9YNerBnTYZ1YPAmyr2aH6A-Le34IPDDs19gG3yFCmdI8xhVmSopDUMpr6yp24NPoAJYKWo4OZZIXOUTDdSUNvRguc3zaDw7Ouj4fC5v6kOBO21O90yX1Z11h4YAFgKOSMz0xg2HIrFQEJTTeKQp38KDo5l2CCG_cEiHt-001eI51-iL2MbJSJDmME5Ph4vdRj4WCfdmcMnO20FNiODuA"/>
+                            <div class="bg-primary p-8 rounded-2xl text-white">
+                                <div class="text-4xl font-black font-headline mb-1">15+</div>
+                                <div class="text-sm font-medium opacity-80">Años de Perfección</div>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <img class="rounded-2xl w-full aspect-[4/5] object-cover cloud-shadow" data-alt="Dentist portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnKS-W2KC4Yoj1u_EwuWilZXu7Qpbsnhw8Jiv1yhrB6c5dQKShJU9oOAPmSbjrzs7GFp2JWMJemhKbB0ufPr1fsvKxzSxSlJt2Ix-TX0O_6dhN8kY4_bcee_0Bs9X6X4_kmWeRvORvYlxf8MT65lUImlod9HLD1IiajSFN30uqI63SVyUfqm5vHw_yvwo1b6F02AEL_pGTENz5VNphjcy_5El2VHZPPafcUwRuTNPz_Iq29FK4dOPjLWKcf8JJblOrgrJrBb1FLvU"/>
+                            <img class="rounded-2xl w-full aspect-square object-cover cloud-shadow" data-alt="Clinic lobby" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkHZkm4ae9-fkS6UKh2_2ILZS7cUSvUCmikFYETtt38WWyFsbQnUZWsMHg9GK0etUa4KOI4s1Z6v6HgnkBEHho8L3-TB72_Zutl-0lAGd7J_Tzgohna_NhqoSoouWze1M5-kl3tMNNK-cBdOwnQuPNR0CNR7SuQa2U6zIeZlw7TMu634wkUhMivjJjJpWTyOi2YGjgCgxaCtDcoQ5zqaYfG5rS9TdTpfW5IBEeo4rV9amfVjXj3TyfjcCl1wy95_SI4ke-ogCCtqQ"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="py-20 bg-surface">
+            <div class="max-w-5xl mx-auto px-6">
+                <div class="bg-primary rounded-[2.5rem] p-12 md:p-20 text-center relative overflow-hidden shadow-2xl">
+                    <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+                        <svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 100 100"><path d="M0 100 C 20 0 50 0 100 100" fill="white"></path></svg>
+                    </div>
+                    <div class="relative z-10">
+                        <h2 class="text-3xl md:text-5xl font-extrabold font-headline text-white mb-6">¿Listo para transformar su sonrisa?</h2>
+                        <p class="text-white/80 max-w-xl mx-auto mb-10 text-lg">
+                            Agende hoy mismo su cita de valoración integral y descubra por qué somos el referente en odontología boutique.
+                        </p>
+                        <a href="agendar_cita.html" class="inline-block bg-white text-primary px-10 py-5 rounded-2xl font-bold font-headline shadow-xl hover:scale-105 transition-transform">
+                            Reservar mi Cita
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="w-full py-10 bg-slate-50 border-t border-slate-200/50">
+        <div class="flex flex-col md:flex-row justify-between items-center px-12 max-w-7xl mx-auto">
+            <div class="mb-6 md:mb-0 text-center md:text-left">
+                <span class="font-headline font-bold text-slate-800 block text-lg mb-1">Clinical Atelier</span>
+                <span class="font-body text-xs text-slate-400 uppercase tracking-widest block">© 2024 Todos los derechos reservados.</span>
+            </div>
+            <div class="flex flex-wrap gap-6 justify-center">
+                <a class="font-body text-xs font-bold text-slate-400 uppercase tracking-widest hover:text-primary transition-colors" href="#">Aviso de Privacidad</a>
+                <a class="font-body text-xs font-bold text-slate-400 uppercase tracking-widest hover:text-primary transition-colors" href="#">Términos Clínicos</a>
+                <a class="font-body text-xs font-bold text-slate-400 uppercase tracking-widest hover:text-primary transition-colors" href="#">Contacto</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

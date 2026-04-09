@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Servicios | The Clinical Atelier</title>
+    
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#005d90", "primary-container": "#0077b6", "primary-fixed": "#cde5ff",
+                        "on-primary": "#ffffff", "surface": "#f8fafb", "on-surface": "#191c1d", 
+                        "on-surface-variant": "#404850", "outline-variant": "#bfc7d1",
+                        "secondary": "#006a63", "secondary-container": "#8bf1e6", "secondary-fixed": "#8ef4e9",
+                        "on-secondary-container": "#006f67", "tertiary": "#864a00", "error": "#ba1a1a",
+                        "surface-container-lowest": "#ffffff", "surface-container-low": "#f2f4f5", "surface-container-high": "#e6e8e9"
+                    },
+                    fontFamily: { "headline": ["Manrope"], "body": ["Inter"] }
+                }
+            }
+        };
+    </script>
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+        .glass-effect { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+    </style>
+</head>
+
+<body class="bg-surface text-on-surface font-body antialiased selection:bg-[#cde5ff] selection:text-[#005d90]">
+    
+      <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-slate-100 transition-colors duration-300">
+        <div class="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold">C</div>
+                <span class="text-xl font-extrabold tracking-tight text-primary font-headline">Clinical Atelier</span>
+            </div>
+            <div class="hidden md:flex gap-8 items-center">
+                <a class="font-headline text-sm font-bold text-slate-500 hover:text-primary transition-all" href="nosotros.html">Nosotros</a>
+                <a class="font-headline text-sm font-bold text-slate-500 hover:text-primary transition-all" href="serviciosIndex.html">Servicios</a>
+                <a class="font-headline text-sm font-bold text-primary border-b-2 border-primary pb-1" href="index_paciente.html">Agendar Cita</a>
+            </div>
+            <button class="md:hidden text-primary">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="pt-20">
+        <header class="relative overflow-hidden bg-surface py-20 lg:py-32">
+            <div class="max-w-7xl mx-auto px-8 grid lg:grid-cols-2 gap-12 items-center">
+                <div class="z-10">
+                    <span class="text-xs text-primary uppercase tracking-[0.2em] font-bold mb-4 block">Excelencia Clínica</span>
+                    <h1 class="font-headline text-5xl lg:text-7xl font-extrabold text-slate-800 tracking-tight leading-tight mb-6">
+                        Nuestros Servicios <span class="text-primary italic">Especializados</span>
+                    </h1>
+                    <p class="text-slate-500 text-lg lg:text-xl max-w-xl leading-relaxed mb-10">
+                        Redefiniendo la experiencia dental a través de la precisión tecnológica y una visión artística de la salud oral.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <button onclick="document.getElementById('tratamientos').scrollIntoView({behavior: 'smooth'})" class="bg-gradient-to-r from-primary to-primary-container text-white px-8 py-4 rounded-xl font-headline font-bold text-lg shadow-xl shadow-primary/25 hover:shadow-2xl transition-all">
+                            Ver Tratamientos
+                        </button>
+                        <div class="flex items-center gap-3 px-6 py-4 rounded-xl bg-white shadow-sm border border-slate-100 text-slate-600 font-bold">
+                            <span class="material-symbols-outlined text-secondary">verified</span>
+                            <span>Certificación Global</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="aspect-square rounded-[2.5rem] overflow-hidden shadow-2xl rotate-3 scale-95 hover:rotate-0 hover:scale-100 transition-transform duration-700">
+                        <img alt="Equipo dental moderno" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3G8-AT_ESRQz5obHBRObm1eiz8co1BKffeF-Y9I5UcI3LEM3NLUAm4avrAtgLPrxVEM6FcGWR3jrPzct1tpda2tBF3cZpHJEEsSQsf2LuI5gy6HCGhoHHyofMXh8WbLOhM8EKrcAvz0LV5qZDHnECZlTeLTTnCqqp5NXkPMNOdZGWIetDTyJbSBVhNxHWj5gtaK43dfOpTz-ahQU5josJDMPtXM89tlJohgI6p8qkd1z4kT_t1GyE4Us6863hwE4M79pN6ICQpHw"/>
+                    </div>
+                    <div class="absolute -bottom-8 -left-8 glass-effect p-8 rounded-3xl shadow-xl max-w-xs border border-white">
+                        <div class="flex items-center gap-4 mb-3">
+                            <div class="w-12 h-12 bg-secondary-container rounded-full flex items-center justify-center">
+                                <span class="material-symbols-outlined text-[#006f67]">biotech</span>
+                            </div>
+                            <h3 class="font-headline font-bold text-slate-800">Alta Tecnología</h3>
+                        </div>
+                        <p class="text-sm text-slate-500 leading-snug">Implementamos escaneo 3D y diseño digital de sonrisa en cada procedimiento.</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section id="tratamientos" class="bg-slate-50 py-24 px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-20">
+                    <h2 class="font-headline text-4xl font-extrabold text-slate-800 mb-4">Tratamientos Personalizados</h2>
+                    <p class="text-slate-500 max-w-2xl mx-auto text-lg">Soluciones integrales diseñadas para restaurar la funcionalidad y realzar la estética natural de tu sonrisa.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="group bg-white p-8 rounded-[2rem] shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100">
+                        <div class="w-14 h-14 bg-[#8ef4e9]/30 mb-6 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-[#006f67] text-3xl">dentistry</span>
+                        </div>
+                        <h3 class="font-headline text-2xl font-bold text-slate-800 mb-3">Limpieza Profunda</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6">Profilaxis avanzada utilizando tecnología ultrasónica para eliminar sarro y manchas sin molestias.</p>
+                        <div class="flex justify-between items-center mt-auto pt-4 border-t border-slate-100">
+                            <span class="text-xs font-bold text-primary tracking-widest uppercase">DESDE $120 USD</span>
+                            <span class="material-symbols-outlined text-primary group-hover:translate-x-2 transition-transform">arrow_forward</span>
+                        </div>
+                    </div>
+
+                    <div class="group bg-white p-8 rounded-[2rem] shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100">
+                        <div class="w-14 h-14 bg-primary-fixed mb-6 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-primary text-3xl">align_horizontal_center</span>
+                        </div>
+                        <h3 class="font-headline text-2xl font-bold text-slate-800 mb-3">Ortodoncia</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6">Alineación perfecta mediante brackets estéticos o alineadores invisibles de última generación.</p>
+                        <div class="flex justify-between items-center mt-auto pt-4 border-t border-slate-100">
+                            <span class="text-xs font-bold text-primary tracking-widest uppercase">CONSULTA GRATIS</span>
+                            <span class="material-symbols-outlined text-primary group-hover:translate-x-2 transition-transform">arrow_forward</span>
+                        </div>
+                    </div>
+
+                    <div class="group bg-white p-8 rounded-[2rem] shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100">
+                        <div class="w-14 h-14 bg-[#ffdcc0]/50 mb-6 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-[#864a00] text-3xl">settings_backup_restore</span>
+                        </div>
+                        <h3 class="font-headline text-2xl font-bold text-slate-800 mb-3">Implantes Dentales</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6">Restauración total con materiales de grado médico que se integran perfectamente a tu estructura ósea.</p>
+                        <div class="flex justify-between items-center mt-auto pt-4 border-t border-slate-100">
+                            <span class="text-xs font-bold text-primary tracking-widest uppercase">DESDE $1,250 USD</span>
+                            <span class="material-symbols-outlined text-primary group-hover:translate-x-2 transition-transform">arrow_forward</span>
+                        </div>
+                    </div>
+
+                    <div class="group bg-white p-8 rounded-[2rem] shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100">
+                        <div class="w-14 h-14 bg-[#8ef4e9]/30 mb-6 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-[#006f67] text-3xl">auto_fix_high</span>
+                        </div>
+                        <h3 class="font-headline text-2xl font-bold text-slate-800 mb-3">Estética Dental</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6">Diseño de sonrisa, carillas de porcelana y blanqueamiento láser para un impacto visual radiante.</p>
+                        <div class="flex justify-between items-center mt-auto pt-4 border-t border-slate-100">
+                            <span class="text-xs font-bold text-primary tracking-widest uppercase">DESDE $350 USD</span>
+                            <span class="material-symbols-outlined text-primary group-hover:translate-x-2 transition-transform">arrow_forward</span>
+                        </div>
+                    </div>
+
+                    <div class="group bg-white p-8 rounded-[2rem] shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100">
+                        <div class="w-14 h-14 bg-red-50 mb-6 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-error text-3xl">medical_services</span>
+                        </div>
+                        <h3 class="font-headline text-2xl font-bold text-slate-800 mb-3">Endodoncia</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6">Salvamos tus piezas naturales mediante procedimientos de conductos indoloros y precisos.</p>
+                        <div class="flex justify-between items-center mt-auto pt-4 border-t border-slate-100">
+                            <span class="text-xs font-bold text-primary tracking-widest uppercase">DESDE $280 USD</span>
+                            <span class="material-symbols-outlined text-primary group-hover:translate-x-2 transition-transform">arrow_forward</span>
+                        </div>
+                    </div>
+
+                    <div class="group bg-white p-8 rounded-[2rem] shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100">
+                        <div class="w-14 h-14 bg-primary-fixed mb-6 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-[#004b74] text-3xl">child_care</span>
+                        </div>
+                        <h3 class="font-headline text-2xl font-bold text-slate-800 mb-3">Odontopediatría</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6">Cuidado especializado para los más pequeños, fomentando hábitos saludables en un ambiente amigable.</p>
+                        <div class="flex justify-between items-center mt-auto pt-4 border-t border-slate-100">
+                            <span class="text-xs font-bold text-primary tracking-widest uppercase">DESDE $70 USD</span>
+                            <span class="material-symbols-outlined text-primary group-hover:translate-x-2 transition-transform">arrow_forward</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24 px-8 overflow-hidden">
+            <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 items-center">
+                <div class="lg:w-1/2 order-2 lg:order-1">
+                    <div class="relative">
+                        <div class="absolute -top-12 -left-12 w-64 h-64 bg-primary-fixed/50 rounded-full blur-3xl -z-10"></div>
+                        <img alt="Tecnología dental" class="rounded-[3rem] shadow-2xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCG7cXF9Lvt7fwVenSYPfoc7WnbKbW0AwzTocwG9o9Q7Qd5v5VDvYhTnhThpG5XNGmBt2cAAATPWNmdCBu06VmVJ6MUQY84oIKRXbHV6p6VwTFNzjO9aecYB9h9dBqLopeYqqsk0LYpy3hsN9BM1NALvsbW-N3UZj48CSBsU-BlaIUWIlRIvWshSwqEZYo9ffHclFqVtz8WyJqxRDcYtsUtAzcQ9zjFWOj3zlBXfWYAlx5PdPQFMUx3SDAs_wC7JQxZIZgpBb_Hy7M"/>
+                        <div class="absolute top-10 -right-10 bg-white p-6 rounded-2xl shadow-xl border border-slate-100 max-w-[200px]">
+                            <div class="flex gap-2 items-center mb-2">
+                                <span class="w-2 h-2 rounded-full bg-secondary"></span>
+                                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Tecnología</span>
+                            </div>
+                            <p class="text-xs font-bold text-slate-800 leading-tight">Escaneo Intraoral 3D para precisión milimétrica.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 order-1 lg:order-2">
+                    <h2 class="font-headline text-4xl font-extrabold text-slate-800 mb-8 leading-tight">Por qué elegir nuestros tratamientos</h2>
+                    <div class="space-y-8">
+                        <div class="flex gap-6">
+                            <div class="flex-shrink-0 w-12 h-12 bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-center">
+                                <span class="material-symbols-outlined text-primary">precision_manufacturing</span>
+                            </div>
+                            <div>
+                                <h4 class="font-headline font-bold text-slate-800 text-xl mb-2">Precisión Digital</h4>
+                                <p class="text-slate-500 leading-relaxed">Utilizamos software de vanguardia para previsualizar resultados finales antes de comenzar cualquier intervención.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6">
+                            <div class="flex-shrink-0 w-12 h-12 bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-center">
+                                <span class="material-symbols-outlined text-primary">psychology</span>
+                            </div>
+                            <div>
+                                <h4 class="font-headline font-bold text-slate-800 text-xl mb-2">Enfoque Bio-mimético</h4>
+                                <p class="text-slate-500 leading-relaxed">Nuestras técnicas respetan la estructura natural del diente, priorizando la conservación y la salud a largo plazo.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6">
+                            <div class="flex-shrink-0 w-12 h-12 bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-center">
+                                <span class="material-symbols-outlined text-primary">volunteer_activism</span>
+                            </div>
+                            <div>
+                                <h4 class="font-headline font-bold text-slate-800 text-xl mb-2">Cuidado Humano</h4>
+                                <p class="text-slate-500 leading-relaxed">Diseñamos una atmósfera de calma y confort, eliminando la ansiedad dental a través de un trato empático y profesional.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="max-w-7xl mx-auto px-8 mb-24">
+            <div class="bg-gradient-to-br from-primary-container to-primary p-12 lg:p-20 rounded-[3rem] text-center relative overflow-hidden shadow-2xl">
+                <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+                    <svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 100 100"><path d="M0,0 Q50,100 100,0 V100 H0 Z" fill="currentColor"></path></svg>
+                </div>
+                <div class="relative z-10">
+                    <h2 class="font-headline text-3xl lg:text-5xl font-extrabold text-white mb-6">¿Listo para transformar tu sonrisa?</h2>
+                    <p class="text-white/80 text-lg lg:text-xl max-w-2xl mx-auto mb-10 font-light">Agende hoy mismo su cita de valoración y descubra la diferencia de un cuidado dental de clase mundial.</p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="agendar_cita.html" class="bg-white text-primary px-10 py-5 rounded-xl font-headline font-bold text-lg shadow-xl hover:scale-105 transition-transform">
+                            Agendar Cita Ahora
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="w-full py-10 bg-slate-50 border-t border-slate-200/50">
+        <div class="flex flex-col md:flex-row justify-between items-center px-12 max-w-7xl mx-auto">
+            <div class="mb-6 md:mb-0 text-center md:text-left">
+                <span class="font-headline font-bold text-slate-800 block text-lg mb-1">Clinical Atelier</span>
+                <span class="font-body text-xs text-slate-400 uppercase tracking-widest block">© 2024 Todos los derechos reservados.</span>
+            </div>
+            <div class="flex flex-wrap gap-6 justify-center">
+                <a class="font-body text-xs font-bold text-slate-400 uppercase tracking-widest hover:text-primary transition-colors" href="#">Aviso de Privacidad</a>
+                <a class="font-body text-xs font-bold text-slate-400 uppercase tracking-widest hover:text-primary transition-colors" href="#">Términos Clínicos</a>
+                <a class="font-body text-xs font-bold text-slate-400 uppercase tracking-widest hover:text-primary transition-colors" href="#">Contacto</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

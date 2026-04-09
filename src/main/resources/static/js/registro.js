@@ -14,8 +14,11 @@ const usuario = {
     }
 };
 
+
+const baseUrl = window.location.origin;
+
 try {
-    const response = await fetch("http://localhost:8080/api/usuarios/registro", {
+    const response = await fetch(`${baseUrl}/api/usuarios/registro`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"

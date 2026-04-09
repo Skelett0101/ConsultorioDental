@@ -46,7 +46,12 @@ public class SecurityConfig {
                     "/assets/**",
                     "/calendario.html",
                     "/personal.html",
+                    "/servicios.html",
+                    "/pacientes.html",
                     "/dashboard.html",
+                    "/index_paciente.html",
+                    "/serviciosIndex.html",
+                    "/nosotros.html",
                     "/css/**",
                     "/js/**",
                     "/error"

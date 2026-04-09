@@ -1,14 +1,22 @@
+// js/index.js
+
 document.getElementById("loginForm").addEventListener("submit", async function(e) {
     e.preventDefault();
 
-    const btnSubmit = document.querySelector("#loginForm button[type='submit']");
+    const btnSubmit = document.getElementById("btnSubmit");
     const msjError = document.getElementById("mensaje");
     
+    // Estado de carga visual
     btnSubmit.disabled = true;
-    btnSubmit.textContent = "Cargando...";
-    msjError.textContent = "";
+    btnSubmit.innerHTML = `
+        <span class="material-symbols-outlined animate-spin">sync</span>
+        Conectando...
+    `;
+    btnSubmit.classList.add("opacity-80", "cursor-not-allowed");
+    msjError.textContent = ""; // Limpiar error anterior
 
     const baseUrl = window.location.origin;
+    
     const datos = {
         email: document.getElementById("email").value,
         password: document.getElementById("password").value
@@ -21,37 +29,49 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
             body: JSON.stringify(datos)
         });
 
-        // 🔥 Leer la respuesta como texto primero
         const textResponse = await response.text();
-        console.log("Respuesta cruda:", textResponse);
         
         let data;
         try {
             data = JSON.parse(textResponse);
         } catch(e) {
             console.error("No es JSON:", textResponse);
-            throw new Error("Error del servidor: " + textResponse);
+            throw new Error("Error de conexión con el servidor.");
         }
 
         if (!response.ok) {
-            // 🔥 Mostrar el mensaje de error del backend
-            const errorMsg = data.error || "Credenciales incorrectas";
+            // Mostrar mensaje de error del backend
+            const errorMsg = data.error || data.message || "Credenciales incorrectas";
             throw new Error(errorMsg);
         }
 
-        // Guardar token y datos
+        // Si todo sale bien, guardar token y redirigir
         const { token, ...datosUsuario } = data;
         localStorage.setItem("token", token);
         localStorage.setItem("usuario", JSON.stringify(datosUsuario));
 
-        // Redirigir
-        window.location.href = "dashboard.html";
+        // Animación de éxito antes de redirigir
+        btnSubmit.innerHTML = `
+            <span class="material-symbols-outlined">check_circle</span>
+            Acceso Autorizado
+        `;
+        btnSubmit.classList.remove("signature-gradient");
+        btnSubmit.classList.add("bg-teal-600");
+
+        setTimeout(() => {
+            window.location.href = "dashboard.html";
+        }, 500);
 
     } catch (error) {
         console.error("Error:", error);
-        msjError.textContent = error.message;
-    } finally {
+        msjError.textContent = error.message; // Mostrar error en pantalla
+        
+        // Restaurar botón
         btnSubmit.disabled = false;
-        btnSubmit.textContent = "Entrar";
+        btnSubmit.classList.remove("opacity-80", "cursor-not-allowed");
+        btnSubmit.innerHTML = `
+            Iniciar Sesión
+            <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+        `;
     }
 });

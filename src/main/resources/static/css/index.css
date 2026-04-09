@@ -1,35 +1,24 @@
-body {
-font-family: Arial;
-background: #f4f4f4;
-display: flex;
-justify-content: center;
-margin-top: 100px;
-}
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
 
-.container {
-background: white;
-padding: 20px;
-border-radius: 10px;
-width: 300px;
-text-align: center;
-}
+        body {
+            font-family: 'Inter', sans-serif;
+        }
 
-input {
-width: 100%;
-padding: 10px;
-margin: 10px 0;
-}
+        h1,
+        h2,
+        h3 {
+            font-family: 'Manrope', sans-serif;
+        }
 
-button {
-width: 100%;
-padding: 10px;
-background: #2c7;
-border: none;
-color: white;
-font-weight: bold;
-}
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
 
-#mensaje {
-margin-top: 10px;
-color: red;
-}
+        .signature-gradient {
+            background: linear-gradient(135deg, #005d90 0%, #0077b6 100%);
+        }

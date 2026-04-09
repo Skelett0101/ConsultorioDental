@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Agendar Cita | The Clinical Atelier</title>
+    
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#005d90",
+                        "primary-container": "#0077b6",
+                        "on-primary": "#ffffff",
+                        "surface": "#f8fafb",
+                        "on-surface": "#191c1d",
+                        "on-surface-variant": "#404850",
+                        "outline-variant": "#bfc7d1",
+                        "secondary": "#006a63",
+                        "secondary-container": "#8bf1e6",
+                        "on-secondary-container": "#006f67"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"]
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-effect { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+    </style>
+</head>
+
+<body class="bg-surface text-on-surface font-body antialiased selection:bg-[#cde5ff] selection:text-[#005d90]">
+    
+    <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-slate-100 transition-colors duration-300">
+        <div class="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold">C</div>
+                <span class="text-xl font-extrabold tracking-tight text-primary font-headline">Clinical Atelier</span>
+            </div>
+            <div class="hidden md:flex gap-8 items-center">
+                <a class="font-headline text-sm font-bold text-slate-500 hover:text-primary transition-all" href="nosotros.html">Nosotros</a>
+                <a class="font-headline text-sm font-bold text-slate-500 hover:text-primary transition-all" href="serviciosIndex.html">Servicios</a>
+              
+                <a class="font-headline text-sm font-bold text-primary border-b-2 border-primary pb-1" href="index_paciente.html">Agendar Cita</a>
+            </div>
+            <button class="md:hidden text-primary">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="pt-24 pb-16 min-h-screen flex items-center relative overflow-hidden">
+        
+        <div class="absolute top-0 right-0 w-full h-full pointer-events-none -z-10 overflow-hidden">
+            <div class="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-[#cde5ff]/40 rounded-full blur-[100px]"></div>
+            <div class="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-[#8ef4e9]/20 rounded-full blur-[100px]"></div>
+        </div>
+
+        <div class="max-w-6xl mx-auto px-6 w-full grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            
+            <div class="space-y-8">
+                <span class="text-xs font-bold text-primary tracking-[0.2em] uppercase bg-[#cde5ff]/50 px-3 py-1 rounded-full">Reserva tu Espacio</span>
+                <h1 class="font-headline text-4xl lg:text-6xl font-extrabold text-slate-800 tracking-tight leading-tight">
+                    Da el primer paso hacia tu <span class="text-primary italic">nueva sonrisa.</span>
+                </h1>
+                <p class="text-slate-500 text-lg max-w-md leading-relaxed">
+                    Completa el formulario y asegura tu cita con nuestros especialistas. Te brindaremos un diagnóstico preciso con la mejor tecnología.
+                </p>
+                
+                <div class="space-y-6 pt-4">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-white shadow-sm border border-slate-100 flex items-center justify-center flex-shrink-0 text-primary">
+                            <span class="material-symbols-outlined">schedule</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-800">Confirmación Rápida</h4>
+                            <p class="text-sm text-slate-500">Te enviaremos un correo con los detalles de tu cita al instante.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-white shadow-sm border border-slate-100 flex items-center justify-center flex-shrink-0 text-secondary">
+                            <span class="material-symbols-outlined">shield_locked</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-800">Privacidad Garantizada</h4>
+                            <p class="text-sm text-slate-500">Tus datos médicos están protegidos bajo los más altos estándares.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-8 md:p-10 rounded-[2.5rem] shadow-xl border border-slate-100 relative">
+                <h3 class="font-headline text-2xl font-bold text-slate-800 mb-6">Detalles de tu Cita</h3>
+                
+                <form id="formAgendar" class="space-y-5">
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div class="space-y-1.5">
+                            <label class="text-xs font-bold text-slate-500 uppercase tracking-widest" for="nombre">Nombre</label>
+                            <input type="text" id="nombre" required placeholder="Ej. Carlos" 
+                                class="w-full px-4 py-3 bg-slate-50 border border-transparent focus:border-primary/30 rounded-xl text-slate-800 placeholder:text-slate-400 focus:ring-2 focus:ring-primary/10 transition-all outline-none" />
+                        </div>
+                        <div class="space-y-1.5">
+                            <label class="text-xs font-bold text-slate-500 uppercase tracking-widest" for="apellido">Apellido</label>
+                            <input type="text" id="apellido" required placeholder="Ej. Ruiz" 
+                                class="w-full px-4 py-3 bg-slate-50 border border-transparent focus:border-primary/30 rounded-xl text-slate-800 placeholder:text-slate-400 focus:ring-2 focus:ring-primary/10 transition-all outline-none" />
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div class="space-y-1.5">
+                            <label class="text-xs font-bold text-slate-500 uppercase tracking-widest" for="email">Correo Electrónico</label>
+                            <input type="email" id="email" required placeholder="correo@ejemplo.com" 
+                                class="w-full px-4 py-3 bg-slate-50 border border-transparent focus:border-primary/30 rounded-xl text-slate-800 placeholder:text-slate-400 focus:ring-2 focus:ring-primary/10 transition-all outline-none" />
+                        </div>
+                        <div class="space-y-1.5">
+                            <label class="text-xs font-bold text-slate-500 uppercase tracking-widest" for="telefono">Teléfono</label>
+                            <input type="tel" id="telefono" required placeholder="555-123-4567" 
+                                class="w-full px-4 py-3 bg-slate-50 border border-transparent focus:border-primary/30 rounded-xl text-slate-800 placeholder:text-slate-400 focus:ring-2 focus:ring-primary/10 transition-all outline-none" />
+                        </div>
+                    </div>
+
+                    <div class="border-t border-slate-100 my-4"></div>
+
+                    <div class="space-y-1.5">
+                        <label class="text-xs font-bold text-slate-500 uppercase tracking-widest" for="servicio">Servicio de Interés</label>
+                        <select id="servicio" required class="w-full px-4 py-3 bg-slate-50 border border-transparent focus:border-primary/30 rounded-xl text-slate-800 focus:ring-2 focus:ring-primary/10 transition-all outline-none cursor-pointer">
+                            <option value="" disabled selected>Selecciona un tratamiento...</option>
+                            <option value="1">Limpieza Profunda</option>
+                            <option value="2">Extracción Simple</option>
+                            <option value="3">Ortodoncia Metálica</option>
+                            <option value="4">Implante Dental</option>
+                            <option value="5">Consulta General / Valoración</option>
+                        </select>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <label class="text-xs font-bold text-slate-500 uppercase tracking-widest" for="fecha">Fecha y Hora Preferida</label>
+                        <input type="datetime-local" id="fecha" required 
+                            class="w-full px-4 py-3 bg-slate-50 border border-transparent focus:border-primary/30 rounded-xl text-slate-800 focus:ring-2 focus:ring-primary/10 transition-all outline-none cursor-pointer" />
+                    </div>
+
+                    <p id="mensajeReserva" class="text-sm font-bold text-center h-5 transition-colors"></p>
+
+                    <button type="submit" id="btnReservar" class="w-full bg-gradient-to-r from-primary to-primary-container text-white py-4 rounded-xl font-headline font-bold text-lg shadow-lg shadow-primary/25 hover:shadow-xl active:scale-[0.98] transition-all flex justify-center items-center gap-2">
+                        Confirmar Reserva
+                        <span class="material-symbols-outlined">check_circle</span>
+                    </button>
+                    
+                    <p class="text-center text-[10px] text-slate-400 mt-4">Al agendar, aceptas nuestra política de privacidad y tratamiento de datos médicos.</p>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="w-full py-10 bg-slate-50 border-t border-slate-200/50">
+        <div class="flex flex-col md:flex-row justify-between items-center px-12 max-w-7xl mx-auto">
+            <div class="mb-6 md:mb-0 text-center md:text-left">
+                <span class="font-headline font-bold text-slate-800 block text-lg mb-1">Clinical Atelier</span>
+                <span class="font-body text-xs text-slate-400 uppercase tracking-widest block">© 2024 Todos los derechos reservados.</span>
+            </div>
+            <div class="flex flex-wrap gap-6 justify-center">
+                <a class="font-body text-xs font-bold text-slate-400 uppercase tracking-widest hover:text-primary transition-colors" href="#">Aviso de Privacidad</a>
+                <a class="font-body text-xs font-bold text-slate-400 uppercase tracking-widest hover:text-primary transition-colors" href="#">Términos Clínicos</a>
+                <a class="font-body text-xs font-bold text-slate-400 uppercase tracking-widest hover:text-primary transition-colors" href="#">Contacto</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/index_paciente.js"> </script>
+</body>
+</html>

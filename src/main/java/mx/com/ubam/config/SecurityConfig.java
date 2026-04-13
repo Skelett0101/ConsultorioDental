@@ -57,6 +57,24 @@ public class SecurityConfig {
                     "/error"
                 ).permitAll()
 
+             // --- REGLAS DEV 4 ---
+
+             // R39, R40: Admin y Recepcionista pueden generar reportes PDF
+             .requestMatchers("/api/reportes/**").hasAnyRole("admin", "recepcionista")
+
+             // R41-R45: Solo Admin y Recepcionista gestionan la caja y pagos
+             .requestMatchers("/api/pagos/**").hasAnyRole("admin", "recepcionista")
+
+             // R49, R50, R52: Las métricas financieras son EXCLUSIVAS del Admin
+             .requestMatchers(
+                 "/api/dashboard/ingresos-dia", 
+                 "/api/dashboard/ingresos-mes", 
+                 "/api/dashboard/servicios-populares"
+             ).hasRole("admin")
+
+             // R46, R48: Otras métricas del dashboard son para todos los empleados
+             .requestMatchers("/api/dashboard/**").hasAnyRole("admin", "recepcionista", "dentista")
+                
                 // login y registro
                 .requestMatchers("/auth/login", "/api/usuarios/registro").permitAll()
 

@@ -15,7 +15,7 @@ import jakarta.persistence.Table;
 public class Cita {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_cita;
+    private Integer id_cita;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_paciente", nullable = false)
@@ -29,13 +29,9 @@ public class Cita {
     @JoinColumn(name = "id_servicio", nullable = false)
     private Servicio servicio;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_servicio", nullable = false)
-	private Long id_servicio;
-	
 	private LocalDateTime fecha_hora;
 	
-	@Column(name = "estado",unique = true)
+	@Column(name = "estado")
 	private String estadoCita;
 	
 	@Column(name = "notas", nullable = false)
@@ -45,18 +41,20 @@ public class Cita {
 	
 	// Getters y Setters
 
-	public Long getId_cita() {
-		return id_cita;
-	}
-
-	public void setId_cita(Long id_cita) {
-		this.id_cita = id_cita;
-	}
+	
 	
 	
 
 	public Paciente getPaciente() {
 		return paciente;
+	}
+
+	public Integer getId_cita() {
+		return id_cita;
+	}
+
+	public void setId_cita(Integer id_cita) {
+		this.id_cita = id_cita;
 	}
 
 	public void setPaciente(Paciente paciente) {
@@ -85,14 +83,6 @@ public class Cita {
 
 	public void setEstadoCita(String estadoCita) {
 		this.estadoCita = estadoCita;
-	}
-
-	public Long getId_servicio() {
-		return id_servicio;
-	}
-
-	public void setId_servicio(Long id_servicio) {
-		this.id_servicio = id_servicio;
 	}
 
 	public LocalDateTime getFecha_hora() {

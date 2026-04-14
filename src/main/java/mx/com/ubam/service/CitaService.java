@@ -20,7 +20,7 @@ public class CitaService {
 	
 	public Cita agendarCita(Cita cita) {
 	    
-	    boolean ocupado = CitaeRepo.existsByDentistaIdAndFechaHoraAndEstadoCitaNot(
+	    boolean ocupado = CitaeRepo.existsByDentista_Id_usuarioAndFechaHoraAndEstadoCitaNot(
 	        cita.getId_cita(), 
 	        cita.getFecha_hora(), 
 	        "CANCELADA"
@@ -37,7 +37,7 @@ public class CitaService {
 	}
 	
 	// Eliminar
-	public void EliminarCita(Long id) {
+	public void EliminarCita(Integer id) {
 		if(CitaeRepo.existsById(id)) {
 		CitaeRepo.deleteById(id);
 		}else {

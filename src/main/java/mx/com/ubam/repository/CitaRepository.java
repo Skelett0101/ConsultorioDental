@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import mx.com.ubam.model.*;
 
 @Repository
-public interface CitaRepository extends JpaRepository<Cita, Long>{
+public interface CitaRepository extends JpaRepository<Cita, Integer>{
 
-	boolean existsByDentistaIdAndFechaHoraAndEstadoCitaNot(Long id_dentista, LocalDateTime fecha_hora, String estadoCita);
+	boolean existsByDentista_Id_usuarioAndFechaHoraAndEstadoCitaNot(Integer id_dentista, LocalDateTime fecha_hora, String estadoCita);
 	}

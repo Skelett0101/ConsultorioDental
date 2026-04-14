@@ -33,7 +33,7 @@ public class CitaController {
     }
 	
 	//eliminar por id citaas
-	public ResponseEntity<String> eliminarCita(@PathVariable Long id) {
+	public ResponseEntity<String> eliminarCita(@PathVariable Integer id) {
 	    Citaser.EliminarCita(id); 
 	    return ResponseEntity.ok("Cita eliminada correctamente");
 	}

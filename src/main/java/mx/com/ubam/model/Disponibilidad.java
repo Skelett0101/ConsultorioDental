@@ -18,13 +18,13 @@ public class Disponibilidad {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_disponibilidad;
+    private Integer id_disponibilidad;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_dentista", nullable = false)
-	private Long id_dentista;
+	private Usuario dentista;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	
     @JoinColumn(name = "dia_semana", nullable = false)
 	private Long diaSemana;
 	
@@ -36,6 +36,58 @@ public class Disponibilidad {
 	
 	@JoinColumn(name = "activo", nullable = false)
 	private Long activoDispo;
+
 	
 
+	public int getId_disponibilidad() {
+		return id_disponibilidad;
+	}
+
+	public void setId_disponibilidad(Integer id_disponibilidad) {
+		this.id_disponibilidad = id_disponibilidad;
+	}
+
+	public Usuario getDentista() {
+		return dentista;
+	}
+
+	public void setDentista(Usuario dentista) {
+		this.dentista = dentista;
+	}
+
+	public Long getDiaSemana() {
+		return diaSemana;
+	}
+
+	public void setDiaSemana(Long diaSemana) {
+		this.diaSemana = diaSemana;
+	}
+
+	public LocalTime getHoraInicio() {
+		return horaInicio;
+	}
+
+	public void setHoraInicio(LocalTime horaInicio) {
+		this.horaInicio = horaInicio;
+	}
+
+	public LocalTime getHoraFin() {
+		return horaFin;
+	}
+
+	public void setHoraFin(LocalTime horaFin) {
+		this.horaFin = horaFin;
+	}
+
+	public Long getActivoDispo() {
+		return activoDispo;
+	}
+
+	public void setActivoDispo(Long activoDispo) {
+		this.activoDispo = activoDispo;
+	}
+	
+
+	
+	
 }

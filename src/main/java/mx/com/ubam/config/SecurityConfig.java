@@ -57,6 +57,9 @@ public class SecurityConfig {
                     "/error"
                 ).permitAll()
 
+                //crear pacientes
+                .requestMatchers(HttpMethod.POST, "/api/pacientes").permitAll()
+                
                 // login y registro
                 .requestMatchers("/auth/login", "/api/usuarios/registro").permitAll()
 

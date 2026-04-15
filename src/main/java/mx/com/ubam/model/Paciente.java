@@ -43,12 +43,12 @@ public class Paciente {
 		this.nombrePaciente = nombrePaciente;
 	}
 
-	public String getApelllidoPaciente() {
+	public String getApellidoPaciente() {
 		return apellidoPaciente;
 	}
 
-	public void setApelllidoPaciente(String apelllidoPaciente) {
-		this.apellidoPaciente = apelllidoPaciente;
+	public void setApellidoPaciente(String apellidoPaciente) {
+		this.apellidoPaciente = apellidoPaciente;
 	}
 
 	public String getEmailPaciente() {

@@ -13,7 +13,7 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
         Conectando...
     `;
     btnSubmit.classList.add("opacity-80", "cursor-not-allowed");
-    msjError.textContent = ""; // Limpiar error anterior
+    msjError.textContent = ""; // Limpiar errores
 
     const baseUrl = window.location.origin;
     
@@ -45,12 +45,12 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
             throw new Error(errorMsg);
         }
 
-        // Si todo sale bien, guardar token y redirigir
+        // guardar token y redirigir
         const { token, ...datosUsuario } = data;
         localStorage.setItem("token", token);
         localStorage.setItem("usuario", JSON.stringify(datosUsuario));
 
-        // Animación de éxito antes de redirigir
+        // éxito antes de redirigir
         btnSubmit.innerHTML = `
             <span class="material-symbols-outlined">check_circle</span>
             Acceso Autorizado

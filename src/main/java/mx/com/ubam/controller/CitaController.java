@@ -14,6 +14,7 @@ import mx.com.ubam.repository.*;
 import mx.com.ubam.service.CitaService;
 
 @RestController 
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/citas")
 public class CitaController {
 
@@ -31,8 +32,10 @@ public class CitaController {
     public ResponseEntity<Cita> Editar(@RequestBody Cita cita) {
         return ResponseEntity.ok(Citaser.editarCita(cita));
     }
+    
 	
 	//eliminar por id citaas
+	@DeleteMapping("/eliminar/{id}")
 	public ResponseEntity<String> eliminarCita(@PathVariable Integer id) {
 	    Citaser.EliminarCita(id); 
 	    return ResponseEntity.ok("Cita eliminada correctamente");

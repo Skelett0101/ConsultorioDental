@@ -2,6 +2,11 @@ package mx.com.ubam.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,31 +15,54 @@ import mx.com.ubam.repository.*;
 
 @Service
 public class CitaService {
-	@Autowired
-	private CitaRepository CitaeRepo;
 	
-	public CitaService(CitaRepository citaRepo) {
+	private  CitaRepository CitaeRepo;
+    private  DisponibilidadRepository DispoRepo;
+
+    @Autowired
+    public CitaService(CitaRepository citaRepo, DisponibilidadRepository dispoRepo) {
         this.CitaeRepo = citaRepo;
+        this.DispoRepo = dispoRepo;
     }
 	
 	
+	
+	
 	public Cita agendarCita(Cita cita) {
-	    
-	    boolean ocupado = CitaeRepo.existsByDentista_Id_usuarioAndFechaHoraAndEstadoCitaNot(
-	        cita.getId_cita(), 
-	        cita.getFecha_hora(), 
-	        "CANCELADA"
-	    );
-	    
-	    if (ocupado) {
-	    	
-	    	throw new RuntimeException("Error: Horario Ocupado.");
+        
+		
+        DayOfWeek dow = cita.getFecha_hora().getDayOfWeek();
+        Long diaSemana = (long) dow.getValue();
+        LocalTime horaCita = cita.getFecha_hora().toLocalTime();
+        Integer idDentista = cita.getDentista().getIdUsuario();
+
+        
+        boolean tieneHorario = DispoRepo.existsByDentistaIdUsuarioAndDiaSemanaAndHoraInicioLessThanEqualAndHoraFinGreaterThan(
+            idDentista, 
+            diaSemana, 
+            horaCita, 
+            horaCita
+        );
+
+        if (!tieneHorario) {
+            throw new RuntimeException("Error: El dentista no labora en ese horario o día.");
         }
 
-        // Guardar 
-        return CitaeRepo.save(cita);
+        
+        boolean ocupado = CitaeRepo.existsByDentistaIdUsuarioAndFechaHoraAndEstadoCitaNot(
+            idDentista, 
+            cita.getFecha_hora(), 
+            "CANCELADA"
+        );
+        
+        if (ocupado) {
+            throw new RuntimeException("Error: Ya existe una cita agendada en este horario.");
+        }
 
-	}
+        
+        cita.setFecha_creacion(LocalDateTime.now());
+        return CitaeRepo.save(cita);
+    }
 	
 	// Eliminar
 	public void EliminarCita(Integer id) {

@@ -2,6 +2,7 @@ package mx.com.ubam.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "PAGO")
@@ -16,9 +17,11 @@ public class Pago {
     @JoinColumn(name = "id_cita", nullable = false, unique = true)
     private Cita cita;
 
+    // 🔥 Solución al error: Usamos BigDecimal para coincidir con DECIMAL(10,2) de MySQL
     @Column(name = "monto", nullable = false, precision = 10, scale = 2)
-    private Double monto;
+    private BigDecimal monto;
 
+    // Protege la BD local de Josué forzando a Hibernate a ver esto como un ENUM
     @Column(name = "metodo_pago", nullable = false, columnDefinition = "ENUM('efectivo', 'tarjeta')")
     private String metodoPago;
 
@@ -42,68 +45,71 @@ public class Pago {
         }
     }
 
-	public Integer getIdPago() {
-		return idPago;
-	}
+    // ==========================================
+    //            GETTERS Y SETTERS
+    // ==========================================
 
-	public void setIdPago(Integer idPago) {
-		this.idPago = idPago;
-	}
+    public Integer getIdPago() {
+        return idPago;
+    }
 
-	public Cita getCita() {
-		return cita;
-	}
+    public void setIdPago(Integer idPago) {
+        this.idPago = idPago;
+    }
 
-	public void setCita(Cita cita) {
-		this.cita = cita;
-	}
+    public Cita getCita() {
+        return cita;
+    }
 
-	public Double getMonto() {
-		return monto;
-	}
+    public void setCita(Cita cita) {
+        this.cita = cita;
+    }
 
-	public void setMonto(Double monto) {
-		this.monto = monto;
-	}
+    public BigDecimal getMonto() {
+        return monto;
+    }
 
-	public String getMetodoPago() {
-		return metodoPago;
-	}
+    public void setMonto(BigDecimal monto) {
+        this.monto = monto;
+    }
 
-	public void setMetodoPago(String metodoPago) {
-		this.metodoPago = metodoPago;
-	}
+    public String getMetodoPago() {
+        return metodoPago;
+    }
 
-	public LocalDateTime getFechaPago() {
-		return fechaPago;
-	}
+    public void setMetodoPago(String metodoPago) {
+        this.metodoPago = metodoPago;
+    }
 
-	public void setFechaPago(LocalDateTime fechaPago) {
-		this.fechaPago = fechaPago;
-	}
+    public LocalDateTime getFechaPago() {
+        return fechaPago;
+    }
 
-	public Usuario getUsuarioRegistra() {
-		return usuarioRegistra;
-	}
+    public void setFechaPago(LocalDateTime fechaPago) {
+        this.fechaPago = fechaPago;
+    }
 
-	public void setUsuarioRegistra(Usuario usuarioRegistra) {
-		this.usuarioRegistra = usuarioRegistra;
-	}
+    public Usuario getUsuarioRegistra() {
+        return usuarioRegistra;
+    }
 
-	public String getUltimos4Digitos() {
-		return ultimos4Digitos;
-	}
+    public void setUsuarioRegistra(Usuario usuarioRegistra) {
+        this.usuarioRegistra = usuarioRegistra;
+    }
 
-	public void setUltimos4Digitos(String ultimos4Digitos) {
-		this.ultimos4Digitos = ultimos4Digitos;
-	}
+    public String getUltimos4Digitos() {
+        return ultimos4Digitos;
+    }
 
-	public String getNotas() {
-		return notas;
-	}
+    public void setUltimos4Digitos(String ultimos4Digitos) {
+        this.ultimos4Digitos = ultimos4Digitos;
+    }
 
-	public void setNotas(String notas) {
-		this.notas = notas;
-	}
+    public String getNotas() {
+        return notas;
+    }
 
+    public void setNotas(String notas) {
+        this.notas = notas;
+    }
 }

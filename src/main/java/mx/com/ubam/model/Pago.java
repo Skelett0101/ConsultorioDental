@@ -17,11 +17,9 @@ public class Pago {
     @JoinColumn(name = "id_cita", nullable = false, unique = true)
     private Cita cita;
 
-    // 🔥 Solución al error: Usamos BigDecimal para coincidir con DECIMAL(10,2) de MySQL
     @Column(name = "monto", nullable = false, precision = 10, scale = 2)
     private BigDecimal monto;
 
-    // Protege la BD local de Josué forzando a Hibernate a ver esto como un ENUM
     @Column(name = "metodo_pago", nullable = false, columnDefinition = "ENUM('efectivo', 'tarjeta')")
     private String metodoPago;
 

@@ -9,9 +9,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.*;
 import jakarta.persistence.Table;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name = "Cita")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Cita {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

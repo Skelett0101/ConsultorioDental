@@ -2,13 +2,14 @@ package mx.com.ubam.model;
 
 import java.math.BigDecimal;
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "SERVICIO")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Servicio {
 
-	//clave primaria de servicio y autoincrement
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_servicio")
     private Integer idServicio;
@@ -25,37 +26,35 @@ public class Servicio {
     private Boolean activoServicio = true;
 
     //getters y setters
-	public Integer getIdServicio() {
+	public Long getIdServicio() {
 		return idServicio;
 	}
 
-	public void setIdServicio(Integer idServicio) {
+	public void setIdServicio(Long idServicio) {
 		this.idServicio = idServicio;
 	}
 
-	public String getNombreServicio() {
-		return nombreServicio;
-	}
+    public String getNombreServicio() {
+        return nombreServicio;
+    }
 
-	public void setNombreServicio(String nombreServicio) {
-		this.nombreServicio = nombreServicio;
-	}
+    public void setNombreServicio(String nombreServicio) {
+        this.nombreServicio = nombreServicio;
+    }
 
-	public BigDecimal getPrecioServicio() {
-		return precioServicio;
-	}
+    public BigDecimal getPrecioServicio() {
+        return precioServicio;
+    }
 
-	public void setPrecioServicio(BigDecimal precioServicio) {
-		this.precioServicio = precioServicio;
-	}
+    public void setPrecioServicio(BigDecimal precioServicio) {
+        this.precioServicio = precioServicio;
+    }
 
-	public Boolean getActivoServicio() {
-		return activoServicio;
-	}
+    public Boolean getActivoServicio() {
+        return activoServicio;
+    }
 
-	public void setActivoServicio(Boolean activoServicio) {
-		this.activoServicio = activoServicio;
-	}
-
-    
+    public void setActivoServicio(Boolean activoServicio) {
+        this.activoServicio = activoServicio;
+    }
 }

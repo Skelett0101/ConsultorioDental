@@ -86,8 +86,18 @@ public class SecurityConfig {
                 // los usuarios logueados
                 .requestMatchers("/api/perfil/**").authenticated()
 
+             // 1. Los reportes financieros
+             .requestMatchers("/api/pagos/ingresos/**").hasRole("admin")
+
+             // 2. El resto de funciones (cobrar, ver recibos)
+             .requestMatchers("/api/pagos/**").hasAnyRole("admin", "recepcionista")
+
+             // 🔹 REGLAS DE PERFIL
+             .requestMatchers("/api/perfil/**").authenticated()
+                
                 // cualquier otra
                 .anyRequest().authenticated()
+                
             )
 
             // filtro

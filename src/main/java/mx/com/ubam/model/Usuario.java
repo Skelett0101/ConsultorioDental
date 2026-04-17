@@ -1,9 +1,10 @@
 package mx.com.ubam.model;
 
 import jakarta.persistence.*;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity // tabla de bd
 @Table(name = "USUARIO") // nombre de la tabla 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Usuario {
 
     @Id // pk de la tabla

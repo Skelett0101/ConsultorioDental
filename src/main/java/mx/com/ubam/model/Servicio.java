@@ -12,7 +12,7 @@ public class Servicio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_servicio")
-    private Integer idServicio;
+    private Integer idServicio; // Aquí está como Integer
 
     @Column(name = "nombre", nullable = false)
     private String nombreServicio;
@@ -25,14 +25,13 @@ public class Servicio {
     @Column(name = "activo")
     private Boolean activoServicio = true;
 
-    //getters y setters
-	public Long getIdServicio() {
-		return idServicio;
-	}
+    public Integer getIdServicio() {
+        return idServicio;
+    }
 
-	public void setIdServicio(Long idServicio) {
-		this.idServicio = idServicio;
-	}
+    public void setIdServicio(Integer idServicio) {
+        this.idServicio = idServicio;
+    }
 
     public String getNombreServicio() {
         return nombreServicio;

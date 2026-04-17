@@ -12,7 +12,7 @@ public class Servicio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_servicio")
-    private Integer idServicio; // Aquí está como Integer
+    private Integer idServicio;
 
     @Column(name = "nombre", nullable = false)
     private String nombreServicio;
@@ -25,6 +25,8 @@ public class Servicio {
     @Column(name = "activo")
     private Boolean activoServicio = true;
 
+    //getters y setters
+    
     public Integer getIdServicio() {
         return idServicio;
     }

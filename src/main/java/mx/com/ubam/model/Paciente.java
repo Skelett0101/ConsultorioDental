@@ -29,6 +29,7 @@ public class Paciente {
     private LocalDateTime fecha_cita;
 
     //getters y setters 
+    
     public Integer getId_paciente() {
         return id_paciente;
     }

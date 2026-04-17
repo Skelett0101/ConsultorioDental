@@ -24,7 +24,8 @@ public class Paciente {
 	@Column(name = "telefono_paciente", nullable = false)
 	private String telefonoPaciente;
 	
-	private LocalDateTime fecha_registro;
+	@Column(name = "fecha_cita")
+	private LocalDateTime fecha_cita;
 
 	//getters y setters 
 	public Long getId_paciente() {
@@ -67,12 +68,12 @@ public class Paciente {
 		this.telefonoPaciente = telefonoPaciente;
 	}
 
-	public LocalDateTime getFecha_registro() {
-		return fecha_registro;
+	public LocalDateTime getFecha_cita() {
+		return fecha_cita;
 	}
 
-	public void setFecha_registro(LocalDateTime fecha_registro) {
-		this.fecha_registro = fecha_registro;
+	public void setFecha_cita(LocalDateTime fecha_cita) {
+		this.fecha_cita = fecha_cita;
 	}
 
 	

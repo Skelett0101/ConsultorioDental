@@ -27,14 +27,12 @@ function renderizarTabla(pacientes) {
     tbody.innerHTML = "";
 
     pacientes.forEach(p => {
-        // Corregido a 2 'l' según tu clase Java. 
-        // Si en tu Java sigue con 3, cámbialo aquí también.
         const apellido = p.apellidoPaciente || ""; 
         const iniciales = `${p.nombrePaciente.charAt(0)}${apellido.charAt(0)}`.toUpperCase();
         
-        // Formatear la fecha para que no se vea "feia" (ISO string)
-        const fechaFormateada = p.fecha_registro 
-            ? new Date(p.fecha_registro).toLocaleString('es-MX', { 
+        // Formatear la fecha
+        const fechaFormateada = p.fecha_cita 
+            ? new Date(p.fecha_cita).toLocaleString('es-MX', { 
                 day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' 
               })
             : 'Sin fecha';

@@ -42,4 +42,17 @@ public class PacienteService {
     	//busca el paciente por id
         return pacienteRepository.findById(id);
     }
+    
+    //actualziar paciente
+    public Paciente actualizarPaciente(Long id, Paciente datosActualizados) {
+        return pacienteRepository.findById(id).map(pacienteExistente -> {
+            pacienteExistente.setNombrePaciente(datosActualizados.getNombrePaciente());
+            pacienteExistente.setApellidoPaciente(datosActualizados.getApellidoPaciente());
+            pacienteExistente.setTelefonoPaciente(datosActualizados.getTelefonoPaciente());
+            pacienteExistente.setEmailPaciente(datosActualizados.getEmailPaciente());
+            pacienteExistente.setFecha_cita(datosActualizados.getFecha_cita());
+            
+            return pacienteRepository.save(pacienteExistente);
+        }).orElseThrow(() -> new RuntimeException("Paciente no encontrado"));
+    }
 }

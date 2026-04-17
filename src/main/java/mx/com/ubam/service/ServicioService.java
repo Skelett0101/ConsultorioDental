@@ -26,7 +26,7 @@ public class ServicioService {
     }
 
     //desactivar servicio
-    public void eliminarLogico(Long id) {
+    public void eliminarLogico(Integer id) {
     	//busca por id le servicio
         Optional<Servicio> servicioOpt = servicioRepository.findById(id);
         if (servicioOpt.isPresent()) {
@@ -39,7 +39,7 @@ public class ServicioService {
     }
     
     // activar servicio
-    public void activarServicio(Long id) {
+    public void activarServicio(Integer id) {
         Optional<Servicio> servicioOpt = servicioRepository.findById(id);
         if (servicioOpt.isPresent()) {
         	//se obtiene el objeto y el campo ActivoServicio a true
@@ -50,7 +50,7 @@ public class ServicioService {
     }
     
     //ver detalle de un servicio por ID
-    public Optional<Servicio> buscarPorId(Long id) {
+    public Optional<Servicio> buscarPorId(Integer id) {
         return servicioRepository.findById(id);
     }
 }

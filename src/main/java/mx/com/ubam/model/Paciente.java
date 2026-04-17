@@ -10,7 +10,7 @@ public class Paciente {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_paciente;
+    private Integer id_paciente;
 	
 	@Column(name = "nombre_paciente", nullable = false)
 	private String nombrePaciente;
@@ -28,11 +28,11 @@ public class Paciente {
 	private LocalDateTime fecha_cita;
 
 	//getters y setters 
-	public Long getId_paciente() {
+	public Integer getId_paciente() {
 		return id_paciente;
 	}
 
-	public void setId_paciente(Long id_paciente) {
+	public void setId_paciente(Integer id_paciente) {
 		this.id_paciente = id_paciente;
 	}
 

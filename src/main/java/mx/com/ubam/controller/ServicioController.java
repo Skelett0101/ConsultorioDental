@@ -27,7 +27,7 @@ public class ServicioController {
     //editar servicio
     //recibe el id desde la url
     @PutMapping("/{id}")
-    public ResponseEntity<Servicio> editar(@PathVariable Long id, @RequestBody Servicio servicio) {
+    public ResponseEntity<Servicio> editar(@PathVariable Integer id, @RequestBody Servicio servicio) {
         
     	//busca el servicio por su id
     	return servicioService.buscarPorId(id).map(s -> {
@@ -42,14 +42,14 @@ public class ServicioController {
 
     //desactivar servicio
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> desactivar(@PathVariable Long id) {
+    public ResponseEntity<Void> desactivar(@PathVariable Integer id) {
         servicioService.eliminarLogico(id);
         return ResponseEntity.noContent().build();
     }
 
     //activar servicio
     @PatchMapping("/{id}/activar")
-    public ResponseEntity<Void> activar(@PathVariable Long id) {
+    public ResponseEntity<Void> activar(@PathVariable Integer id) {
         servicioService.activarServicio(id);
         return ResponseEntity.noContent().build();
     }

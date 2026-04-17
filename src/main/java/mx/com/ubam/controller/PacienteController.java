@@ -51,4 +51,22 @@ public class PacienteController {
     	
         return ResponseEntity.ok(pacienteService.buscar(nombre, apellido, PageRequest.of(page, size)));
     }
+    
+    //obtener un paciente por id
+    @GetMapping("/{id}")
+    public ResponseEntity<Paciente> obtenerPorId(@PathVariable Integer id) {
+        return pacienteService.buscarPorId(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    //actualizar paciente
+    @PutMapping("/{id}")
+    public ResponseEntity<Paciente> actualizar(@PathVariable Integer id, @RequestBody Paciente paciente) {
+        try {
+            return ResponseEntity.ok(pacienteService.actualizarPaciente(id, paciente));
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

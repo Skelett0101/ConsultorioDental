@@ -38,13 +38,13 @@ public class PacienteService {
     }
 
     //ver detalle por ID
-    public Optional<Paciente> buscarPorId(Long id) {
+    public Optional<Paciente> buscarPorId(Integer id) {
     	//busca el paciente por id
         return pacienteRepository.findById(id);
     }
     
     //actualziar paciente
-    public Paciente actualizarPaciente(Long id, Paciente datosActualizados) {
+    public Paciente actualizarPaciente(Integer id, Paciente datosActualizados) {
         return pacienteRepository.findById(id).map(pacienteExistente -> {
             pacienteExistente.setNombrePaciente(datosActualizados.getNombrePaciente());
             pacienteExistente.setApellidoPaciente(datosActualizados.getApellidoPaciente());

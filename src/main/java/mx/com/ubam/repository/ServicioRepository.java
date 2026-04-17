@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import mx.com.ubam.model.Servicio;
 
-public interface ServicioRepository extends JpaRepository<Servicio, Long>{
+public interface ServicioRepository extends JpaRepository<Servicio, Integer>{
 
     //buscar todos los servicios donde activoServicio sea true
     List<Servicio> findByActivoServicioTrue();

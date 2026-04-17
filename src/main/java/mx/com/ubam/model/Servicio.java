@@ -11,7 +11,7 @@ public class Servicio {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_servicio")
-    private Long idServicio;
+    private Integer idServicio;
 
     @Column(name = "nombre", nullable = false)
     private String nombreServicio;
@@ -25,11 +25,11 @@ public class Servicio {
     private Boolean activoServicio = true;
 
     //getters y setters
-	public Long getIdServicio() {
+	public Integer getIdServicio() {
 		return idServicio;
 	}
 
-	public void setIdServicio(Long idServicio) {
+	public void setIdServicio(Integer idServicio) {
 		this.idServicio = idServicio;
 	}
 

@@ -17,8 +17,8 @@ public interface CitaRepository extends JpaRepository<Cita, Integer> {
 	List<Cita> findByFechaHoraBetween(LocalDateTime inicio, LocalDateTime fin);
 
 	// filtro
-	@Query("SELECT c FROM Cita c WHERE c.dentista.idUsuario = :idD AND c.paciente.id_paciente = :idP")
-	List<Cita> buscarPorFiltro(@Param("idD") Integer idDentista, @Param("idP") Integer id_paciente);
+	@Query("SELECT c FROM Cita c WHERE c.dentista.idUsuario = :idD AND c.paciente.idPaciente = :idP")
+	List<Cita> buscarPorFiltro(@Param("idD") Integer idDentista, @Param("idP") Integer idP);
 	
     boolean existsByDentistaIdUsuarioAndFechaHoraAndEstadoCitaNot(
         Integer idUsuario, 

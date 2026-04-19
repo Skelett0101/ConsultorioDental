@@ -11,7 +11,8 @@ public class Paciente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_paciente;
+    @Column(name = "id_paciente")
+    private Integer idPaciente;
     
     @Column(name = "nombre_paciente", nullable = false)
     private String nombrePaciente;
@@ -26,17 +27,17 @@ public class Paciente {
     private String telefonoPaciente;
     
     @Column(name = "fecha_cita")
-    private LocalDateTime fecha_cita;
+    private LocalDateTime fechaCita;
 
     //getters y setters 
     
-    public Integer getId_paciente() {
-        return id_paciente;
-    }
+    public Integer getIdPaciente() {
+		return idPaciente;
+	}
 
-    public void setId_paciente(Integer id_paciente) {
-        this.id_paciente = id_paciente;
-    }
+	public void setIdPaciente(Integer idPaciente) {
+		this.idPaciente = idPaciente;
+	}
 
     public String getNombrePaciente() {
         return nombrePaciente;
@@ -70,11 +71,13 @@ public class Paciente {
         this.telefonoPaciente = telefonoPaciente;
     }
 
-    public LocalDateTime getFecha_cita() {
-        return fecha_cita;
-    }
+	public LocalDateTime getFechaCita() {
+		return fechaCita;
+	}
 
-    public void setFecha_cita(LocalDateTime fecha_cita) {
-        this.fecha_cita = fecha_cita;
-    }
+	public void setFechaCita(LocalDateTime fechaCita) {
+		this.fechaCita = fechaCita;
+	}
+
+    
 }

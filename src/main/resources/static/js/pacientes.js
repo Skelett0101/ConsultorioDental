@@ -7,9 +7,19 @@ document.addEventListener("DOMContentLoaded", () => {
     cargarPacientes(paginaActual);
     configurarBuscador();
     actualizarInfoUsuario(); 
-    configurarFormularioEdicion(); // Inicializa el listener del formulario
-});
+    configurarFormularioEdicion(); 
 
+    // restriccion de roles para eagregar paciente
+    const usuarioStr = localStorage.getItem("usuario");
+    if (usuarioStr) {
+        const usuario = JSON.parse(usuarioStr);
+        //si es dentissta,  el botón de neuvo paciente se desaparece
+        if (usuario.rol.toUpperCase() === "DENTISTA") {
+            const btnNuevo = document.getElementById("btnNuevoPaciente");
+            if (btnNuevo) btnNuevo.style.display = "none";
+        }
+    }
+});
 // --- LISTAR PACIENTES (R13) ---
 async function cargarPacientes(page) {
     paginaActual = page;
@@ -30,19 +40,39 @@ function renderizarTabla(pacientes) {
     if(!tbody) return;
     tbody.innerHTML = "";
 
+    // Obtenemos el rol del usuario logueado
+    const usuarioStr = localStorage.getItem("usuario");
+    const rolActual = usuarioStr ? JSON.parse(usuarioStr).rol.toUpperCase() : "";
+
     pacientes.forEach(p => {
         const apellido = p.apellidoPaciente || ""; 
         const iniciales = `${p.nombrePaciente.charAt(0)}${apellido.charAt(0)}`.toUpperCase();
         
-        const fechaFormateada = p.fecha_cita 
-            ? new Date(p.fecha_cita).toLocaleString('es-MX', { 
+        const fechaFormateada = p.fechaCita 
+            ? new Date(p.fechaCita).toLocaleString('es-MX', { 
                 day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' 
               })
             : 'Sin fecha';
 
+        // 1. Botón de Historial: Lo ven TODOS (Admin, Recepcionista, Dentista)
+        let botonesHTML = `
+            <button onclick="verHistorial(${p.idPaciente})" class="w-8 h-8 flex items-center justify-center rounded-lg bg-slate-50 hover:bg-[#cde5ff] text-[#005d90] transition-colors" title="Ver Historial">
+                <span class="material-symbols-outlined text-lg">calendar_month</span>
+            </button>
+        `;
+
+        // 2. Botón de Editar: Lo ven todos EXCEPTO el Dentista (R12)
+        if (rolActual !== "DENTISTA") {
+            botonesHTML += `
+                <button onclick="abrirModalEditar(${p.idPaciente})" class="w-8 h-8 flex items-center justify-center rounded-lg bg-slate-50 hover:bg-slate-200 text-slate-600 transition-colors" title="Editar">
+                    <span class="material-symbols-outlined text-lg">edit</span>
+                </button>
+            `;
+        }
+
         tbody.innerHTML += `
             <tr class="hover:bg-slate-50 transition-colors">
-                <td class="px-6 py-4 text-sm font-bold font-mono text-slate-500">${p.id_paciente}</td>
+                <td class="px-6 py-4 text-sm font-bold font-mono text-slate-500">${p.idPaciente}</td>
                 <td class="px-6 py-4">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-full bg-[#cde5ff] flex items-center justify-center text-[#005d90] font-bold text-sm">
@@ -56,12 +86,7 @@ function renderizarTabla(pacientes) {
                 <td class="px-6 py-4 text-sm text-slate-500 font-medium">${fechaFormateada}</td>
                 <td class="px-6 py-4 text-right">
                     <div class="flex items-center justify-end gap-2">
-                         <button onclick="verHistorial(${p.id_paciente})" class="w-8 h-8 flex items-center justify-center rounded-lg bg-slate-50 hover:bg-[#cde5ff] text-[#005d90] transition-colors" title="Ver Historial">
-                            <span class="material-symbols-outlined text-lg">calendar_month</span>
-                        </button>
-                        <button onclick="abrirModalEditar(${p.id_paciente})" class="w-8 h-8 flex items-center justify-center rounded-lg bg-slate-50 hover:bg-slate-200 text-slate-600 transition-colors" title="Editar">
-                            <span class="material-symbols-outlined text-lg">edit</span>
-                        </button>
+                        ${botonesHTML}
                     </div>
                 </td>
             </tr>
@@ -78,15 +103,15 @@ async function abrirModalEditar(id) {
         const p = await resp.json();
 
         // Rellenar campos del modal
-        document.getElementById('editIdPaciente').value = p.id_paciente;
+        document.getElementById('editIdPaciente').value = p.idPaciente;
         document.getElementById('editNombre').value = p.nombrePaciente;
         document.getElementById('editApellido').value = p.apellidoPaciente;
         document.getElementById('editTelefono').value = p.telefonoPaciente;
         document.getElementById('editEmail').value = p.emailPaciente;
         
         // Formatear fecha para el input datetime-local
-        if (p.fecha_cita) {
-            document.getElementById('editFechaCita').value = p.fecha_cita.substring(0, 16);
+        if (p.fechaCita) {
+            document.getElementById('editFechaCita').value = p.fechaCita.substring(0, 16);
         }
 
         // Mostrar Modal
@@ -114,7 +139,7 @@ function configurarFormularioEdicion() {
             apellidoPaciente: document.getElementById('editApellido').value,
             telefonoPaciente: document.getElementById('editTelefono').value,
             emailPaciente: document.getElementById('editEmail').value,
-            fecha_cita: document.getElementById('editFechaCita').value
+            fechaCita: document.getElementById('editFechaCita').value
         };
 
         try {
@@ -190,4 +215,55 @@ function actualizarInfoUsuario() {
 function verHistorial(id) {
     alert("Cargando historial de citas para el paciente #" + id + "...");
     // Aquí implementaremos la lógica del R16
+}
+
+//REGISTRO INTERNO
+
+// 1. Escuchar el click en el botón azul (si existe en la pantalla)
+const btnNuevo = document.getElementById("btnNuevoPaciente");
+if (btnNuevo) {
+    btnNuevo.addEventListener("click", () => {
+        document.getElementById("formCrearPacienteInterno").reset(); // Limpiar formulario
+        document.getElementById("modalCrear").classList.remove("hidden");
+    });
+}
+
+// 2. Función para cerrar la ventana
+window.cerrarModalCrear = function() {
+    document.getElementById("modalCrear").classList.add("hidden");
+};
+
+// 3. Enviar los datos a Spring Boot
+const formCrear = document.getElementById("formCrearPacienteInterno");
+if (formCrear) {
+    formCrear.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        
+        const nuevoPaciente = {
+            nombrePaciente: document.getElementById('crearNombre').value,
+            apellidoPaciente: document.getElementById('crearApellido').value,
+            telefonoPaciente: document.getElementById('crearTelefono').value,
+            emailPaciente: document.getElementById('crearEmail').value,
+            fechaCita: document.getElementById('crearFechaCita').value
+        };
+
+        try {
+            // Usamos fetchConAuth aunque el endpoint sea público, es buena práctica enviarlo
+            const res = await fetchConAuth(`${API_BASE}`, {
+                method: 'POST',
+                body: JSON.stringify(nuevoPaciente)
+            });
+
+            if (res.ok) {
+                cerrarModalCrear();
+                cargarPacientes(paginaActual); // Recargamos la tabla para ver al nuevo paciente
+                alert("Paciente registrado con éxito en el sistema.");
+            } else {
+                const err = await res.json();
+                alert("Error: " + (err.message || "No se pudo registrar"));
+            }
+        } catch (error) {
+            console.error("Error al registrar:", error);
+        }
+    });
 }

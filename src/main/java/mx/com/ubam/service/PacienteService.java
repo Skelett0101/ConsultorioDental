@@ -50,7 +50,7 @@ public class PacienteService {
             pacienteExistente.setApellidoPaciente(datosActualizados.getApellidoPaciente());
             pacienteExistente.setTelefonoPaciente(datosActualizados.getTelefonoPaciente());
             pacienteExistente.setEmailPaciente(datosActualizados.getEmailPaciente());
-            pacienteExistente.setFecha_cita(datosActualizados.getFecha_cita());
+            pacienteExistente.setFechaCita(datosActualizados.getFechaCita());
             
             return pacienteRepository.save(pacienteExistente);
         }).orElseThrow(() -> new RuntimeException("Paciente no encontrado"));

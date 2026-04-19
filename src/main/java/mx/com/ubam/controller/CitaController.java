@@ -47,4 +47,26 @@ public class CitaController {
 		Page<Cita> pagina = Citaser.mostrarTodo(PageRequest.of(0, 10)); 
 	    return ResponseEntity.ok(pagina.getContent());
 	}
+
+	@GetMapping("/hoy")
+	public ResponseEntity<List<Cita>> obtenerCitasHoy() {
+	    return ResponseEntity.ok(Citaser.obtenerCitasHoy());
+	}
+
+	
+	@PutMapping("/{id}/cancelar")
+	public ResponseEntity<Cita> cancelar(@PathVariable Integer id) {
+	    return ResponseEntity.ok(Citaser.cambiarEstado(id, "CANCELADA"));
+	}
+
+	@PutMapping("/{id}/confirmar")
+	public ResponseEntity<Cita> confirmar(@PathVariable Integer id) {
+	    return ResponseEntity.ok(Citaser.cambiarEstado(id, "CONFIRMADA"));
+	}
+	
+	@PutMapping("/{id}/completada")
+	public ResponseEntity<Cita> completar(@PathVariable Integer id) {
+	    return ResponseEntity.ok(Citaser.cambiarEstado(id, "COMPLETADA"));
+	}
+	
 }

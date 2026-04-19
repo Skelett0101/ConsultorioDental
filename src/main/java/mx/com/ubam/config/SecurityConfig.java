@@ -63,6 +63,9 @@ public class SecurityConfig {
                 // login y registro
                 .requestMatchers("/auth/login", "/api/usuarios/registro").permitAll()
                 
+                //disponible admin, recep,dentista
+                .requestMatchers("/api/citas/registrar", "/api/citas/listar", "/api/citas/eliminar").hasAnyRole("admin")
+                
                // citas admin
                 .requestMatchers("/api/citas/registrar", "/api/citas/listar", "/api/citas/eliminar").hasAnyRole("admin")
                 

@@ -18,7 +18,7 @@ public class Disponibilidad {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_disponibilidad;
+    private Integer id_disponibilidad;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_dentista", nullable = false)
@@ -34,17 +34,15 @@ public class Disponibilidad {
 	@Column(name = "hora_fin")
 	private LocalTime horaFin;
 	
-	@JoinColumn(name = "activo", nullable = false)
+	@Column(name = "activo", nullable = false)
 	private Long activo;
 
-	
-
-	public Long getId_disponibilidad() {
+	public Integer getId_disponibilidad() {
 		return id_disponibilidad;
 	}
 
-	public void setId_disponibilidad(Long idDisponibilidad) {
-		this.id_disponibilidad = idDisponibilidad;
+	public void setId_disponibilidad(Integer id_disponibilidad) {
+		this.id_disponibilidad = id_disponibilidad;
 	}
 
 	public Usuario getDentista() {
@@ -79,13 +77,18 @@ public class Disponibilidad {
 		this.horaFin = horaFin;
 	}
 
-	public Long getActivoDispo() {
+	public Long getActivo() {
 		return activo;
 	}
 
-	public void setActivoDispo(Long activoDispo) {
-		this.activo = activoDispo;
+	public void setActivo(Long activo) {
+		this.activo = activo;
 	}
+
+	
+	
+
+	
 	
 
 	

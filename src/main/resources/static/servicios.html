@@ -92,7 +92,10 @@
                 <div class="flex items-center gap-4 flex-1">
                     <div class="relative w-full max-w-md group">
                         <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm group-hover:text-primary transition-colors">search</span>
-                        <input class="w-full pl-10 pr-4 py-2 bg-surface-container-high rounded-xl border-none text-sm focus:ring-2 focus:ring-primary/20 transition-all outline-none" placeholder="Buscar pacientes, registros..." type="text" />
+                        <input id="inputBusquedaServicio" 
+                            class="w-full pl-10 pr-4 py-2 bg-surface-container-high rounded-xl ..." 
+                            placeholder="Buscar servicios o tratamientos..." 
+                            type="text" />
                     </div>
                 </div>
 
@@ -160,59 +163,35 @@
                             <span class="w-1.5 h-6 bg-[#8ef4e9] rounded-full"></span>
                             Catálogo de Tratamientos
                         </h3>
-                        <button class="text-sm font-bold text-[#005d90] hover:underline">Ver Todos los Servicios</button>
+                        <button id="btn-admin-servicios" class="hidden bg-[#005d90] text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-[#004b74] transition-all">
+                            + Nuevo Servicio
+                        </button>
                     </div>
                     
                     <div id="contenedor-servicios" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer">
-                            <div class="w-12 h-12 rounded-xl bg-teal-50 flex items-center justify-center mb-4">
-                                <span class="material-symbols-outlined text-teal-700" style="font-variation-settings: 'FILL' 1;">cleaning_services</span>
-                            </div>
-                            <h4 class="font-bold text-lg text-slate-800 mb-1">Limpieza Profunda</h4>
-                            <p class="text-sm text-slate-500 line-clamp-2 mb-4">Profilaxis y remoción de sarro para una higiene oral óptima.</p>
-                            <div class="flex justify-between items-center pt-4 border-t border-slate-100">
-                                <span class="text-2xl font-extrabold text-[#005d90]">$120</span>
-                                <span class="text-[10px] font-bold uppercase tracking-widest text-teal-700 bg-teal-50 px-2 py-1 rounded-md">45 MIN</span>
-                            </div>
                         </div>
-
-                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer">
-                            <div class="w-12 h-12 rounded-xl bg-orange-50 flex items-center justify-center mb-4">
-                                <span class="material-symbols-outlined text-orange-700" style="font-variation-settings: 'FILL' 1;">medical_mask</span>
-                            </div>
-                            <h4 class="font-bold text-lg text-slate-800 mb-1">Extracción Simple</h4>
-                            <p class="text-sm text-slate-500 line-clamp-2 mb-4">Remoción sin dolor de piezas dentales dañadas o no funcionales.</p>
-                            <div class="flex justify-between items-center pt-4 border-t border-slate-100">
-                                <span class="text-2xl font-extrabold text-[#005d90]">$250</span>
-                                <span class="text-[10px] font-bold uppercase tracking-widest text-orange-700 bg-orange-50 px-2 py-1 rounded-md">60 MIN</span>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer">
-                            <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center mb-4">
-                                <span class="material-symbols-outlined text-[#005d90]" style="font-variation-settings: 'FILL' 1;">orthopedics</span>
-                            </div>
-                            <h4 class="font-bold text-lg text-slate-800 mb-1">Ortodoncia Metálica</h4>
-                            <p class="text-sm text-slate-500 line-clamp-2 mb-4">Programa completo de alineación con ajustes mensuales.</p>
-                            <div class="flex justify-between items-center pt-4 border-t border-slate-100">
-                                <span class="text-2xl font-extrabold text-[#005d90]">$3,800</span>
-                                <span class="text-[10px] font-bold uppercase tracking-widest text-[#005d90] bg-blue-50 px-2 py-1 rounded-md">PLAN</span>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer">
-                            <div class="w-12 h-12 rounded-xl bg-teal-50 flex items-center justify-center mb-4">
-                                <span class="material-symbols-outlined text-teal-700" style="font-variation-settings: 'FILL' 1;">medication</span>
-                            </div>
-                            <h4 class="font-bold text-lg text-slate-800 mb-1">Implante Dental</h4>
-                            <p class="text-sm text-slate-500 line-clamp-2 mb-4">Reemplazo de raíz de titanio para restauración permanente.</p>
-                            <div class="flex justify-between items-center pt-4 border-t border-slate-100">
-                                <span class="text-2xl font-extrabold text-[#005d90]">$1,250</span>
-                                <span class="text-[10px] font-bold uppercase tracking-widest text-teal-700 bg-teal-50 px-2 py-1 rounded-md">90 MIN</span>
-                            </div>
-                        </div>
-                    </div>
                 </section>
+
+                <div id="modal-servicio-gestion" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center">
+                    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
+                        <h3 id="modal-servicio-titulo" class="text-xl font-bold text-slate-800 mb-4">Nuevo Tratamiento</h3>
+                        <form id="form-gestion-servicio" class="space-y-4">
+                            <input type="hidden" id="input-servicio-id">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Nombre del Servicio</label>
+                                <input type="text" id="input-servicio-nombre" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Precio ($)</label>
+                                <input type="number" step="0.01" id="input-servicio-precio" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 outline-none">
+                            </div>
+                            <div class="flex gap-3 mt-6">
+                                <button type="button" onclick="cerrarModalServicio()" class="flex-1 py-2 text-slate-500 font-bold">Cancelar</button>
+                                <button type="submit" class="flex-1 py-2 bg-[#005d90] text-white rounded-lg font-bold">Guardar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
 
                 <section class="space-y-6">
                     <div class="flex items-center justify-between">

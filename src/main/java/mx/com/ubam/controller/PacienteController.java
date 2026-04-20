@@ -40,6 +40,7 @@ public class PacienteController {
     public ResponseEntity<Page<Paciente>> buscar(
             @RequestParam String nombre,
             @RequestParam String apellido,
+            @RequestParam String email,
             
             //numero de pagina que se quiere consultar
             //si no se envía en la url, por defecto sera 0
@@ -49,7 +50,7 @@ public class PacienteController {
             //si no se envía en la url, por defecto será 10
             @RequestParam(defaultValue = "10") int size) {
     	
-        return ResponseEntity.ok(pacienteService.buscar(nombre, apellido, PageRequest.of(page, size)));
+        return ResponseEntity.ok(pacienteService.buscar(nombre, apellido, email,PageRequest.of(page, size)));
     }
     
     //obtener un paciente por id

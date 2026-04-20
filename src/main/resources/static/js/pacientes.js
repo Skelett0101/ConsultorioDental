@@ -178,7 +178,7 @@ function configurarBuscador() {
 
 async function buscarPacientes(termino) {
     try {
-        const url = `${API_BASE}/buscar?nombre=${termino}&apellido=${termino}&page=0&size=5`;
+        const url = `${API_BASE}/buscar?nombre=${termino}&apellido=${termino}&email=${termino}&page=0&size=5`;
         const resp = await fetchConAuth(url);
         const data = await resp.json();
         renderizarTabla(data.content);

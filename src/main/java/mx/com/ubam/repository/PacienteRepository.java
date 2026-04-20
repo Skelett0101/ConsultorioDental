@@ -13,8 +13,8 @@ public interface PacienteRepository extends JpaRepository<Paciente, Integer>{
 	// para buscar un paciente específico por su email exacto
     Optional<Paciente> findByEmailPaciente(String email);
 
-    //buscar por nombre o apellido
-    Page<Paciente> findByNombrePacienteContainingOrApellidoPacienteContaining
-    (String nombre, String apellido, Pageable pageable);
+    //buscar por nombre, apellido o email
+    Page<Paciente> findByNombrePacienteContainingOrApellidoPacienteContainingOrEmailPacienteContaining(
+            String nombre, String apellido, String email, Pageable pageable);
 
 }

@@ -53,4 +53,14 @@ public class ServicioService {
     public Optional<Servicio> buscarPorId(Integer id) {
         return servicioRepository.findById(id);
     }
+    
+    //listar absolutamente todos los servicios, activos e inactivos
+    public List<Servicio> listarTodo() {
+        return servicioRepository.findAll();
+    }
+
+    //Buscar por nombre
+    public List<Servicio> buscarPorNombre(String nombre) {
+        return servicioRepository.findByNombreServicioContaining(nombre);
+    }
 }

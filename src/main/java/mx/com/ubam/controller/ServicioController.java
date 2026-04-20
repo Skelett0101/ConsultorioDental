@@ -16,7 +16,7 @@ public class ServicioController {
 	@Autowired
     private ServicioService servicioService;
 
-	//---------------para admins-----------------
+	//---------------para admin-----------------
 	
     //crear nuevo servicio
     @PostMapping
@@ -53,6 +53,12 @@ public class ServicioController {
         servicioService.activarServicio(id);
         return ResponseEntity.noContent().build();
     }
+    
+    //listar todo
+    @GetMapping("/todos")
+    public ResponseEntity<List<Servicio>> listarTodos() {
+        return ResponseEntity.ok(servicioService.listarTodo());
+    }
 
     //----------------Para todos xd------------------
     //-----------------------------------------------
@@ -61,5 +67,11 @@ public class ServicioController {
     @GetMapping
     public ResponseEntity<List<Servicio>> listarActivos() {
         return ResponseEntity.ok(servicioService.listarActivos());
+    }
+    
+    //buscar servicio
+    @GetMapping("/buscar")
+    public ResponseEntity<List<Servicio>> buscar(@RequestParam String nombre) {
+        return ResponseEntity.ok(servicioService.buscarPorNombre(nombre));
     }
 }

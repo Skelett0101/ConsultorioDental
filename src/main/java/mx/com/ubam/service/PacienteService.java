@@ -31,10 +31,10 @@ public class PacienteService {
         return pacienteRepository.findAll(pageable);
     }
 	
-	//buscar por nombre o apellido
-    public Page<Paciente> buscar(String nombre, String apellido, Pageable pageable) {
-    	//busca pacientes que tengasn la cadena "nombre" o que tenga la cadena "apellido"
-        return pacienteRepository.findByNombrePacienteContainingOrApellidoPacienteContaining(nombre, apellido, pageable);
+	//buscar por nombre, apellido o email
+    public Page<Paciente> buscar(String nombre, String apellido, String email, Pageable pageable) {
+        // busca pacientes que tengan la cadena en nombre, apellido o email
+        return pacienteRepository.findByNombrePacienteContainingOrApellidoPacienteContainingOrEmailPacienteContaining(nombre, apellido, email, pageable);
     }
 
     //ver detalle por ID

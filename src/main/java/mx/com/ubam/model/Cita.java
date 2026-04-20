@@ -9,6 +9,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.*;
 import jakarta.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name = "Cita")
@@ -19,6 +21,7 @@ public class Cita {
     private Integer idCita;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonAlias({"id_paciente", "idPaciente"})
     @JoinColumn(name = "id_paciente", nullable = false)
     private Paciente paciente; 
 
@@ -30,7 +33,7 @@ public class Cita {
     @JoinColumn(name = "id_servicio", nullable = false)
     private Servicio servicio;
 	
-    @Column(name = "fecha_hora") // Opcional: define el nombre en la DB
+    @Column(name = "fecha_hora")
     private LocalDateTime fechaHora;
 	
     @Column(name = "estado") 
@@ -52,8 +55,8 @@ public class Cita {
 		return idCita;
 	}
 
-	public void setId_cita(Integer id_cita) {
-		this.idCita = id_cita;
+	public void setId_cita(Integer idCita) {
+		this.idCita = idCita;
 	}
 
 	public void setPaciente(Paciente paciente) {
@@ -84,12 +87,12 @@ public class Cita {
 		this.estadoCita = estadoCita;
 	}
 
-	public LocalDateTime getFecha_hora() {
+	public LocalDateTime getFechaHora() {
 		return fechaHora;
 	}
 
-	public void setFecha_hora(LocalDateTime fecha_hora) {
-		this.fechaHora = fecha_hora;
+	public void setFechaHora(LocalDateTime fechaHora) {
+		this.fechaHora = fechaHora;
 	}
 
 
@@ -101,11 +104,11 @@ public class Cita {
 		this.notaCita = notaCita;
 	}
 
-	public LocalDateTime getFecha_creacion() {
+	public LocalDateTime getFechaCreacion() {
 		return fecha_creacion;
 	}
 
-	public void setFecha_creacion(LocalDateTime fecha_creacion) {
+	public void setFechaCreacion(LocalDateTime fecha_creacion) {
 		this.fecha_creacion = fecha_creacion;
 	}
 	

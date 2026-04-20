@@ -42,7 +42,7 @@ public class CitaController {
 	}
 	
 	//mostrar listas
-	@GetMapping
+	@GetMapping("/listar")
 	public ResponseEntity<List<Cita>> listar() {
 		Page<Cita> pagina = Citaser.mostrarTodo(PageRequest.of(0, 10)); 
 	    return ResponseEntity.ok(pagina.getContent());

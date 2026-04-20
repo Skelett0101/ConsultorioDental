@@ -21,4 +21,9 @@ public class UsuarioController {
         //   RequestBody convierte JSON a objeto Usuario
         return usuarioService.registrarUsuario(usuario);
     }
+    
+    @GetMapping
+    public java.util.List<Usuario> listarUsuarios() {
+        return usuarioService.listarTodos();
+    }
 }

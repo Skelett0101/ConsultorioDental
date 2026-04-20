@@ -11,7 +11,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import mx.com.ubam.model.Cita;
+import mx.com.ubam.model.*;
 import mx.com.ubam.repository.*;
 
 @Service
@@ -19,35 +19,58 @@ public class CitaService {
 	
 	private  CitaRepository CitaeRepo;
     private  DisponibilidadRepository DispoRepo;
+    private  PacienteRepository pacienteRepo;
+    private  UsuarioRepository usuarioRepo;
+    private  ServicioRepository servicioRepo;
 
     @Autowired
-    public CitaService(CitaRepository citaRepo, DisponibilidadRepository dispoRepo) {
-        this.CitaeRepo = citaRepo;
-        this.DispoRepo = dispoRepo;
-    }
-	
-	public Cita agendarCita(Cita cita) {
-		validacionesyCorrecciones(cita);
-		cita.setEstadoCita("PENDIENTE"); 
-        cita.setFecha_creacion(LocalDateTime.now());
-        return CitaeRepo.save(cita);
-		
-    }
+	public CitaService(CitaRepository citaeRepo, DisponibilidadRepository dispoRepo, PacienteRepository pacienteRepo,
+			UsuarioRepository usuarioRepo, ServicioRepository servicioRepo) {
+		super();
+		CitaeRepo = citaeRepo;
+		DispoRepo = dispoRepo;
+		this.pacienteRepo = pacienteRepo;
+		this.usuarioRepo = usuarioRepo;
+		this.servicioRepo = servicioRepo;
+	}
+
+    public Cita agendarCita(Cita cita) {
+		Paciente pacienteExiste = pacienteRepo.findById(cita.getPaciente().getIdPaciente())
+	            .orElseThrow(() -> new RuntimeException("Paciente no encontrado"));
+        
+	        Usuario dentistaExiste = usuarioRepo.findById(cita.getDentista().getIdUsuario())
+	            .orElseThrow(() -> new RuntimeException("Dentista no encontrado"));
+	            
+	        Servicio servicioExiste = servicioRepo.findById(cita.getServicio().getIdServicio())
+	            .orElseThrow(() -> new RuntimeException("Servicio no encontrado"));
+
+	        
+	        cita.setPaciente(pacienteExiste);
+	        cita.setDentista(dentistaExiste);
+	        cita.setServicio(servicioExiste);
+
+	        validacionesyCorrecciones(cita);
+	        
+	        cita.setEstadoCita("PENDIENTE"); 
+	        cita.setFechaCreacion(LocalDateTime.now());
+	        return CitaeRepo.save(cita);
+	    }
 	
 	public void validacionesyCorrecciones(Cita cita) {
 		
 		//Declarar variabe
 		Integer idDentista = cita.getDentista().getIdUsuario();
-		LocalDateTime fechaCita = cita.getFecha_hora();
-		LocalTime horaCita = cita.getFecha_hora().toLocalTime();
+		LocalDateTime fechaCita = cita.getFechaHora();
+		LocalTime horaCita = cita.getFechaHora().toLocalTime();
         Long diaSemanaDisponibles = (long) fechaCita.getDayOfWeek().getValue();
         
         //comprobar
-        boolean tieneHorario = DispoRepo.existsByDentistaIdUsuarioAndDiaSemanaAndHoraInicioLessThanEqualAndHoraFinGreaterThan(
+        boolean tieneHorario = DispoRepo.existsByDentistaIdUsuarioAndDiaSemanaAndHoraInicioLessThanEqualAndHoraFinGreaterThanAndActivo(
                 idDentista, 
                 diaSemanaDisponibles, 
                 horaCita, 
-                horaCita
+                horaCita,
+                1L
             );
       //comprobar la disponibilidad del dentista 
         if (!tieneHorario) {
@@ -57,7 +80,7 @@ public class CitaService {
         
         boolean ocupado = CitaeRepo.existsByDentistaIdUsuarioAndFechaHoraAndEstadoCitaNot(
             idDentista, 
-            cita.getFecha_hora(), 
+            cita.getFechaHora(), 
             "CANCELADA"
         );
       //comprobar la disponibilidad del dentista 

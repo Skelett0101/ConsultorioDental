@@ -1,5 +1,7 @@
 package mx.com.ubam.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -39,5 +41,10 @@ public class UsuarioService {
 
         // 🔹 Guardar usuario
         return usuarioRepository.save(usuario);
+    }
+    
+ // Agrega este método dentro de tu clase UsuarioService
+    public List<Usuario> listarTodos() {
+        return usuarioRepository.findAll();
     }
 }

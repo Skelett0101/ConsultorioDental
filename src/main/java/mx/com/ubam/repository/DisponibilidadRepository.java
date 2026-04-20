@@ -14,10 +14,11 @@ public interface DisponibilidadRepository extends JpaRepository<Disponibilidad, 
 
 	List<Disponibilidad> findByDentistaIdUsuario(Integer idUsuario);
 	
-	boolean existsByDentistaIdUsuarioAndDiaSemanaAndHoraInicioLessThanEqualAndHoraFinGreaterThan(
+	boolean existsByDentistaIdUsuarioAndDiaSemanaAndHoraInicioLessThanEqualAndHoraFinGreaterThanAndActivo(
 	        Integer idUsuario, 
 	        Long diaSemana, 
 	        LocalTime horaCitaInicio, 
-	        LocalTime horaCitaFin
+	        LocalTime horaCitaFin,
+	        Long activo
 	    );
 }

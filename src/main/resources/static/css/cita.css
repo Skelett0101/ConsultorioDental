@@ -1,0 +1,73 @@
+:root {
+    --verde-clinica: #006050; /* El color de tu imagen */
+    --gris-texto: #7d8ea1;
+    --borde-input: #e2e8f0;
+}
+
+.modal-container {
+    background: white;
+    width: 500px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+}
+
+.modal-header {
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-title { display: flex; align-items: center; gap: 15px; }
+.header-title h2 { margin: 0; font-size: 1.4rem; color: #1a202c; }
+.header-title p { margin: 0; color: var(--gris-texto); font-size: 0.85rem; }
+
+.grid-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 10px 30px 30px;
+}
+
+.input-group { display: flex; flex-direction: column; gap: 8px; }
+.full-width { grid-column: span 2; }
+
+.input-group label {
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: var(--gris-texto);
+    letter-spacing: 0.5px;
+}
+
+.input-group input, .input-group select, .input-group textarea {
+    padding: 12px;
+    border: 1px solid var(--borde-input);
+    border-radius: 10px;
+    background: #f8fafc;
+    outline: none;
+}
+
+.modal-footer {
+    padding: 20px 30px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    align-items: center;
+}
+
+.btn-cancel { background: none; border: none; color: #4a5568; cursor: pointer; font-weight: 500; }
+
+.btn-submit {
+    background: var(--verde-clinica);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 12px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

@@ -76,7 +76,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, "/api/servicios/**").hasRole("admin")
                 
                 //activar servicios
-                .requestMatchers(HttpMethod.PATCH, "/api/servicios/**/activar").hasRole("admin")
+                .requestMatchers(HttpMethod.PATCH, "/api/servicios/*/activar").hasRole("admin")
                 
                 //ver lista completa de usuarios (incluso inactivos)
                 .requestMatchers("/api/servicios/todos").hasRole("admin")

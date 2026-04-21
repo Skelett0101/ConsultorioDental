@@ -59,9 +59,9 @@ public class CitaService {
 	public void validacionesyCorrecciones(Cita cita) {
 		
 		//Declarar variabe
-		Integer idDentista = cita.getDentista().getIdUsuario();
-		LocalDateTime inicio = cita.getFechaHora();
-	    LocalDateTime fin = inicio.plusHours(1);
+		    Integer idDentista = cita.getDentista().getIdUsuario();
+		    LocalDateTime inicio = cita.getFechaHora();
+		    LocalDateTime fin = inicio.plusHours(1);
 		LocalDateTime fechaCita = cita.getFechaHora();
 		
         
@@ -78,16 +78,16 @@ public class CitaService {
             throw new RuntimeException("El horario está fuera de la Horario laboral del dentista");
         }
 
-        
-        Integer resultadoOcupado = CitaeRepo.existeTraslape(idDentista, inicio);
-        boolean ocupado = (resultadoOcupado != null && resultadoOcupado > 0);
-      //comprobar la disponibilidad del dentista 
-        if (ocupado) {
-        	if (cita.getId_cita() == null) {
-                throw new RuntimeException("Las citas deben tener al menos 1 hora de diferencia entre ");
-           }        }
+     // 2. Validar Traslapes
+        Integer citaId = (cita.getId_cita() == null) ? 0 : cita.getId_cita();
+        Integer resultadoOcupado = CitaeRepo.existeTraslapeIgnorandoActual(idDentista, inicio, citaId);
+
+        //comprobar la disponibilidad del dentista 
+        if (resultadoOcupado != null && resultadoOcupado > 0) {
+            throw new RuntimeException("Conflicto de horario: Ya existe una cita agendada. Debe haber 1 hora de diferencia.");
+        }   
         if (inicio.isBefore(LocalDateTime.now())) {
-            throw new RuntimeException("No puedes agendar citas en una fecha pasada.");
+            throw new RuntimeException("No puedes agendar citas en fechas pasadas");
         }
         
 	}
@@ -139,4 +139,10 @@ public class CitaService {
         return CitaeRepo.findByFechaHoraBetween(inicio, fin);
     }
 
+    public long obtenerContadorSemanal() {
+        LocalDateTime inicio = LocalDateTime.now(); 
+        LocalDateTime fin = inicio.plusDays(7);
+        // Contamos las citas que NO estén canceladas
+        return CitaeRepo.countByFechaHoraBetweenAndEstadoCitaNot(inicio, fin, "CANCELADA");
+    }
 }

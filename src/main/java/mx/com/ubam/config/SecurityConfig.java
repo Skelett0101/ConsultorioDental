@@ -96,8 +96,9 @@ public class SecurityConfig {
                 .requestMatchers("/api/citas/eliminar").hasAnyRole("admin")
                 
              //
-                .requestMatchers(HttpMethod.GET, "/api/usuarios/disponibilidad/mia").hasAnyRole("dentista", "admin")
+                .requestMatchers(HttpMethod.GET, "/api/usuarios/disponibilidad/mia").hasAnyRole("dentista", "admin", "recepcionista")
 
+                .requestMatchers(HttpMethod.GET, "/api/citas/contadorsemanas").hasAnyRole("admin", "recepcionista", "dentista")
 
              // 3. El resto de tus reglas de usuarios que ya corregiste
              .requestMatchers(HttpMethod.GET, "/api/usuarios").hasAnyRole("admin", "recepcionista", "dentista")

@@ -13,6 +13,7 @@ import mx.com.ubam.model.*;
 @Repository
 public interface CitaRepository extends JpaRepository<Cita, Integer> {
 
+	long countByFechaHoraBetweenAndEstadoCitaNot(LocalDateTime inicio, LocalDateTime fin, String estado);
 	// Para buscar citas de hoy
 	List<Cita> findByFechaHoraBetween(LocalDateTime inicio, LocalDateTime fin);
 
@@ -26,11 +27,13 @@ public interface CitaRepository extends JpaRepository<Cita, Integer> {
         String estadoCita
     );
     
-    @Query(value = "SELECT COUNT(*) > 0 FROM cita c WHERE c.id_dentista = :id " +
-            "AND c.estado <> 'CANCELADA' " +
-            "AND (:inicio < DATE_ADD(c.fecha_hora, INTERVAL 1 HOUR) " +
-            "AND DATE_ADD(:inicio, INTERVAL 1 HOUR) > c.fecha_hora)", 
-            nativeQuery = true)
-     Integer existeTraslape(@Param("id") Integer id, 
-                            @Param("inicio") LocalDateTime inicio);
+    @Query(value = "SELECT COUNT(*) FROM cita c WHERE c.id_dentista = :id " +
+    	       "AND c.id_cita <> :citaId " + // 👈 Ignoramos la cita actual
+    	       "AND c.estado <> 'CANCELADA' " +
+    	       "AND (:inicio < DATE_ADD(c.fecha_hora, INTERVAL 1 HOUR) " +
+    	       "AND DATE_ADD(:inicio, INTERVAL 1 HOUR) > c.fecha_hora)", 
+    	       nativeQuery = true)
+    	Integer existeTraslapeIgnorandoActual(@Param("id") Integer id, 
+    	                                      @Param("inicio") LocalDateTime inicio,
+    	                                      @Param("citaId") Integer citaId);
 }

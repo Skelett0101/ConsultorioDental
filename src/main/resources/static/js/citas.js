@@ -249,72 +249,170 @@ async function actualizarContadorCitas() {
 }
 
 
-// ------------------------------------FUNCIÓN PARA ACTUALIZAR CONTADOR DE CITAS 7 DIAS DESPUES----------------------------------
-async function actualizarContadorCitas() {
-    const uiCitasHoy2 = document.getElementById("uiCitasHoy2");
-    if (!uiCitasHoy2) return;
+// ------------------------------------FUNCIÓN PARA CONTADOR SEMANAL (7 DÍAS)----------------------------------
+async function actualizarContadorSemanal() {
+    const uiSemana = document.getElementById("uiCitasSemana");
+    if (!uiSemana) return;
 
     const token = localStorage.getItem("token");
-    if (!token) return;
+
     try {
-        const response = await fetch(`${API_BASE}/hoy`, {
-            method: 'GET',
+        const response = await fetch(`${API_BASE}/contador-semanal`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
 
         if (response.ok) {
-            const citas = await response.json();
-            uiCitasHoy2.textContent = citas.length;
+            const cantidad = await response.json();
+            uiSemana.textContent = cantidad;
         }
     } catch (error) {
-        console.error("Error al actualizar contador:", error);
+        console.error("Error al cargar contador semanal:", error);
     }
 }
 
-
 // ------------------------------------FUNCIÓN PARA MOSTRAR LOS HORARIOS DE LOS DOSTORES----------------------------------
+
 async function mostrarHorariosDentistas() {
-    const contenedor = document.getElementById("tablaHorariosBody") || document.getElementById("horariosDentistas");
+    const contenedor = document.getElementById("horariosDentistas");
     if (!contenedor) return;
 
     const usuarioStr = localStorage.getItem("usuario");
     const token = localStorage.getItem("token");
-    if (!usuarioStr || !token) return;
 
-    const usuarioLogueado = JSON.parse(usuarioStr);
-    const idDelDentista = usuarioLogueado.idUsuario;
-    const diasSemana = ["", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
+    if (!usuarioStr || !token) {
+        console.error("Falta usuario o token en el localStorage");
+        return;
+    }
+
+    const user = JSON.parse(usuarioStr);
+    const idrol = user.rol?.idRol || user.idRol; 
+    
+    let url = (idrol === 2) 
+        ? `http://localhost:8080/api/disponibilidad/mia?idDentista=${user.idUsuario}`
+        : `http://localhost:8080/api/disponibilidad/todas`;
+
+    console.log("Intentando fetch a:", url); // <--- DEBUG
 
     try {
-        const response = await fetch(`http://localhost:8080/api/usuarios/disponibilidad/mia?idDentista=${idDelDentista}`, {
+        const response = await fetch(url, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        console.log("Status de la respuesta:", response.status); // <--- DEBUG
+
+        if (response.ok) {
+            const horarios = await response.json();
+            console.log("Datos recibidos:", horarios); // <--- DEBUG
+
+            // Limpiamos el "Cargando..."
+            contenedor.innerHTML = horarios.length === 0 
+                ? '<tr><td colspan="3" class="py-4 text-center text-xs text-slate-400">No hay horarios registrados.</td></tr>' 
+                : "";
+
+            const diasSemana = ["", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
+
+            horarios.forEach(h => {
+                // Validación de seguridad para h.horaInicio
+                const horaI = h.horaInicio ? h.horaInicio.substring(0, 5) : "--:--";
+                const horaF = h.horaFin ? h.horaFin.substring(0, 5) : "--:--";
+
+                const nombreMostrar = (idrol === 2) 
+                    ? `${user.nombre} ${user.apellido || ''}` 
+                    : `Dr. ${h.dentista?.nombre || ''} ${h.dentista?.apellido || ''}`;
+
+                const fila = `
+                    <tr class="hover:bg-slate-50/50 transition-colors border-b border-slate-50">
+                        <td class="py-3">
+                            <p class="text-xs font-bold text-slate-700">${nombreMostrar}</p>
+                        </td>
+                        <td class="py-3">
+                            <span class="text-[10px] text-primary uppercase font-medium">
+                                ${diasSemana[h.diaSemana] || 'S/D'}
+                            </span>
+                        </td>
+                        <td class="py-3">
+                            <p class="text-[10px] font-mono text-slate-500">${horaI} - ${horaF}</p>
+                        </td>
+                    </tr>`;
+                contenedor.innerHTML += fila;
+            });
+        } else {
+            // Manejo de errores específicos
+            if (response.status === 403) {
+                contenedor.innerHTML = '<tr><td colspan="3" class="py-4 text-center text-red-500 text-xs font-bold">Error 403: No tienes permiso para ver horarios.</td></tr>';
+            } else {
+                contenedor.innerHTML = `<tr><td colspan="3" class="py-4 text-center text-red-400 text-xs">Error del servidor (${response.status})</td></tr>`;
+            }
+        }
+    } catch (error) {
+        console.error("Error en la petición:", error);
+        contenedor.innerHTML = '<tr><td colspan="3" class="py-4 text-center text-red-400 text-xs">Error de conexión al servidor.</td></tr>';
+    }
+}
+
+
+
+
+
+async function mostrarHorarioDentistas() {
+    const contenedor = document.getElementById("horariosDentistas");
+    if (!contenedor) return;
+
+    const usuarioStr = localStorage.getItem("usuario");
+
+    const token = localStorage.getItem("token");
+
+    if (!usuarioStr || !token) return;
+
+    const user = JSON.parse(usuarioStr);
+    const idrol = user.rol?.idRol || user.idRol; 
+    
+   
+    let url = "";
+    if (idrol === 2) {
+        url = `http://localhost:8080/api/usuarios/disponibilidad/mia?idDentista=${user.idUsuario}`;
+    } else {
+        url = `http://localhost:8080/api/usuarios/disponibilidad/todas`;
+    }
+
+    try {
+        const response = await fetch(url, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
 
         if (response.ok) {
             const horarios = await response.json();
+            contenedor.innerHTML = horarios.length === 0 ? '<tr><td colspan="3" class="py-4 text-center text-xs text-slate-400">No hay horarios registrados.</td></tr>' : "";
 
-            if (horarios.length === 0) {
-                contenedor.innerHTML = '<tr><td colspan="3" class="py-4 text-center text-xs text-slate-400">No hay turnos registrados.</td></tr>';
-                return;
-            }
-
-            contenedor.innerHTML = "";
+            const diasSemana = ["", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
 
             horarios.forEach(h => {
                 const horaI = h.horaInicio.substring(0, 5);
                 const horaF = h.horaFin.substring(0, 5);
+
+                const nombreMostrar = (idrol === 2) 
+                    ? `${user.nombre} ${user.apellido || ''}` 
+                    : `Dr. ${h.dentista?.nombre || ''} ${h.dentista?.apellido || ''}`;
+
                 const fila = `
                     <tr class="hover:bg-slate-50/50 transition-colors border-b border-slate-50">
-                        <td class="py-3 text-xs font-bold text-slate-700">Dr. ${h.dentista?.apellido || 'Dentista'}</td>
-                        <td class="py-3 text-[10px] text-primary uppercase font-medium">${diasSemana[h.diaSemana] || 'S/D'}</td>
-                        <td class="py-3 text-[10px] font-mono text-slate-500">${horaI} - ${horaF}</td>
+                        <td class="py-3">
+                            <p class="text-xs font-bold text-slate-700">${nombreMostrar}</p>
+                        </td>
+                        <td class="py-3">
+                            <span class="text-[10px] text-primary uppercase font-medium">
+                                ${diasSemana[h.diaSemana] || 'S/D'}
+                            </span>
+                        </td>
+                        <td class="py-3">
+                            <p class="text-[10px] font-mono text-slate-500">${horaI} - ${horaF}</p>
+                        </td>
                     </tr>`;
                 contenedor.innerHTML += fila;
             });
         }
     } catch (error) {
-        console.error("Error al cargar horarios:", error);
-        contenedor.innerHTML = '<tr><td colspan="3" class="py-4 text-center text-red-400 text-xs">Error de conexión</td></tr>';
+        console.error("Error:", error);
     }
 }
 //------------------------------- FUNCIÓN PARA RENDERIZAR LAS CITAS DEL DIA EN EL DASHBOARD --------------------------------

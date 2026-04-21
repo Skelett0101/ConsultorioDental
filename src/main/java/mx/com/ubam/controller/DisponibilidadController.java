@@ -28,7 +28,7 @@ public class DisponibilidadController {
         return ResponseEntity.ok(dispoRepo.save(dispo));
 	}
 	
-	@GetMapping
+	@GetMapping("/todas")
     public ResponseEntity<List<Disponibilidad>> listarTodas() {
         return ResponseEntity.ok(dispoRepo.findAll());
     }

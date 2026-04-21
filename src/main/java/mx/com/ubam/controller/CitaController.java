@@ -69,4 +69,10 @@ public class CitaController {
 	    return ResponseEntity.ok(Citaser.cambiarEstado(id, "COMPLETADA"));
 	}
 	
+	// En CitaController.java
+	@GetMapping("/contadorsemanas")
+	public ResponseEntity<Long> getContadorSemanal() {
+	    return ResponseEntity.ok(Citaser.obtenerContadorSemanal());
+	}
+	
 }

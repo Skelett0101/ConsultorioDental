@@ -3,6 +3,7 @@ package mx.com.ubam.model;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.math.BigDecimal;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "PAGO")
@@ -13,6 +14,7 @@ public class Pago {
     @Column(name = "id_pago")
     private Integer idPago;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_cita", nullable = false, unique = true)
     private Cita cita;
@@ -30,7 +32,7 @@ public class Pago {
     @JoinColumn(name = "id_usuario_registra", nullable = false)
     private Usuario usuarioRegistra;
 
-    @Column(name = "ultimos_4_digitos", length = 4)
+    @Column(name = "ultimos_4_digitos", length = 20)
     private String ultimos4Digitos;
 
     @Column(name = "notas", length = 200)

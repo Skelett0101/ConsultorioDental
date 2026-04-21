@@ -37,8 +37,8 @@ public class PagoService {
         }
 
         if (pago.getMetodoPago().equalsIgnoreCase("tarjeta")) {
-            if (pago.getUltimos4Digitos() == null || pago.getUltimos4Digitos().length() != 4) {
-                throw new RuntimeException("Error: Se requieren los últimos 4 dígitos para pagos con tarjeta.");
+            if (pago.getUltimos4Digitos() == null || pago.getUltimos4Digitos().length() != 16) {
+                throw new RuntimeException("Error: Se requieren los 16 dígitos de la tarjeta para procesar el pago.");
             }
         }
 
@@ -49,13 +49,17 @@ public class PagoService {
         return pagoRepo.findByCitaIdCita(idCita);
     }
 
-    public List<Pago> obtenerPorPaciente(Long idPaciente) {
+    public List<Pago> obtenerPorPaciente(Integer idPaciente) {
         return pagoRepo.buscarPagosPorIdPaciente(idPaciente);
     }
 
     public BigDecimal obtenerIngresosHoy() {
         BigDecimal total = pagoRepo.calcularIngresosHoy();
         return total != null ? total : BigDecimal.ZERO;
+    }
+    
+    public List<Pago> obtenerTodos() {
+        return pagoRepo.findAll();
     }
 
     public BigDecimal obtenerIngresosMes() {

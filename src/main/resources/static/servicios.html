@@ -13,33 +13,30 @@
 
     <script>
      tailwind.config = {
-    darkMode: "class",
-    theme: {
-        extend: {
-            colors: {
-                "on-primary-fixed-variant": "#004b74", "tertiary-fixed": "#ffdcc0", "tertiary": "#864a00", "primary-fixed": "#cde5ff", "on-primary-fixed": "#001d32", "secondary-fixed": "#8ef4e9", "on-surface": "#191c1d", "surface-tint": "#006399", "background": "#f8fafb", "surface-container": "#eceeef", "on-tertiary": "#ffffff", "tertiary-container": "#a95f00", "error-container": "#ffdad6", "surface-container-high": "#e6e8e9", "primary": "#005d90", "on-primary-container": "#f3f7ff", "on-background": "#191c1d", "on-error": "#ffffff", "on-secondary": "#ffffff", "inverse-surface": "#2e3132", "on-error-container": "#93000a", "on-secondary-container": "#006f67", "surface-container-lowest": "#ffffff", "secondary-container": "#8bf1e6", "surface-container-highest": "#e1e3e4", "on-tertiary-fixed": "#2e1600", "secondary": "#006a63", "on-primary": "#ffffff", "surface-container-low": "#f2f4f5", "inverse-on-surface": "#eff1f2", "on-secondary-fixed": "#00201d", "primary-fixed-dim": "#94ccff", "surface-variant": "#e1e3e4", "on-surface-variant": "#404850", "tertiary-fixed-dim": "#ffb877", "inverse-primary": "#94ccff", "surface-bright": "#f8fafb", "primary-container": "#0077b6", "on-secondary-fixed-variant": "#00504a", "outline": "#707881", "surface-dim": "#d8dadb", "on-tertiary-container": "#fff6f1", "on-tertiary-fixed-variant": "#6c3a00", "surface": "#f8fafb", "secondary-fixed-dim": "#71d7cd", "outline-variant": "#bfc7d1", "error": "#ba1a1a"
-            },
-            borderRadius: {
-                "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"
-            },
-            fontFamily: {
-                "headline": ["Manrope"], "body": ["Inter"], "label": ["Inter"]
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "on-primary-fixed-variant": "#004b74", "tertiary-fixed": "#ffdcc0", "tertiary": "#864a00", "primary-fixed": "#cde5ff", "on-primary-fixed": "#001d32", "secondary-fixed": "#8ef4e9", "on-surface": "#191c1d", "surface-tint": "#006399", "background": "#f8fafb", "surface-container": "#eceeef", "on-tertiary": "#ffffff", "tertiary-container": "#a95f00", "error-container": "#ffdad6", "surface-container-high": "#e6e8e9", "primary": "#005d90", "on-primary-container": "#f3f7ff", "on-background": "#191c1d", "on-error": "#ffffff", "on-secondary": "#ffffff", "inverse-surface": "#2e3132", "on-error-container": "#93000a", "on-secondary-container": "#006f67", "surface-container-lowest": "#ffffff", "secondary-container": "#8bf1e6", "surface-container-highest": "#e1e3e4", "on-tertiary-fixed": "#2e1600", "secondary": "#006a63", "on-primary": "#ffffff", "surface-container-low": "#f2f4f5", "inverse-on-surface": "#eff1f2", "on-secondary-fixed": "#00201d", "primary-fixed-dim": "#94ccff", "surface-variant": "#e1e3e4", "on-surface-variant": "#404850", "tertiary-fixed-dim": "#ffb877", "inverse-primary": "#94ccff", "surface-bright": "#f8fafb", "primary-container": "#0077b6", "on-secondary-fixed-variant": "#00504a", "outline": "#707881", "surface-dim": "#d8dadb", "on-tertiary-container": "#fff6f1", "on-tertiary-fixed-variant": "#6c3a00", "surface": "#f8fafb", "secondary-fixed-dim": "#71d7cd", "outline-variant": "#bfc7d1", "error": "#ba1a1a"
+                },
+                borderRadius: {
+                    "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"
+                },
+                fontFamily: {
+                    "headline": ["Manrope"], "body": ["Inter"], "label": ["Inter"]
+                }
             }
         }
-    }
-};
+    };
     </script>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
 </head>
 
 <body class="bg-background text-on-surface">
     <div class="flex h-screen overflow-hidden">
 
         <aside class="hidden md:flex flex-col h-full py-6 px-4 bg-slate-50 h-screen w-64 border-r-0 font-['Manrope'] antialiased">
-            
             <div class="flex items-center gap-3 px-2 mb-10">
                 <div class="w-8 h-8 rounded-xl bg-primary flex items-center justify-center text-white font-bold">C</div>
                 <div>
@@ -83,19 +80,13 @@
             </div>
         </aside>
 
-       
-
         <main class="flex-1 flex flex-col overflow-hidden">
 
            <header class="w-full h-16 sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-100/50 flex items-center justify-between px-8 font-['Manrope'] font-medium">
-                
                 <div class="flex items-center gap-4 flex-1">
                     <div class="relative w-full max-w-md group">
                         <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm group-hover:text-primary transition-colors">search</span>
-                        <input id="inputBusquedaServicio" 
-                            class="w-full pl-10 pr-4 py-2 bg-surface-container-high rounded-xl ..." 
-                            placeholder="Buscar servicios o tratamientos..." 
-                            type="text" />
+                        <input id="inputBusquedaServicio" class="w-full pl-10 pr-4 py-2 bg-surface-container-high rounded-xl outline-none focus:ring-2 focus:ring-primary/50 transition-all" placeholder="Buscar servicios o tratamientos..." type="text" />
                     </div>
                 </div>
 
@@ -136,25 +127,19 @@
                 </div>
             </header>
 
-              <!-- Contenido Principal -->
-         <div class="flex-1 overflow-y-auto bg-background p-8 space-y-10">
+            <div class="flex-1 overflow-y-auto bg-background p-8 space-y-10">
                 
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
                     <div>
                         <h2 class="text-3xl font-extrabold text-slate-800 tracking-tight">Servicios y Facturación</h2>
                         <p class="text-slate-500 font-medium mt-1">Gestione precios de tratamientos e historial de transacciones clínicas.</p>
                     </div>
-					<div class="flex items-center gap-3">
-					    <button id="btn-verificar-cita" class="bg-white border-2 border-[#005d90] text-[#005d90] px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-slate-50 active:scale-95 transition-all shadow-sm">
-					        <span class="material-symbols-outlined text-lg">fact_check</span>
-					        Verificar Cita
-					    </button>
-					    
-					    <button id="btn-nueva-factura" class="bg-[#005d90] text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-[#004b74] active:scale-95 transition-all shadow-lg">
-					        <span class="material-symbols-outlined text-lg">add_card</span>
-					        Generar Nueva Factura
-					    </button>
-					</div>
+                    <div class="flex items-center gap-3">
+                        <button id="btn-nueva-factura" class="bg-[#005d90] text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-[#004b74] active:scale-95 transition-all shadow-lg">
+                            <span class="material-symbols-outlined text-lg">add_card</span>
+                            Generar Nueva Factura
+                        </button>
+                    </div>
                 </div>
 
                 <section>
@@ -172,179 +157,124 @@
                         </div>
                 </section>
 
-                <div id="modal-servicio-gestion" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center">
-                    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
-                        <h3 id="modal-servicio-titulo" class="text-xl font-bold text-slate-800 mb-4">Nuevo Tratamiento</h3>
-                        <form id="form-gestion-servicio" class="space-y-4">
-                            <input type="hidden" id="input-servicio-id">
-                            <div>
-                                <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Nombre del Servicio</label>
-                                <input type="text" id="input-servicio-nombre" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 outline-none">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Precio ($)</label>
-                                <input type="number" step="0.01" id="input-servicio-precio" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 outline-none">
-                            </div>
-                            <div class="flex gap-3 mt-6">
-                                <button type="button" onclick="cerrarModalServicio()" class="flex-1 py-2 text-slate-500 font-bold">Cancelar</button>
-                                <button type="submit" class="flex-1 py-2 bg-[#005d90] text-white rounded-lg font-bold">Guardar</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
                 <section class="space-y-6">
                     <div class="flex items-center justify-between">
-						<div class="flex items-center gap-4">
-						    <h3 class="text-xl font-bold text-slate-800 flex items-center gap-2">
-						        <span class="w-1.5 h-6 bg-[#005d90] rounded-full"></span>
-						        Historial de Pagos
-						    </h3>
-						    <div class="flex items-center gap-2 ml-4">
-						        <input type="number" id="input-buscar-paciente" placeholder="ID Paciente (Ej: 1)" class="w-40 bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-[#005d90]">
-						        <button id="btn-buscar-paciente" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-3 py-1.5 rounded-lg text-sm font-bold transition-colors">
-						            Buscar
-						        </button>
-						    </div>
-						</div>
-                        <div class="flex gap-2">
-                            <button class="p-2 rounded-lg bg-white border border-slate-200 text-slate-500 hover:bg-slate-50 hover:text-slate-700 transition-colors shadow-sm">
-                                <span class="material-symbols-outlined text-sm">filter_list</span>
-                            </button>
-                            <button class="p-2 rounded-lg bg-white border border-slate-200 text-slate-500 hover:bg-slate-50 hover:text-slate-700 transition-colors shadow-sm">
-                                <span class="material-symbols-outlined text-sm">download</span>
-                            </button>
+                        <div class="flex items-center gap-4">
+                            <h3 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                                <span class="w-1.5 h-6 bg-[#005d90] rounded-full"></span>
+                                Historial de Pagos
+                            </h3>
+                            <div class="flex items-center gap-2 ml-4">
+                                <input type="text" id="input-buscar-paciente" placeholder="Nombre del paciente..." class="w-48 bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-[#005d90]">
+                                <button id="btn-buscar-paciente" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-3 py-1.5 rounded-lg text-sm font-bold transition-colors">
+                                    Buscar
+                                </button>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden mt-6">
                         <div class="overflow-x-auto">
                             <table class="w-full text-left border-collapse">
                                 <thead>
                                     <tr class="bg-slate-50/50 border-b border-slate-100">
-                                        <th class="px-6 py-4 text-[11px] font-bold uppercase tracking-widest text-slate-400">ID Transacción</th>
-                                        <th class="px-6 py-4 text-[11px] font-bold uppercase tracking-widest text-slate-400">Fecha</th>
-                                        <th class="px-6 py-4 text-[11px] font-bold uppercase tracking-widest text-slate-400">Paciente</th>
-                                        <th class="px-6 py-4 text-[11px] font-bold uppercase tracking-widest text-slate-400">Monto</th>
-                                        <th class="px-6 py-4 text-[11px] font-bold uppercase tracking-widest text-slate-400 text-right">Estado</th>
+                                        <th class="px-6 py-4 text-[11px] font-bold uppercase tracking-widest text-slate-400">Nombre del Paciente</th>
+                                        <th class="px-6 py-4 text-[11px] font-bold uppercase tracking-widest text-slate-400">Total de Transacciones</th>
+                                        <th class="px-6 py-4 text-[11px] font-bold uppercase tracking-widest text-slate-400 text-right">Detalles</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tabla-pagos" class="divide-y divide-slate-50">
-                                    <tr class="hover:bg-slate-50/50 transition-colors">
-                                        <td class="px-6 py-4 text-sm font-bold text-slate-700">#TXN-8829</td>
-                                        <td class="px-6 py-4 text-sm text-slate-500 font-medium">24 Oct, 2023</td>
-                                        <td class="px-6 py-4">
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-8 h-8 rounded-full bg-[#cde5ff] flex items-center justify-center text-[10px] font-bold text-[#005d90]">SC</div>
-                                                <span class="text-sm font-bold text-slate-800">Sarah Connor</span>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 font-extrabold text-slate-800">$1,250.00</td>
-                                        <td class="px-6 py-4 text-right">
-                                            <span class="px-3 py-1 bg-[#8ef4e9]/30 text-[#006f67] text-[10px] font-bold uppercase tracking-wider rounded-md">Pagado</span>
-                                        </td>
-                                    </tr>
-                                    
-                                    <tr class="hover:bg-slate-50/50 transition-colors">
-                                        <td class="px-6 py-4 text-sm font-bold text-slate-700">#TXN-8830</td>
-                                        <td class="px-6 py-4 text-sm text-slate-500 font-medium">23 Oct, 2023</td>
-                                        <td class="px-6 py-4">
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center text-[10px] font-bold text-amber-700">JW</div>
-                                                <span class="text-sm font-bold text-slate-800">John Wick</span>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 font-extrabold text-slate-800">$120.00</td>
-                                        <td class="px-6 py-4 text-right">
-                                            <span class="px-3 py-1 bg-amber-100 text-amber-800 text-[10px] font-bold uppercase tracking-wider rounded-md">Pendiente</span>
-                                        </td>
-                                    </tr>
-                                    
-                                    <tr class="hover:bg-slate-50/50 transition-colors">
-                                        <td class="px-6 py-4 text-sm font-bold text-slate-700">#TXN-8831</td>
-                                        <td class="px-6 py-4 text-sm text-slate-500 font-medium">22 Oct, 2023</td>
-                                        <td class="px-6 py-4">
-                                            <div class="flex items-center gap-3">
-                                                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOZ_ZhlPXiRFsNqC35n4MC4ErIngvJsxYXVsmv9zBZljsTIRn08Dj-JqO2En29HmG9RStit-zknOTlfX2z6k3cMHxe3VqQWTM_Hwq3IJIBQn75Ls781m7jq5SLGn3ZilYmCqZMX3SvCbMTo82zw9XcVQKDoDuaLc-_yJDhPzJ-xSPIMvLzQczlSqyZFbgq9EKDFPnOTn1BQS2bWt7vNGitEKIibrTuPZDoW-SBQoj9HPUc0CK61er9jDJlcpo0GywZTljbvx2-kTA" class="w-8 h-8 rounded-full object-cover">
-                                                <span class="text-sm font-bold text-slate-800">Michael Scott</span>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 font-extrabold text-slate-800">$3,800.00</td>
-                                        <td class="px-6 py-4 text-right">
-                                            <span class="px-3 py-1 bg-[#8ef4e9]/30 text-[#006f67] text-[10px] font-bold uppercase tracking-wider rounded-md">Pagado</span>
-                                        </td>
-                                    </tr>
-
-                                    <tr class="hover:bg-slate-50/50 transition-colors">
-                                        <td class="px-6 py-4 text-sm font-bold text-slate-700">#TXN-8832</td>
-                                        <td class="px-6 py-4 text-sm text-slate-500 font-medium">21 Oct, 2023</td>
-                                        <td class="px-6 py-4">
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-[10px] font-bold text-slate-500">EP</div>
-                                                <span class="text-sm font-bold text-slate-800">Ellen Ripley</span>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 font-extrabold text-slate-800">$250.00</td>
-                                        <td class="px-6 py-4 text-right">
-                                            <span class="px-3 py-1 bg-red-100 text-red-700 text-[10px] font-bold uppercase tracking-wider rounded-md">Vencido</span>
-                                        </td>
-                                    </tr>
-                                </tbody>
+                                    </tbody>
                             </table>
                         </div>
                     </div>
                 </section>
 
             </div>
-   
         </main>
     </div>
-	<div id="modal-pago" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center transition-all">
-	        <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 relative">
-	            <button id="btn-cerrar-modal" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 transition-colors">
-	                <span class="material-symbols-outlined">close</span>
-	            </button>
-	            
-	            <h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
-	                <span class="material-symbols-outlined text-[#005d90]">payments</span>
-	                Registrar Pago
-	            </h3>
-	            
-	            <form id="form-pago" class="space-y-4">
-	                <div>
-	                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">ID de la Cita</label>
-	                    <input type="number" id="input-cita" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#005d90] outline-none text-sm font-bold text-slate-700">
-	                </div>
-	                
-	                <div>
-	                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Monto ($)</label>
-	                    <input type="number" step="0.01" id="input-monto" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#005d90] outline-none text-sm font-bold text-slate-700">
-	                </div>
 
-	                <div>
-	                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Método de Pago</label>
-	                    <select id="select-metodo" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#005d90] outline-none text-sm font-bold text-slate-700">
-	                        <option value="efectivo">Efectivo</option>
-	                        <option value="tarjeta">Tarjeta</option>
-	                    </select>
-	                </div>
+    <div id="modal-servicio-gestion" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
+            <h3 id="modal-servicio-titulo" class="text-xl font-bold text-slate-800 mb-4">Nuevo Tratamiento</h3>
+            <form id="form-gestion-servicio" class="space-y-4">
+                <input type="hidden" id="input-servicio-id">
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Nombre del Servicio</label>
+                    <input type="text" id="input-servicio-nombre" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Precio ($)</label>
+                    <input type="number" step="0.01" id="input-servicio-precio" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 outline-none">
+                </div>
+                <div class="flex gap-3 mt-6">
+                    <button type="button" onclick="cerrarModalServicio()" class="flex-1 py-2 text-slate-500 font-bold hover:bg-slate-50 rounded-lg">Cancelar</button>
+                    <button type="submit" class="flex-1 py-2 bg-[#005d90] text-white rounded-lg font-bold hover:bg-[#004b74]">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-	                <div id="div-digitos" class="hidden">
-	                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Últimos 4 Dígitos</label>
-	                    <input type="text" maxlength="4" id="input-digitos" placeholder="Ej: 4567" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#005d90] outline-none text-sm font-bold text-slate-700">
-	                </div>
+    <div id="modal-pago" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center transition-all">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 relative">
+            <button id="btn-cerrar-modal" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 transition-colors">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            
+            <h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined text-[#005d90]">payments</span>
+                Registrar Pago
+            </h3>
+            
+            <form id="form-pago" class="space-y-4">
+                
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Seleccionar Cita Pendiente</label>
+                    <select id="select-cita" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#005d90] outline-none text-sm font-bold text-slate-700 cursor-pointer">
+                        <option value="">Cargando citas pendientes...</option>
+                    </select>
+                </div>
+                
+                <div id="info-cita-seleccionada" class="hidden bg-[#f3f7ff] p-4 rounded-xl border border-[#cde5ff] space-y-3 mt-2 transition-all">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold text-slate-500 uppercase">Paciente:</span>
+                        <span id="lbl-paciente" class="text-sm font-bold text-[#005d90]">---</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold text-slate-500 uppercase">Servicio:</span>
+                        <span id="lbl-servicio" class="text-sm font-bold text-slate-700">---</span>
+                    </div>
+                    <div class="flex justify-between items-center pt-3 border-t border-[#cde5ff]">
+                        <span class="text-xs font-bold text-slate-500 uppercase">Total a Pagar:</span>
+                        <span id="lbl-monto" class="text-xl font-extrabold text-[#005d90]">$0.00</span>
+                    </div>
+                </div>
 
-	                <div>
-	                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Notas (Opcional)</label>
-	                    <input type="text" id="input-notas" placeholder="Ej: Pago completo" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#005d90] outline-none text-sm font-bold text-slate-700">
-	                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Método de Pago</label>
+                    <select id="select-metodo" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#005d90] outline-none text-sm font-bold text-slate-700 cursor-pointer">
+                        <option value="efectivo">Efectivo</option>
+                        <option value="tarjeta">Tarjeta</option>
+                    </select>
+                </div>
 
-	                <button type="submit" class="w-full mt-6 bg-[#005d90] text-white font-bold py-3 rounded-xl hover:bg-[#004b74] active:scale-95 transition-all shadow-md">
-	                    Confirmar Transacción
-	                </button>
-	            </form>
-	        </div>
-	    </div>
+                <div id="div-digitos" class="hidden">
+                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">16 Dígitos de la Tarjeta</label>
+                    <input type="text" maxlength="16" id="input-digitos" placeholder="Ej: 1234567890123456" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#005d90] outline-none text-sm font-bold text-slate-700">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Notas (Opcional)</label>
+                    <input type="text" id="input-notas" placeholder="Ej: Pago de limpieza" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#005d90] outline-none text-sm font-bold text-slate-700">
+                </div>
+
+                <button type="submit" class="w-full mt-6 bg-[#005d90] text-white font-bold py-3 rounded-xl hover:bg-[#004b74] active:scale-95 transition-all shadow-md">
+                    Confirmar Transacción
+                </button>
+            </form>
+        </div>
+    </div>
+    
     <script src="js/utils.js"></script>
     <script src="js/menu.js"></script>
     <script src="js/servicios.js"></script>

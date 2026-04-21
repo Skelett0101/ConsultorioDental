@@ -16,8 +16,8 @@ public interface PagoRepository extends JpaRepository<Pago, Integer> {
 
     boolean existsByCitaIdCita(Integer idCita);
 
-    @Query("SELECT p FROM Pago p WHERE p.cita.paciente.idPaciente = :idPaciente")
-    List<Pago> buscarPagosPorIdPaciente(@Param("idPaciente") Long idPaciente);
+    @Query(value = "SELECT p.* FROM pago p INNER JOIN cita c ON p.id_cita = c.id_cita WHERE c.id_paciente = :idPaciente", nativeQuery = true)
+    List<Pago> buscarPagosPorIdPaciente(@Param("idPaciente") Integer idPaciente);
     
     @Query("SELECT SUM(p.monto) FROM Pago p WHERE DATE(p.fechaPago) = CURRENT_DATE")
     BigDecimal calcularIngresosHoy();

@@ -28,13 +28,18 @@ public class PagoController {
     @GetMapping("/cita/{id}")
     public ResponseEntity<?> obtenerPagoPorCita(@PathVariable Integer id) {
         return pagoService.obtenerPorCita(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/paciente/{id}")
-    public ResponseEntity<List<Pago>> obtenerPagosPorPaciente(@PathVariable Long id) {
+    public ResponseEntity<List<Pago>> obtenerPagosPorPaciente(@PathVariable Integer id) {
         return ResponseEntity.ok(pagoService.obtenerPorPaciente(id));
+    }
+
+    @GetMapping("/todos")
+    public ResponseEntity<List<Pago>> obtenerTodosLosPagos() {
+        return ResponseEntity.ok(pagoService.obtenerTodos());
     }
 
     @GetMapping("/ingresos/hoy")

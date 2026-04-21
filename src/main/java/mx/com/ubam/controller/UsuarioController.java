@@ -1,8 +1,12 @@
 package mx.com.ubam.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import mx.com.ubam.dto.UsuarioDTO;
 import mx.com.ubam.model.Usuario;
 import mx.com.ubam.service.UsuarioService;
 
@@ -14,11 +18,10 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
-    // R01: Registrar usuario
+    // registrar usuario
     @PostMapping("/registro")
     public Usuario registrar(@RequestBody Usuario usuario) {
 
-        //   RequestBody convierte JSON a objeto Usuario
         return usuarioService.registrarUsuario(usuario);
     }
     
@@ -26,4 +29,27 @@ public class UsuarioController {
     public java.util.List<Usuario> listarUsuarios() {
         return usuarioService.listarTodos();
     }
+    
+ 
+    // Ruta: GET /api/usuarios/personal
+    @GetMapping("/personal")
+    public ResponseEntity<List<UsuarioDTO>> getPersonalCompleto() {
+        List<UsuarioDTO> lista = usuarioService.obtenerTodoElPersonal();
+        return ResponseEntity.ok(lista);
+    }
+    
+    
+ // Ruta para actualizar: PUT /api/usuarios/actualizar/{id}
+    @PutMapping("/actualizar/{id}")
+    public ResponseEntity<?> actualizarEmpleado(@PathVariable Integer id, @RequestBody UsuarioDTO dto) {
+        try {
+            usuarioService.actualizarUsuario(id, dto);
+            
+            return ResponseEntity.ok().body("{\"mensaje\": \"Usuario actualizado correctamente\"}");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("{\"error\": \"" + e.getMessage() + "\"}");
+        }
+    }
+
+    
 }

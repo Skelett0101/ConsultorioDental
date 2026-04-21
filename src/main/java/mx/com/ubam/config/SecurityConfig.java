@@ -65,6 +65,8 @@ public class SecurityConfig {
                 
                 // login y registro
                 .requestMatchers("/auth/login", "/api/usuarios/registro").permitAll()
+                //personal
+                .requestMatchers( "/api/usuarios/personal").hasAnyRole("admin")
                 
                 //crear servicios
                 .requestMatchers(HttpMethod.POST, "/api/servicios").hasRole("admin")
@@ -120,13 +122,13 @@ public class SecurityConfig {
                 // los usuarios logueados
                 .requestMatchers("/api/perfil/**").authenticated()
 
-             // 1. Los reportes financieros
+             // Los reportes financieros
              .requestMatchers("/api/pagos/ingresos/**").hasRole("admin")
 
-             // 2. El resto de funciones (cobrar, ver recibos)
+             // l resto de funciones (cobrar, ver recibos)
              .requestMatchers("/api/pagos/**").hasAnyRole("admin", "recepcionista")
 
-             // 🔹 REGLAS DE PERFIL
+             // REGLAS DE PERFIL
              .requestMatchers("/api/perfil/**").authenticated()
                 
                 // cualquier otra

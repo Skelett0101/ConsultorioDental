@@ -12,22 +12,22 @@
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 
     <script>
-     tailwind.config = {
-    darkMode: "class",
-    theme: {
-        extend: {
-            colors: {
-                "on-primary-fixed-variant": "#004b74", "tertiary-fixed": "#ffdcc0", "tertiary": "#864a00", "primary-fixed": "#cde5ff", "on-primary-fixed": "#001d32", "secondary-fixed": "#8ef4e9", "on-surface": "#191c1d", "surface-tint": "#006399", "background": "#f8fafb", "surface-container": "#eceeef", "on-tertiary": "#ffffff", "tertiary-container": "#a95f00", "error-container": "#ffdad6", "surface-container-high": "#e6e8e9", "primary": "#005d90", "on-primary-container": "#f3f7ff", "on-background": "#191c1d", "on-error": "#ffffff", "on-secondary": "#ffffff", "inverse-surface": "#2e3132", "on-error-container": "#93000a", "on-secondary-container": "#006f67", "surface-container-lowest": "#ffffff", "secondary-container": "#8bf1e6", "surface-container-highest": "#e1e3e4", "on-tertiary-fixed": "#2e1600", "secondary": "#006a63", "on-primary": "#ffffff", "surface-container-low": "#f2f4f5", "inverse-on-surface": "#eff1f2", "on-secondary-fixed": "#00201d", "primary-fixed-dim": "#94ccff", "surface-variant": "#e1e3e4", "on-surface-variant": "#404850", "tertiary-fixed-dim": "#ffb877", "inverse-primary": "#94ccff", "surface-bright": "#f8fafb", "primary-container": "#0077b6", "on-secondary-fixed-variant": "#00504a", "outline": "#707881", "surface-dim": "#d8dadb", "on-tertiary-container": "#fff6f1", "on-tertiary-fixed-variant": "#6c3a00", "surface": "#f8fafb", "secondary-fixed-dim": "#71d7cd", "outline-variant": "#bfc7d1", "error": "#ba1a1a"
-            },
-            borderRadius: {
-                "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"
-            },
-            fontFamily: {
-                "headline": ["Manrope"], "body": ["Inter"], "label": ["Inter"]
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-primary-fixed-variant": "#004b74", "tertiary-fixed": "#ffdcc0", "tertiary": "#864a00", "primary-fixed": "#cde5ff", "on-primary-fixed": "#001d32", "secondary-fixed": "#8ef4e9", "on-surface": "#191c1d", "surface-tint": "#006399", "background": "#f8fafb", "surface-container": "#eceeef", "on-tertiary": "#ffffff", "tertiary-container": "#a95f00", "error-container": "#ffdad6", "surface-container-high": "#e6e8e9", "primary": "#005d90", "on-primary-container": "#f3f7ff", "on-background": "#191c1d", "on-error": "#ffffff", "on-secondary": "#ffffff", "inverse-surface": "#2e3132", "on-error-container": "#93000a", "on-secondary-container": "#006f67", "surface-container-lowest": "#ffffff", "secondary-container": "#8bf1e6", "surface-container-highest": "#e1e3e4", "on-tertiary-fixed": "#2e1600", "secondary": "#006a63", "on-primary": "#ffffff", "surface-container-low": "#f2f4f5", "inverse-on-surface": "#eff1f2", "on-secondary-fixed": "#00201d", "primary-fixed-dim": "#94ccff", "surface-variant": "#e1e3e4", "on-surface-variant": "#404850", "tertiary-fixed-dim": "#ffb877", "inverse-primary": "#94ccff", "surface-bright": "#f8fafb", "primary-container": "#0077b6", "on-secondary-fixed-variant": "#00504a", "outline": "#707881", "surface-dim": "#d8dadb", "on-tertiary-container": "#fff6f1", "on-tertiary-fixed-variant": "#6c3a00", "surface": "#f8fafb", "secondary-fixed-dim": "#71d7cd", "outline-variant": "#bfc7d1", "error": "#ba1a1a"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"], "body": ["Inter"], "label": ["Inter"]
+                    }
+                }
             }
-        }
-    }
-};
+        };
     </script>
 
     <link
@@ -38,8 +38,9 @@
 <body class="bg-background text-on-surface">
     <div class="flex h-screen overflow-hidden">
 
-        <aside class="hidden md:flex flex-col h-full py-6 px-4 bg-slate-50 h-screen w-64 border-r-0 font-['Manrope'] antialiased">
-            
+        <aside
+            class="hidden md:flex flex-col h-full py-6 px-4 bg-slate-50 h-screen w-64 border-r-0 font-['Manrope'] antialiased">
+
             <div class="flex items-center gap-3 px-2 mb-10">
                 <div class="w-8 h-8 rounded-xl bg-primary flex items-center justify-center text-white font-bold">C</div>
                 <div>
@@ -72,11 +73,13 @@
             </nav>
 
             <div class="mt-auto space-y-1 pt-6 border-t border-slate-200">
-                <a class="flex items-center gap-3 px-3 py-2 rounded-xl transition-colors text-slate-500 hover:bg-white/60 font-medium" href="configuracion.html">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-xl transition-colors text-slate-500 hover:bg-white/60 font-medium"
+                    href="configuracion.html">
                     <span class="material-symbols-outlined">settings</span>
                     <span class="text-sm font-medium">Configuración</span>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-xl transition-colors text-slate-500 hover:bg-white/60 font-medium" href="soporte.html">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-xl transition-colors text-slate-500 hover:bg-white/60 font-medium"
+                    href="soporte.html">
                     <span class="material-symbols-outlined">help</span>
                     <span class="text-sm font-medium">Soporte</span>
                 </a>
@@ -85,45 +88,56 @@
 
         <main class="flex-1 flex flex-col overflow-hidden">
 
-           <header class="w-full h-16 sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-100/50 flex items-center justify-between px-8 font-['Manrope'] font-medium">
-                
+            <header
+                class="w-full h-16 sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-100/50 flex items-center justify-between px-8 font-['Manrope'] font-medium">
                 <div class="flex items-center gap-4 flex-1">
                     <div class="relative w-full max-w-md group">
-                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm group-hover:text-primary transition-colors">search</span>
-                        <input class="w-full pl-10 pr-4 py-2 bg-surface-container-high rounded-xl border-none text-sm focus:ring-2 focus:ring-primary/20 transition-all outline-none" placeholder="Buscar pacientes, registros..." type="text" />
+                        <span
+                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm group-hover:text-primary transition-colors">search</span>
+                        <input
+                            class="w-full pl-10 pr-4 py-2 bg-surface-container-high rounded-xl border-none text-sm focus:ring-2 focus:ring-primary/20 transition-all outline-none"
+                            placeholder="Buscar pacientes, registros..." type="text" />
                     </div>
                 </div>
 
                 <div class="flex items-center gap-6">
                     <div class="flex items-center gap-4">
-                        <button class="relative p-2 text-slate-400 hover:bg-surface-container-high transition-colors rounded-full">
+                        <button
+                            class="relative p-2 text-slate-400 hover:bg-surface-container-high transition-colors rounded-full">
                             <span class="material-symbols-outlined">notifications</span>
-                            <span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-white"></span>
+                            <span
+                                class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-white"></span>
                         </button>
-                        <button class="p-2 text-slate-400 hover:bg-surface-container-high transition-colors rounded-full">
+                        <button
+                            class="p-2 text-slate-400 hover:bg-surface-container-high transition-colors rounded-full">
                             <span class="material-symbols-outlined">chat_bubble</span>
                         </button>
                     </div>
-                    
+
                     <div class="h-8 w-[1px] bg-slate-200"></div>
 
                     <div class="relative cursor-pointer" id="perfilDropdownBtn">
                         <div class="flex items-center gap-3 hover:bg-slate-50 p-2 rounded-xl transition-colors">
                             <div class="text-right hidden sm:block">
                                 <p id="uiNombreNav" class="text-sm font-bold text-on-surface">Cargando...</p>
-                                <p id="uiRolNav" class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">...</p>
+                                <p id="uiRolNav" class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">
+                                    ...</p>
                             </div>
-                            <div class="w-10 h-10 rounded-xl bg-primary-fixed border-[1.5px] border-primary flex items-center justify-center text-primary font-bold">
+                            <div
+                                class="w-10 h-10 rounded-xl bg-primary-fixed border-[1.5px] border-primary flex items-center justify-center text-primary font-bold">
                                 <span class="material-symbols-outlined">person</span>
                             </div>
                         </div>
 
-                        <div id="perfilMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-slate-100 overflow-hidden z-50">
-                            <a href="perfil.html" class="block px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-3 transition-colors">
+                        <div id="perfilMenu"
+                            class="hidden absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-slate-100 overflow-hidden z-50">
+                            <a href="perfil.html"
+                                class="block px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-3 transition-colors">
                                 <span class="material-symbols-outlined text-lg">account_circle</span> Mi Perfil
                             </a>
                             <div class="border-t border-slate-100"></div>
-                            <a href="#" onclick="logout()" class="block px-4 py-3 text-sm text-red-600 hover:bg-red-50 flex items-center gap-3 transition-colors">
+                            <a href="#" onclick="logout()"
+                                class="block px-4 py-3 text-sm text-red-600 hover:bg-red-50 flex items-center gap-3 transition-colors">
                                 <span class="material-symbols-outlined text-lg">logout</span> Cerrar Sesión
                             </a>
                         </div>
@@ -131,179 +145,206 @@
                 </div>
             </header>
 
+            <div class="flex-1 overflow-y-auto bg-background p-8 space-y-6 relative">
 
-             <!-- Contenido Principal -->
-
-        <div class="flex-1 overflow-y-auto bg-background p-8 space-y-6 relative">
-                
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
                     <div>
                         <p class="text-xs font-bold text-slate-400 tracking-widest uppercase mb-1">Administración</p>
                         <h1 class="text-3xl font-extrabold tracking-tight text-slate-800">Personal y Permisos</h1>
                     </div>
                     <div class="flex items-center gap-3">
-                        <button class="bg-white border border-slate-200 text-slate-600 px-5 py-2 rounded-xl text-sm font-bold shadow-sm hover:bg-slate-50 transition-all">
-                            Exportar Directorio
-                        </button>
-                        <button class="flex items-center gap-2 bg-[#48d1c6] text-white px-5 py-2 rounded-xl text-sm font-bold shadow-md hover:bg-[#3bbab0] transition-all">
+                        <button onclick="abrirModalNuevo()"
+                            class="flex items-center gap-2 bg-[#48d1c6] text-white px-5 py-2 rounded-xl text-sm font-bold shadow-md hover:bg-[#3bbab0] transition-all">
                             <span class="material-symbols-outlined text-lg">person_add</span> Nuevo Empleado
                         </button>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-                        <p class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-1">Total Activos</p>
-                        <p class="text-4xl font-extrabold text-primary">24</p>
+                        <p class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-1">Total
+                            Empleados Activos</p>
+                        <p id="uiTotalActivos" class="text-4xl font-extrabold text-primary">...</p>
                         <p class="text-xs text-teal-600 font-bold mt-2 flex items-center gap-1">
-                            <span class="material-symbols-outlined text-[14px]">trending_up</span> +2 este mes
+                            <span class="material-symbols-outlined text-[14px]">how_to_reg</span> Registrados en el
+                            sistema
                         </p>
                     </div>
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-                        <p class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-1">Roles Administrativos</p>
-                        <p class="text-4xl font-extrabold text-slate-700">6</p>
-                        <p class="text-xs text-slate-400 font-medium mt-2">Con acceso al sistema</p>
-                    </div>
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-                        <p class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-1">Bienestar Staff</p>
-                        <p class="text-4xl font-extrabold text-amber-700">Alto</p>
-                        <p class="text-xs text-amber-600 font-bold mt-2 flex items-center gap-1">
-                            <span class="material-symbols-outlined text-[14px]">wb_sunny</span> Balance de turnos óptimo
+                        <p class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-1">Roles
+                            Administrativos</p>
+                        <p id="uiRolesAdmin" class="text-4xl font-extrabold text-slate-700">...</p>
+                        <p class="text-xs text-slate-400 font-medium mt-2 flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[14px]">manage_accounts</span> Con acceso al
+                            sistema
                         </p>
                     </div>
                 </div>
 
                 <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
                     <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-                        <h3 class="text-xs font-extrabold text-slate-500 tracking-widest uppercase">Miembros del Equipo</h3>
+                        <h3 class="text-xs font-extrabold text-slate-500 tracking-widest uppercase">Miembros del Equipo
+                        </h3>
                         <span class="text-xs font-extrabold text-slate-400 tracking-widest uppercase">Acciones</span>
                     </div>
-                    
-                    <div class="divide-y divide-slate-50">
-                        <div class="px-6 py-4 flex items-center justify-between hover:bg-slate-50/80 transition-colors group">
-                            <div class="flex items-center gap-4">
-                                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAfVi179j7J6jQVkHmUNpfB6I6BppMynHBD6Wv8JZs7AP5bCIV5yTv93o_KMjMf_D9X4QgdujwuR1wBW5aGjGSaAld_kFmai7yKsqnSZMVNSyldZd4HKsasl3GikKvMezAeaDhnqKR2eAgXXen9msKY5bc-jLN2UL_Hbr7H1WYtBHmghb_40gcntnoHUz7E84dfIoisd8oFS563m5IvQJkbQ3mZtGF6n-HZcXdqHfzb7Nvv1uixLpYvH1GOdBXCOvxrvxPkilNkzs1" class="w-10 h-10 rounded-full object-cover shadow-sm">
-                                <div>
-                                    <p class="text-sm font-bold text-slate-800">Dr. Aria Thorne</p>
-                                    <p class="text-xs text-slate-500 font-medium">aria.t@atelier.com • Dentista</p>
-                                </div>
-                            </div>
-                            <button onclick="abrirModal('Dr. Aria Thorne', 'DENTISTA')" class="text-xs font-bold text-primary bg-primary-fixed/30 hover:bg-primary-fixed/60 px-4 py-2 rounded-lg transition-colors opacity-0 group-hover:opacity-100">
-                                Editar Permisos
-                            </button>
-                        </div>
 
-                        <div class="px-6 py-4 flex items-center justify-between hover:bg-slate-50/80 transition-colors group">
-                            <div class="flex items-center gap-4">
-                                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAfVi179j7J6jQVkHmUNpfB6I6BppMynHBD6Wv8JZs7AP5bCIV5yTv93o_KMjMf_D9X4QgdujwuR1wBW5aGjGSaAld_kFmai7yKsqnSZMVNSyldZd4HKsasl3GikKvMezAeaDhnqKR2eAgXXen9msKY5bc-jLN2UL_Hbr7H1WYtBHmghb_40gcntnoHUz7E84dfIoisd8oFS563m5IvQJkbQ3mZtGF6n-HZcXdqHfzb7Nvv1uixLpYvH1GOdBXCOvxrvxPkilNkzs2" class="w-10 h-10 rounded-full object-cover shadow-sm">
-                                <div>
-                                    <p class="text-sm font-bold text-slate-800">Sarah Jenkins</p>
-                                    <p class="text-xs text-slate-500 font-medium">s.jenkins@atelier.com • Recepcionista</p>
-                                </div>
-                            </div>
-                            <button onclick="abrirModal('Sarah Jenkins', 'RECEPCIONISTA')" class="text-xs font-bold text-primary bg-primary-fixed/30 hover:bg-primary-fixed/60 px-4 py-2 rounded-lg transition-colors opacity-0 group-hover:opacity-100">
-                                Editar Permisos
-                            </button>
-                        </div>
-                        
-                        <div class="px-6 py-4 flex items-center justify-between hover:bg-slate-50/80 transition-colors group">
-                            <div class="flex items-center gap-4">
-                                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAfVi179j7J6jQVkHmUNpfB6I6BppMynHBD6Wv8JZs7AP5bCIV5yTv93o_KMjMf_D9X4QgdujwuR1wBW5aGjGSaAld_kFmai7yKsqnSZMVNSyldZd4HKsasl3GikKvMezAeaDhnqKR2eAgXXen9msKY5bc-jLN2UL_Hbr7H1WYtBHmghb_40gcntnoHUz7E84dfIoisd8oFS563m5IvQJkbQ3mZtGF6n-HZcXdqHfzb7Nvv1uixLpYvH1GOdBXCOvxrvxPkilNkzs3" class="w-10 h-10 rounded-full object-cover shadow-sm">
-                                <div>
-                                    <p class="text-sm font-bold text-slate-800">Marcus Vance</p>
-                                    <p class="text-xs text-slate-500 font-medium">m.vance@atelier.com • Asistente</p>
-                                </div>
-                            </div>
-                            <button onclick="abrirModal('Marcus Vance', 'ASISTENTE')" class="text-xs font-bold text-primary bg-primary-fixed/30 hover:bg-primary-fixed/60 px-4 py-2 rounded-lg transition-colors opacity-0 group-hover:opacity-100">
-                                Editar Permisos
-                            </button>
-                        </div>
+                    <div id="tablaPersonal" class="divide-y divide-slate-50">
                     </div>
                 </div>
-
             </div>
 
-            <div id="modalPermisos" class="fixed inset-0 z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
-                <div class="absolute inset-0 bg-slate-900/30 backdrop-blur-sm" onclick="cerrarModal()"></div>
-                
-                <div class="relative bg-white w-full max-w-md rounded-[24px] shadow-2xl p-6 m-4 transform scale-95 transition-transform duration-300" id="modalBox">
-                    
-                    <button onclick="cerrarModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 rounded-full p-1 transition-colors">
+            <div id="modalNuevo"
+                class="fixed inset-0 z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+                <div class="absolute inset-0 bg-slate-900/30 backdrop-blur-sm" onclick="cerrarModalNuevo()"></div>
+
+                <div class="relative bg-white w-full max-w-md rounded-[24px] shadow-2xl p-8 m-4 transform scale-95 transition-transform duration-300"
+                    id="modalBoxNuevo">
+                    <button onclick="cerrarModalNuevo()"
+                        class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 rounded-full p-1 transition-colors">
+                        <span class="material-symbols-outlined text-sm">close</span>
+                    </button>
+
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-12 h-12 rounded-2xl bg-[#cde5ff] flex items-center justify-center text-[#005d90]">
+                            <span class="material-symbols-outlined">person_add</span>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-extrabold text-slate-800">Nuevo Empleado</h2>
+                            <p class="text-xs text-slate-500 font-medium">Registra un nuevo miembro del equipo</p>
+                        </div>
+                    </div>
+
+                    <form id="registroForm" class="space-y-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label
+                                    class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Nombre</label>
+                                <input type="text" id="nombreNuevo" required
+                                    class="w-full mt-1 px-3 py-2 bg-slate-50 border border-transparent focus:border-primary/30 rounded-xl text-sm outline-none transition-all">
+                            </div>
+                            <div>
+                                <label
+                                    class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Apellido</label>
+                                <input type="text" id="apellidoNuevo" required
+                                    class="w-full mt-1 px-3 py-2 bg-slate-50 border border-transparent focus:border-primary/30 rounded-xl text-sm outline-none transition-all">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Correo
+                                Electrónico</label>
+                            <input type="email" id="emailNuevo" required
+                                class="w-full mt-1 px-3 py-2 bg-slate-50 border border-transparent focus:border-primary/30 rounded-xl text-sm outline-none transition-all">
+                        </div>
+
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Contraseña
+                                Temporal</label>
+                            <input type="password" id="passwordNuevo" required
+                                class="w-full mt-1 px-3 py-2 bg-slate-50 border border-transparent focus:border-primary/30 rounded-xl text-sm outline-none transition-all">
+                        </div>
+
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Rol del
+                                Sistema</label>
+                            <select id="rolEditar"
+                                class="w-full mt-1 px-3 py-2 bg-slate-50 border border-transparent focus:border-primary/30 rounded-xl text-sm outline-none transition-all cursor-pointer">
+                                <option value="1">Administrador</option>
+                                <option value="2">Dentista</option>
+                                <option value="3">Recepcionista</option>
+                            </select>
+                        </div>
+
+                        <p id="mensajeNuevo" class="text-center text-xs font-bold h-4 text-primary"></p>
+
+                        <button type="submit" id="btnGuardarNuevo"
+                            class="w-full bg-[#48d1c6] hover:bg-[#3bbab0] text-white font-bold text-sm py-3 rounded-xl shadow-lg transition-colors mt-2">
+                            Registrar Empleado
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="modalEditar"
+                class="fixed inset-0 z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+                <div class="absolute inset-0 bg-slate-900/30 backdrop-blur-sm" onclick="cerrarModalEditar()"></div>
+
+                <div class="relative bg-white w-full max-w-md rounded-[24px] shadow-2xl p-8 m-4 transform scale-95 transition-transform duration-300"
+                    id="modalBoxEditar">
+                    <button onclick="cerrarModalEditar()"
+                        class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 rounded-full p-1 transition-colors">
                         <span class="material-symbols-outlined text-sm">close</span>
                     </button>
 
                     <div class="flex items-center gap-4 mb-6">
                         <div class="w-12 h-12 rounded-2xl bg-[#a7f3d0] flex items-center justify-center text-teal-800">
-                            <span class="material-symbols-outlined">shield_person</span>
+                            <span class="material-symbols-outlined">manage_accounts</span>
                         </div>
                         <div>
-                            <h2 class="text-lg font-extrabold text-slate-800">Editar Permisos</h2>
-                            <p class="text-xs text-slate-500 font-medium">Gestionando acceso para <span id="modalNombre" class="font-bold text-slate-800">Sarah Jenkins</span></p>
+                            <h2 class="text-xl font-extrabold text-slate-800">Editar Datos</h2>
+                            <p class="text-xs text-slate-500 font-medium">Modificando a <span id="modalNombreDisplay"
+                                    class="font-bold text-slate-800">...</span></p>
                         </div>
                     </div>
 
-                    <div class="bg-[#f0fdf4] border-l-4 border-teal-500 px-4 py-3 rounded-r-lg mb-6">
-                        <p class="text-xs font-extrabold text-teal-800 tracking-wider">Rol Actual: <span id="modalRol">RECEPCIONISTA</span></p>
-                    </div>
+                    <form id="editarForm" class="space-y-4">
+                        <input type="hidden" id="idEditar">
 
-                    <div class="space-y-5 mb-8">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-bold text-slate-800">Registros Clínicos</p>
-                                <p class="text-[10px] text-slate-500 font-medium">Acceso a historial médico y notas del paciente</p>
-                            </div>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" class="sr-only peer">
-                                <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
-                            </label>
-                        </div>
-                        
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-bold text-slate-800">Finanzas y Pagos</p>
-                                <p class="text-[10px] text-slate-500 font-medium">Procesar pagos y ver reportes de ingresos</p>
-                            </div>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" class="sr-only peer">
-                                <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
-                            </label>
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Nombre
+                                Completo</label>
+                            <input type="text" id="nombreEditar"
+                                class="w-full mt-1 px-3 py-2 bg-slate-50 border border-transparent focus:border-primary/30 rounded-xl text-sm outline-none transition-all">
                         </div>
 
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-bold text-slate-800">Programación</p>
-                                <p class="text-[10px] text-slate-500 font-medium">Modificar entradas del calendario y turnos</p>
-                            </div>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" class="sr-only peer" checked>
-                                <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
-                            </label>
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Correo
+                                Electrónico</label>
+                            <input type="email" id="emailEditar"
+                                class="w-full mt-1 px-3 py-2 bg-slate-50 border border-transparent focus:border-primary/30 rounded-xl text-sm outline-none transition-all">
                         </div>
 
-                        <div class="flex items-center justify-between">
+                        <div class="grid grid-cols-2 gap-4 items-center">
                             <div>
-                                <p class="text-sm font-bold text-slate-800">Directorio de Personal</p>
-                                <p class="text-[10px] text-slate-500 font-medium">Ver y editar otros perfiles del equipo</p>
+                                <label
+                                    class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Rol</label>
+                                <select id="rolEditar"
+                                    class="w-full mt-1 px-3 py-2 bg-slate-50 border border-transparent focus:border-primary/30 rounded-xl text-sm outline-none transition-all cursor-pointer">
+                                    <option value="1">Administrador</option>
+                                    <option value="2">Dentista</option>
+                                    <option value="3">Recepcionista</option>
+                                </select>
                             </div>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" class="sr-only peer">
-                                <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
-                            </label>
+
+                            <div class="flex flex-col">
+                                <label
+                                    class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Estado
+                                    del Sistema</label>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" id="estadoEditar" class="sr-only peer">
+                                    <div
+                                        class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-teal-500">
+                                    </div>
+                                    <span class="ml-3 text-xs font-bold text-slate-600 peer-checked:text-teal-600"
+                                        id="textoEstadoEditar">Inactivo</span>
+                                </label>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="flex gap-3 mt-4">
-                        <button onclick="cerrarModal()" class="flex-1 bg-slate-100 text-slate-700 font-bold text-sm py-3 rounded-xl hover:bg-slate-200 transition-colors">
-                            Descartar Cambios
-                        </button>
-                        <button onclick="cerrarModal()" class="flex-1 bg-[#005d90] text-white font-bold text-sm py-3 rounded-xl shadow-lg hover:bg-sky-800 transition-colors">
-                            Actualizar Política
-                        </button>
-                    </div>
-
+                        <div class="flex gap-3 mt-6">
+                            <button type="button" onclick="cerrarModalEditar()"
+                                class="flex-1 bg-slate-100 text-slate-700 font-bold text-sm py-3 rounded-xl hover:bg-slate-200 transition-colors">
+                                Cancelar
+                            </button>
+                            <button type="submit"
+                                class="flex-1 bg-[#005d90] text-white font-bold text-sm py-3 rounded-xl shadow-lg hover:bg-sky-800 transition-colors">
+                                Actualizar
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
-        
+
         </main>
     </div>
 
@@ -311,5 +352,7 @@
     <script src="js/menu.js"></script>
     <script src="js/personal.js"></script>
 
+
 </body>
+
 </html>

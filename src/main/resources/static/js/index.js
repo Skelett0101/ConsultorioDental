@@ -6,14 +6,14 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
     const btnSubmit = document.getElementById("btnSubmit");
     const msjError = document.getElementById("mensaje");
     
-    // Estado de carga visual
+    // estado de carga visual
     btnSubmit.disabled = true;
     btnSubmit.innerHTML = `
         <span class="material-symbols-outlined animate-spin">sync</span>
         Conectando...
     `;
     btnSubmit.classList.add("opacity-80", "cursor-not-allowed");
-    msjError.textContent = ""; // Limpiar errores
+    msjError.textContent = "";
 
     const baseUrl = window.location.origin;
     
@@ -50,7 +50,7 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
         localStorage.setItem("token", token);
         localStorage.setItem("usuario", JSON.stringify(datosUsuario));
 
-        // éxito antes de redirigir
+        // exito antes de redirigir
         btnSubmit.innerHTML = `
             <span class="material-symbols-outlined">check_circle</span>
             Acceso Autorizado
@@ -64,9 +64,9 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
 
     } catch (error) {
         console.error("Error:", error);
-        msjError.textContent = error.message; // Mostrar error en pantalla
+        msjError.textContent = error.message; // error en pantalla
         
-        // Restaurar botón
+        // estado normal 
         btnSubmit.disabled = false;
         btnSubmit.classList.remove("opacity-80", "cursor-not-allowed");
         btnSubmit.innerHTML = `

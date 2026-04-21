@@ -1,12 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
     
-    // 1. Verificación de Sesión
     const usuarioStr = localStorage.getItem("usuario");
     if (!usuarioStr) return; 
     const usuario = JSON.parse(usuarioStr); 
     const esAdmin = usuario.rol.toLowerCase() === 'admin';
 
-    // 2. Referencias al HTML
     const contenedorServicios = document.getElementById("contenedor-servicios");
     const tablaPagos = document.getElementById("tabla-pagos");
     const inputBuscarPaciente = document.getElementById("input-buscar-paciente");
@@ -14,7 +12,26 @@ document.addEventListener("DOMContentLoaded", () => {
     const inputBusquedaServicio = document.getElementById("inputBusquedaServicio");
     const btnAdminNuevoServicio = document.getElementById("btn-admin-servicios");
 
-    // --- MÓDULO DE SERVICIOS ---
+    const inputFiltroDia = document.getElementById("input-filtro-dia");
+    const inputFiltroMes = document.getElementById("input-filtro-mes");
+    const uiIngresosDia = document.getElementById("ui-ingresos-dia");
+    const uiIngresosMes = document.getElementById("ui-ingresos-mes");
+
+    const btnPopulares = document.getElementById("btn-servicios-populares");
+    const modalPopulares = document.getElementById("modal-populares");
+    const listaPopulares = document.getElementById("lista-populares");
+
+    let historialPagosCache = []; 
+
+    // Inicializar inputs con la fecha de HOY
+    const hoy = new Date();
+    const year = hoy.getFullYear();
+    const month = String(hoy.getMonth() + 1).padStart(2, '0');
+    const day = String(hoy.getDate()).padStart(2, '0');
+    
+    if(inputFiltroDia) inputFiltroDia.value = `${year}-${month}-${day}`;
+    if(inputFiltroMes) inputFiltroMes.value = `${year}-${month}`;
+
     async function cargarServicios() {
         if(!contenedorServicios) return;
         try {
@@ -40,22 +57,22 @@ document.addEventListener("DOMContentLoaded", () => {
         servicios.forEach(s => {
             const opacidad = s.activoServicio ? "" : "opacity-50 grayscale";
             contenedorServicios.innerHTML += `
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:-translate-y-1 transition-all ${opacidad}">
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 hover:-translate-y-1 transition-all ${opacidad}">
                 <div class="flex justify-between items-start mb-4">
-                    <div class="w-12 h-12 rounded-xl bg-teal-50 flex items-center justify-center">
-                        <span class="material-symbols-outlined text-teal-700">medical_services</span>
+                    <div class="w-10 h-10 rounded-xl bg-teal-50 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-teal-600 text-lg">medical_services</span>
                     </div>
                     ${esAdmin ? `
-                        <div class="flex gap-2">
-                            <button onclick="prepararEdicion(${s.idServicio}, '${s.nombreServicio}', ${s.precioServicio})" class="p-1 hover:bg-slate-100 rounded text-slate-400 hover:text-primary transition-colors"><span class="material-symbols-outlined text-sm">edit</span></button>
-                            <button onclick="toggleServicio(${s.idServicio}, ${s.activoServicio})" class="p-1 hover:bg-slate-100 rounded text-slate-400 hover:text-error transition-colors"><span class="material-symbols-outlined text-sm">${s.activoServicio ? 'visibility_off' : 'visibility'}</span></button>
+                        <div class="flex gap-1 bg-slate-50 rounded-lg p-1">
+                            <button onclick="prepararEdicion(${s.idServicio}, '${s.nombreServicio}', ${s.precioServicio})" class="p-1 hover:bg-white rounded shadow-sm text-slate-400 hover:text-primary transition-all"><span class="material-symbols-outlined text-sm">edit</span></button>
+                            <button onclick="toggleServicio(${s.idServicio}, ${s.activoServicio})" class="p-1 hover:bg-white rounded shadow-sm text-slate-400 hover:text-error transition-all"><span class="material-symbols-outlined text-sm">${s.activoServicio ? 'visibility_off' : 'visibility'}</span></button>
                         </div>
                     ` : ''}
                 </div>
-                <h4 class="font-bold text-lg text-slate-800 mb-1">${s.nombreServicio}</h4>
-                <div class="flex justify-between items-center pt-4 border-t border-slate-100 mt-4">
-                    <span class="text-2xl font-extrabold text-[#005d90]">$${s.precioServicio.toFixed(2)}</span>
-                    ${!s.activoServicio ? '<span class="text-[10px] font-bold text-red-500 bg-red-50 px-2 py-1 rounded">INACTIVO</span>' : ''}
+                <h4 class="font-bold text-base text-slate-800 mb-1 truncate">${s.nombreServicio}</h4>
+                <div class="flex justify-between items-end pt-3 border-t border-slate-50 mt-3">
+                    <span class="text-xl font-extrabold text-[#005d90]">$${s.precioServicio.toFixed(2)}</span>
+                    ${!s.activoServicio ? '<span class="text-[9px] font-bold text-red-500 bg-red-50 px-2 py-1 rounded-md">INACTIVO</span>' : ''}
                 </div>
             </div>`;
         });
@@ -118,32 +135,34 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- MÓDULO DE PAGOS ---
     async function cargarPagos(busqueda = "") {
         if(!tablaPagos) return;
         try {
-            tablaPagos.innerHTML = `<tr><td colspan="3" class="text-center py-4 text-slate-500">Cargando historial...</td></tr>`;
+            tablaPagos.innerHTML = `<tr><td colspan="3" class="text-center py-6 text-slate-500 text-sm">Cargando historial de pagos...</td></tr>`;
             const response = await fetchConAuth(`http://localhost:8080/api/pagos/todos`);
             if (!response.ok) throw new Error("Error al cargar pagos");
             
-            let pagos = await response.json();
+            historialPagosCache = await response.json();
+            calcularIngresos(); 
+
+            let pagosParaTabla = historialPagosCache;
             tablaPagos.innerHTML = ""; 
             
             if (busqueda.trim() !== "") {
                 const termino = busqueda.toLowerCase().trim();
-                pagos = pagos.filter(pago => {
+                pagosParaTabla = pagosParaTabla.filter(pago => {
                     const nombre = (pago.cita.paciente.nombre_paciente || pago.cita.paciente.nombrePaciente || "").toLowerCase();
                     const apellido = (pago.cita.paciente.apellido_paciente || pago.cita.paciente.apellidoPaciente || "").toLowerCase();
                     return `${nombre} ${apellido}`.includes(termino);
                 });
             }
 
-            if (pagos.length === 0) {
-                tablaPagos.innerHTML = `<tr><td colspan="3" class="text-center py-4 text-slate-500">No se encontraron pagos.</td></tr>`;
+            if (pagosParaTabla.length === 0) {
+                tablaPagos.innerHTML = `<tr><td colspan="3" class="text-center py-6 text-slate-500 text-sm">No se encontraron pagos.</td></tr>`;
                 return;
             }
 
-            const pagosAgrupados = pagos.reduce((acc, pago) => {
+            const pagosAgrupados = pagosParaTabla.reduce((acc, pago) => {
                 const idPac = pago.cita.paciente.id_paciente || pago.cita.paciente.idPaciente;
                 if (!acc[idPac]) {
                     const nombre = pago.cita.paciente.nombre_paciente || pago.cita.paciente.nombrePaciente || 'Paciente';
@@ -156,56 +175,123 @@ document.addEventListener("DOMContentLoaded", () => {
 
             Object.entries(pagosAgrupados).forEach(([idPac, data]) => {
                 const filaPrincipal = `
-                <tr class="hover:bg-slate-50/50 transition-colors cursor-pointer group" onclick="document.getElementById('detalle-paciente-${idPac}').classList.toggle('hidden')">
-                    <td class="px-6 py-4">
+                <tr class="hover:bg-slate-50 transition-colors cursor-pointer group" onclick="document.getElementById('detalle-paciente-${idPac}').classList.toggle('hidden')">
+                    <td class="px-6 py-4 border-b border-slate-50">
                         <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-[#cde5ff] flex items-center justify-center text-[10px] font-bold text-[#005d90]">P${idPac}</div>
-                            <span class="text-sm font-bold text-slate-800 group-hover:text-[#005d90] transition-colors">${data.nombreCompleto}</span>
+                            <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-[10px] font-bold text-primary border border-blue-100">P${idPac}</div>
+                            <span class="text-sm font-bold text-slate-700 group-hover:text-primary transition-colors">${data.nombreCompleto}</span>
                         </div>
                     </td>
-                    <td class="px-6 py-4 text-sm font-bold text-slate-500">${data.listaPagos.length} pagos registrados</td>
-                    <td class="px-6 py-4 text-right"><span class="material-symbols-outlined text-slate-400 group-hover:text-[#005d90]">expand_more</span></td>
+                    <td class="px-6 py-4 border-b border-slate-50 text-sm font-semibold text-slate-500">${data.listaPagos.length} pagos registrados</td>
+                    <td class="px-6 py-4 border-b border-slate-50 text-right"><span class="material-symbols-outlined text-slate-400 group-hover:text-primary bg-white shadow-sm p-1 rounded-lg">expand_more</span></td>
                 </tr>`;
 
                 let filasDetalle = data.listaPagos.map(pago => {
-                    const fecha = new Date(pago.fechaPago).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
+                    const fString = pago.fecha_pago || pago.fechaPago;
+                    const fecha = new Date(fString ? fString.split('.')[0].replace(' ','T') : Date.now()).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
                     const idCita = pago.cita.id_cita || pago.cita.idCita;
                     const nombreServicio = pago.cita.servicio?.nombreServicio || pago.cita.servicio?.nombre || 'Consulta General';
                     return `
-                    <tr class="border-b border-slate-100/50 last:border-0 hover:bg-white transition-colors">
-                        <td class="px-8 py-3 text-sm font-bold text-slate-600">Cita #${idCita}</td>
-                        <td class="px-6 py-3 text-sm text-slate-500">${fecha}</td>
-                        <td class="px-6 py-3 font-extrabold text-[#005d90]">$${pago.monto.toFixed(2)}</td>
-                        <td class="px-6 py-3 text-right"><span class="text-xs font-bold text-slate-500 uppercase tracking-wider bg-slate-100 px-3 py-1 rounded-md">${nombreServicio}</span></td>
+                    <tr class="border-b border-slate-50 last:border-0 hover:bg-slate-50 transition-colors bg-white">
+                        <td class="px-10 py-3 text-sm font-bold text-slate-500 flex items-center gap-2">
+                            <span class="w-1 h-1 rounded-full bg-slate-300"></span> Cita #${idCita}
+                        </td>
+                        <td class="px-6 py-3 text-[13px] font-medium text-slate-500">${fecha}</td>
+                        <td class="px-6 py-3 font-extrabold text-primary">$${parseFloat(pago.monto).toFixed(2)}</td>
+                        <td class="px-6 py-3 text-right"><span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider bg-slate-100 px-2 py-1 rounded-md border border-slate-200">${nombreServicio}</span></td>
                     </tr>`;
                 }).join('');
 
                 const menuDesplegable = `
                 <tr id="detalle-paciente-${idPac}" class="hidden bg-slate-50/50">
-                    <td colspan="3" class="p-0 border-b border-slate-200">
-                        <table class="w-full text-left">
-                            <thead class="bg-slate-100/50">
-                                <tr>
-                                    <th class="px-8 py-2 text-[10px] uppercase text-slate-400 font-bold">Número de Cita</th>
-                                    <th class="px-6 py-2 text-[10px] uppercase text-slate-400 font-bold">Fecha</th>
-                                    <th class="px-6 py-2 text-[10px] uppercase text-slate-400 font-bold">Monto</th>
-                                    <th class="px-6 py-2 text-[10px] uppercase text-slate-400 font-bold text-right">Servicio</th>
-                                </tr>
-                            </thead>
-                            <tbody>${filasDetalle}</tbody>
-                        </table>
+                    <td colspan="3" class="p-0 border-b border-slate-100">
+                        <div class="px-6 py-4 bg-slate-50/50 inset-shadow-sm">
+                            <table class="w-full text-left bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+                                <thead class="bg-slate-50/50 border-b border-slate-100">
+                                    <tr>
+                                        <th class="px-6 py-2.5 text-[10px] uppercase text-slate-400 font-bold">Ticket</th>
+                                        <th class="px-6 py-2.5 text-[10px] uppercase text-slate-400 font-bold">Fecha</th>
+                                        <th class="px-6 py-2.5 text-[10px] uppercase text-slate-400 font-bold">Cobro</th>
+                                        <th class="px-6 py-2.5 text-[10px] uppercase text-slate-400 font-bold text-right">Servicio Realizado</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-50">${filasDetalle}</tbody>
+                            </table>
+                        </div>
                     </td>
                 </tr>`;
                 tablaPagos.innerHTML += filaPrincipal + menuDesplegable;
             });
         } catch (error) {
-            if(tablaPagos) tablaPagos.innerHTML = `<tr><td colspan="3" class="text-center py-4 text-red-500">Error al cargar historial de pagos.</td></tr>`;
+            if(tablaPagos) tablaPagos.innerHTML = `<tr><td colspan="3" class="text-center py-6 text-red-500 text-sm">Error al cargar historial de pagos.</td></tr>`;
         }
     }
 
+    function calcularIngresos() {
+        if(!historialPagosCache.length) return;
+
+        const diaSeleccionado = inputFiltroDia.value; 
+        const mesSeleccionado = inputFiltroMes.value; 
+
+        let sumaDia = 0;
+        let sumaMes = 0;
+
+        historialPagosCache.forEach(pago => {
+            const fString = pago.fecha_pago || pago.fechaPago;
+            if(!fString) return;
+            
+            const fechaLimpia = String(fString).split('T')[0].split(' ')[0]; 
+            const mesAnioLimpio = fechaLimpia.substring(0, 7); 
+
+            if (fechaLimpia === diaSeleccionado) sumaDia += parseFloat(pago.monto || 0);
+            if (mesAnioLimpio === mesSeleccionado) sumaMes += parseFloat(pago.monto || 0);
+        });
+
+        if(uiIngresosDia) uiIngresosDia.innerText = `$${sumaDia.toFixed(2)}`;
+        if(uiIngresosMes) uiIngresosMes.innerText = `$${sumaMes.toFixed(2)}`;
+    }
+
+    if(inputFiltroDia) inputFiltroDia.addEventListener("change", calcularIngresos);
+    if(inputFiltroMes) inputFiltroMes.addEventListener("change", calcularIngresos);
+
     if(btnBuscarPaciente){
-        btnBuscarPaciente.addEventListener("click", () => {
-            cargarPagos(inputBuscarPaciente.value);
+        btnBuscarPaciente.addEventListener("click", () => { cargarPagos(inputBuscarPaciente.value); });
+    }
+
+    if(btnPopulares){
+        btnPopulares.addEventListener("click", () => {
+            if(historialPagosCache.length === 0) {
+                alert("Aún no hay pagos registrados para analizar estadísticas.");
+                return;
+            }
+
+            const conteoServicios = {};
+            historialPagosCache.forEach(pago => {
+                const nombreS = pago.cita?.servicio?.nombreServicio || pago.cita?.servicio?.nombre || 'Consulta General';
+                if(!conteoServicios[nombreS]) conteoServicios[nombreS] = 0;
+                conteoServicios[nombreS]++;
+            });
+
+            const ordenados = Object.entries(conteoServicios).sort((a, b) => b[1] - a[1]);
+
+            listaPopulares.innerHTML = "";
+            ordenados.forEach(([nombre, cantidad], index) => {
+                let medalla = '🔹';
+                let colorFondo = 'bg-slate-50';
+                
+                if(index === 0) { medalla = '🥇'; colorFondo = 'bg-amber-50 border-amber-100'; }
+                else if(index === 1) { medalla = '🥈'; colorFondo = 'bg-slate-100 border-slate-200'; }
+                else if(index === 2) { medalla = '🥉'; colorFondo = 'bg-orange-50 border-orange-100'; }
+
+                listaPopulares.innerHTML += `
+                    <div class="flex items-center justify-between p-3 rounded-xl border ${colorFondo} transition-all hover:scale-[1.02]">
+                        <span class="text-sm font-bold text-slate-700 flex items-center gap-2">${medalla} ${nombre}</span>
+                        <span class="text-[10px] font-extrabold text-white bg-[#005d90] px-2.5 py-1 rounded-full shadow-sm">${cantidad} cobros</span>
+                    </div>
+                `;
+            });
+
+            modalPopulares.classList.remove("hidden");
         });
     }
 
@@ -249,8 +335,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     citasPendientesCache.forEach(cita => {
                         const id = cita.id_cita || cita.idCita;
                         const nombrePac = cita.paciente?.nombre_paciente || cita.paciente?.nombrePaciente || "Paciente";
-                        const fechaRaw = cita.fecha_hora || cita.fechaHora || cita.fecha_creacion;
-                        const fechaTxt = fechaRaw ? new Date(fechaRaw).toLocaleDateString() : 'Sin fecha';
+                        
+                        const fString = cita.fecha_hora || cita.fechaHora || cita.fecha_creacion;
+                        const fObj = new Date(fString ? fString.split('.')[0].replace(' ','T') : Date.now());
+                        const fechaTxt = fObj.toLocaleDateString('es-ES', {day: '2-digit', month:'short'});
+                        
                         selectCita.innerHTML += `<option value="${id}">Cita #${id} - ${nombrePac} (${fechaTxt})</option>`;
                     });
                 }
@@ -335,7 +424,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Iniciar
+    if (!esAdmin) {
+        const seccionFinanzas = document.getElementById("seccion-finanzas");
+        const btnPopulares = document.getElementById("btn-servicios-populares");
+        if (seccionFinanzas) seccionFinanzas.style.display = "none";
+        if (btnPopulares) btnPopulares.style.display = "none";
+    }
+
     cargarServicios();
     cargarPagos(); 
 });

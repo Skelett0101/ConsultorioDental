@@ -17,10 +17,7 @@
         theme: {
             extend: {
                 colors: {
-                    "on-primary-fixed-variant": "#004b74", "tertiary-fixed": "#ffdcc0", "tertiary": "#864a00", "primary-fixed": "#cde5ff", "on-primary-fixed": "#001d32", "secondary-fixed": "#8ef4e9", "on-surface": "#191c1d", "surface-tint": "#006399", "background": "#f8fafb", "surface-container": "#eceeef", "on-tertiary": "#ffffff", "tertiary-container": "#a95f00", "error-container": "#ffdad6", "surface-container-high": "#e6e8e9", "primary": "#005d90", "on-primary-container": "#f3f7ff", "on-background": "#191c1d", "on-error": "#ffffff", "on-secondary": "#ffffff", "inverse-surface": "#2e3132", "on-error-container": "#93000a", "on-secondary-container": "#006f67", "surface-container-lowest": "#ffffff", "secondary-container": "#8bf1e6", "surface-container-highest": "#e1e3e4", "on-tertiary-fixed": "#2e1600", "secondary": "#006a63", "on-primary": "#ffffff", "surface-container-low": "#f2f4f5", "inverse-on-surface": "#eff1f2", "on-secondary-fixed": "#00201d", "primary-fixed-dim": "#94ccff", "surface-variant": "#e1e3e4", "on-surface-variant": "#404850", "tertiary-fixed-dim": "#ffb877", "inverse-primary": "#94ccff", "surface-bright": "#f8fafb", "primary-container": "#0077b6", "on-secondary-fixed-variant": "#00504a", "outline": "#707881", "surface-dim": "#d8dadb", "on-tertiary-container": "#fff6f1", "on-tertiary-fixed-variant": "#6c3a00", "surface": "#f8fafb", "secondary-fixed-dim": "#71d7cd", "outline-variant": "#bfc7d1", "error": "#ba1a1a"
-                },
-                borderRadius: {
-                    "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"
+                    "primary": "#005d90", "error": "#ba1a1a", "background": "#f8fafb", "on-surface": "#191c1d"
                 },
                 fontFamily: {
                     "headline": ["Manrope"], "body": ["Inter"], "label": ["Inter"]
@@ -46,37 +43,16 @@
             </div>
 
             <nav class="flex-1 space-y-1">
-                <a href="dashboard.html">
-                    <span class="material-symbols-outlined">dashboard</span>
-                    <span class="text-sm">Panel de Control</span>
-                </a>
-                <a href="calendario.html">
-                    <span class="material-symbols-outlined">calendar_month</span>
-                    <span class="text-sm">Calendario</span>
-                </a>
-                <a id="navPersonal" href="personal.html">
-                    <span class="material-symbols-outlined">badge</span>
-                    <span class="text-sm">Personal</span>
-                </a>
-                <a href="servicios.html">
-                    <span class="material-symbols-outlined">payments</span>
-                    <span class="text-sm">Servicios</span>
-                </a>
-                <a href="pacientes.html">
-                    <span class="material-symbols-outlined">person</span>
-                    <span class="text-sm">Pacientes</span>
-                </a>
+                <a href="dashboard.html"><span class="material-symbols-outlined">dashboard</span><span class="text-sm">Panel de Control</span></a>
+                <a href="calendario.html"><span class="material-symbols-outlined">calendar_month</span><span class="text-sm">Calendario</span></a>
+                <a id="navPersonal" href="personal.html"><span class="material-symbols-outlined">badge</span><span class="text-sm">Personal</span></a>
+                <a href="servicios.html" class="bg-white text-primary shadow-sm"><span class="material-symbols-outlined">payments</span><span class="text-sm font-bold">Servicios</span></a>
+                <a href="pacientes.html"><span class="material-symbols-outlined">person</span><span class="text-sm">Pacientes</span></a>
             </nav>
 
             <div class="mt-auto space-y-1 pt-6 border-t border-slate-200">
-                <a class="flex items-center gap-3 px-3 py-2 rounded-xl transition-colors text-slate-500 hover:bg-white/60 font-medium" href="configuracion.html">
-                    <span class="material-symbols-outlined">settings</span>
-                    <span class="text-sm font-medium">Configuración</span>
-                </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-xl transition-colors text-slate-500 hover:bg-white/60 font-medium" href="soporte.html">
-                    <span class="material-symbols-outlined">help</span>
-                    <span class="text-sm font-medium">Soporte</span>
-                </a>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-xl transition-colors text-slate-500 hover:bg-white/60 font-medium" href="configuracion.html"><span class="material-symbols-outlined">settings</span><span class="text-sm font-medium">Configuración</span></a>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-xl transition-colors text-slate-500 hover:bg-white/60 font-medium" href="soporte.html"><span class="material-symbols-outlined">help</span><span class="text-sm font-medium">Soporte</span></a>
             </div>
         </aside>
 
@@ -86,19 +62,14 @@
                 <div class="flex items-center gap-4 flex-1">
                     <div class="relative w-full max-w-md group">
                         <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm group-hover:text-primary transition-colors">search</span>
-                        <input id="inputBusquedaServicio" class="w-full pl-10 pr-4 py-2 bg-surface-container-high rounded-xl outline-none focus:ring-2 focus:ring-primary/50 transition-all" placeholder="Buscar servicios o tratamientos..." type="text" />
+                        <input id="inputBusquedaServicio" class="w-full pl-10 pr-4 py-2 bg-slate-100 rounded-xl outline-none focus:ring-2 focus:ring-primary/50 transition-all text-sm" placeholder="Buscar servicios o tratamientos..." type="text" />
                     </div>
                 </div>
 
                 <div class="flex items-center gap-6">
                     <div class="flex items-center gap-4">
-                        <button class="relative p-2 text-slate-400 hover:bg-surface-container-high transition-colors rounded-full">
-                            <span class="material-symbols-outlined">notifications</span>
-                            <span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-white"></span>
-                        </button>
-                        <button class="p-2 text-slate-400 hover:bg-surface-container-high transition-colors rounded-full">
-                            <span class="material-symbols-outlined">chat_bubble</span>
-                        </button>
+                        <button class="relative p-2 text-slate-400 hover:bg-slate-100 transition-colors rounded-full"><span class="material-symbols-outlined">notifications</span><span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-white"></span></button>
+                        <button class="p-2 text-slate-400 hover:bg-slate-100 transition-colors rounded-full"><span class="material-symbols-outlined">chat_bubble</span></button>
                     </div>
                     
                     <div class="h-8 w-[1px] bg-slate-200"></div>
@@ -109,33 +80,28 @@
                                 <p id="uiNombreNav" class="text-sm font-bold text-on-surface">Cargando...</p>
                                 <p id="uiRolNav" class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">...</p>
                             </div>
-                            <div class="w-10 h-10 rounded-xl bg-primary-fixed border-[1.5px] border-primary flex items-center justify-center text-primary font-bold">
+                            <div class="w-10 h-10 rounded-xl bg-blue-100 border-[1.5px] border-primary flex items-center justify-center text-primary font-bold">
                                 <span class="material-symbols-outlined">person</span>
                             </div>
                         </div>
-
                         <div id="perfilMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-slate-100 overflow-hidden z-50">
-                            <a href="perfil.html" class="block px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-3 transition-colors">
-                                <span class="material-symbols-outlined text-lg">account_circle</span> Mi Perfil
-                            </a>
+                            <a href="perfil.html" class="block px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-3 transition-colors"><span class="material-symbols-outlined text-lg">account_circle</span> Mi Perfil</a>
                             <div class="border-t border-slate-100"></div>
-                            <a href="#" onclick="logout()" class="block px-4 py-3 text-sm text-red-600 hover:bg-red-50 flex items-center gap-3 transition-colors">
-                                <span class="material-symbols-outlined text-lg">logout</span> Cerrar Sesión
-                            </a>
+                            <a href="#" onclick="logout()" class="block px-4 py-3 text-sm text-red-600 hover:bg-red-50 flex items-center gap-3 transition-colors"><span class="material-symbols-outlined text-lg">logout</span> Cerrar Sesión</a>
                         </div>
                     </div>
                 </div>
             </header>
 
-            <div class="flex-1 overflow-y-auto bg-background p-8 space-y-10">
+            <div class="flex-1 overflow-y-auto bg-background p-8 space-y-10 custom-scrollbar">
                 
-                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
                     <div>
+                        <p class="text-xs font-bold text-primary tracking-widest uppercase mb-1">Administración</p>
                         <h2 class="text-3xl font-extrabold text-slate-800 tracking-tight">Servicios y Facturación</h2>
-                        <p class="text-slate-500 font-medium mt-1">Gestione precios de tratamientos e historial de transacciones clínicas.</p>
                     </div>
                     <div class="flex items-center gap-3">
-                        <button id="btn-nueva-factura" class="bg-[#005d90] text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-[#004b74] active:scale-95 transition-all shadow-lg">
+                        <button id="btn-nueva-factura" class="bg-[#005d90] text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-[#004b74] active:scale-95 transition-all shadow-md">
                             <span class="material-symbols-outlined text-lg">add_card</span>
                             Generar Nueva Factura
                         </button>
@@ -145,46 +111,76 @@
                 <section>
                     <div class="flex items-center justify-between mb-6">
                         <h3 class="text-xl font-bold text-slate-800 flex items-center gap-2">
-                            <span class="w-1.5 h-6 bg-[#8ef4e9] rounded-full"></span>
+                            <span class="w-1.5 h-6 bg-teal-400 rounded-full"></span>
                             Catálogo de Tratamientos
                         </h3>
-                        <button id="btn-admin-servicios" class="hidden bg-[#005d90] text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-[#004b74] transition-all">
+                        <button id="btn-admin-servicios" class="hidden bg-slate-100 text-slate-700 px-4 py-2 rounded-xl text-sm font-bold hover:bg-slate-200 transition-all">
                             + Nuevo Servicio
                         </button>
                     </div>
-                    
-                    <div id="contenedor-servicios" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        </div>
+                    <div id="contenedor-servicios" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"></div>
                 </section>
 
-                <section class="space-y-6">
-                    <div class="flex items-center justify-between">
+                <section id="seccion-finanzas" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 flex flex-col relative overflow-hidden group hover:shadow-md transition-shadow">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-teal-50/50 rounded-bl-full -z-10 group-hover:scale-110 transition-transform"></div>
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-teal-600 bg-teal-100 p-1.5 rounded-lg">today</span>
+                                <p class="text-xs font-bold text-slate-500 uppercase tracking-widest">Ingresos del Día</p>
+                            </div>
+                            <input type="date" id="input-filtro-dia" class="text-xs font-bold text-primary bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-primary/20 cursor-pointer px-3 py-1.5 outline-none">
+                        </div>
+                        <h3 id="ui-ingresos-dia" class="text-4xl font-extrabold text-slate-800 tracking-tight mt-2">$0.00</h3>
+                    </div>
+
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 flex flex-col relative overflow-hidden group hover:shadow-md transition-shadow">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-blue-50/50 rounded-bl-full -z-10 group-hover:scale-110 transition-transform"></div>
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-blue-600 bg-blue-100 p-1.5 rounded-lg">date_range</span>
+                                <p class="text-xs font-bold text-slate-500 uppercase tracking-widest">Ingresos del Mes</p>
+                            </div>
+                            <input type="month" id="input-filtro-mes" class="text-xs font-bold text-primary bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-primary/20 cursor-pointer px-3 py-1.5 outline-none">
+                        </div>
+                        <h3 id="ui-ingresos-mes" class="text-4xl font-extrabold text-slate-800 tracking-tight mt-2">$0.00</h3>
+                    </div>
+                </section>
+
+                <section class="space-y-4">
+                    <div class="flex items-center justify-between flex-wrap gap-4">
                         <div class="flex items-center gap-4">
-                            <h3 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                            <h3 class="text-xl font-bold text-slate-800 flex items-center gap-2 whitespace-nowrap">
                                 <span class="w-1.5 h-6 bg-[#005d90] rounded-full"></span>
                                 Historial de Pagos
                             </h3>
+                            
                             <div class="flex items-center gap-2 ml-4">
-                                <input type="text" id="input-buscar-paciente" placeholder="Nombre del paciente..." class="w-48 bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-[#005d90]">
-                                <button id="btn-buscar-paciente" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-3 py-1.5 rounded-lg text-sm font-bold transition-colors">
-                                    Buscar
+                                <input type="text" id="input-buscar-paciente" placeholder="Buscar paciente..." class="w-48 bg-white border border-slate-200 rounded-xl px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-[#005d90] shadow-sm">
+                                <button id="btn-buscar-paciente" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 rounded-xl text-sm font-bold transition-colors">Buscar</button>
+                                
+                                <div class="w-[1px] h-6 bg-slate-300 mx-2"></div>
+
+                                <button id="btn-servicios-populares" class="bg-teal-50 border border-teal-100 hover:bg-teal-100 text-teal-800 px-4 py-2 rounded-xl text-sm font-bold transition-colors flex items-center gap-1.5 shadow-sm">
+                                    <span class="material-symbols-outlined text-[18px]">trending_up</span>
+                                    Top Servicios
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden mt-6">
-                        <div class="overflow-x-auto">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden mt-4">
+                        <div class="overflow-x-auto custom-scrollbar">
                             <table class="w-full text-left border-collapse">
                                 <thead>
-                                    <tr class="bg-slate-50/50 border-b border-slate-100">
-                                        <th class="px-6 py-4 text-[11px] font-bold uppercase tracking-widest text-slate-400">Nombre del Paciente</th>
-                                        <th class="px-6 py-4 text-[11px] font-bold uppercase tracking-widest text-slate-400">Total de Transacciones</th>
-                                        <th class="px-6 py-4 text-[11px] font-bold uppercase tracking-widest text-slate-400 text-right">Detalles</th>
+                                    <tr class="bg-slate-50 border-b border-slate-100">
+                                        <th class="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-slate-400">Paciente</th>
+                                        <th class="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-slate-400">Transacciones</th>
+                                        <th class="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-slate-400 text-right">Detalles</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tabla-pagos" class="divide-y divide-slate-50">
-                                    </tbody>
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -208,8 +204,8 @@
                     <input type="number" step="0.01" id="input-servicio-precio" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 outline-none">
                 </div>
                 <div class="flex gap-3 mt-6">
-                    <button type="button" onclick="cerrarModalServicio()" class="flex-1 py-2 text-slate-500 font-bold hover:bg-slate-50 rounded-lg">Cancelar</button>
-                    <button type="submit" class="flex-1 py-2 bg-[#005d90] text-white rounded-lg font-bold hover:bg-[#004b74]">Guardar</button>
+                    <button type="button" onclick="cerrarModalServicio()" class="flex-1 py-2 text-slate-500 font-bold hover:bg-slate-50 rounded-lg transition-colors">Cancelar</button>
+                    <button type="submit" class="flex-1 py-2 bg-[#005d90] text-white rounded-lg font-bold hover:bg-[#004b74] transition-colors">Guardar</button>
                 </div>
             </form>
         </div>
@@ -227,24 +223,23 @@
             </h3>
             
             <form id="form-pago" class="space-y-4">
-                
                 <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Seleccionar Cita Pendiente</label>
+                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Cita Pendiente</label>
                     <select id="select-cita" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#005d90] outline-none text-sm font-bold text-slate-700 cursor-pointer">
                         <option value="">Cargando citas pendientes...</option>
                     </select>
                 </div>
                 
-                <div id="info-cita-seleccionada" class="hidden bg-[#f3f7ff] p-4 rounded-xl border border-[#cde5ff] space-y-3 mt-2 transition-all">
+                <div id="info-cita-seleccionada" class="hidden bg-sky-50 p-4 rounded-xl border border-sky-100 space-y-3 mt-2 transition-all">
                     <div class="flex justify-between items-center">
                         <span class="text-xs font-bold text-slate-500 uppercase">Paciente:</span>
-                        <span id="lbl-paciente" class="text-sm font-bold text-[#005d90]">---</span>
+                        <span id="lbl-paciente" class="text-sm font-bold text-sky-900">---</span>
                     </div>
                     <div class="flex justify-between items-center">
                         <span class="text-xs font-bold text-slate-500 uppercase">Servicio:</span>
                         <span id="lbl-servicio" class="text-sm font-bold text-slate-700">---</span>
                     </div>
-                    <div class="flex justify-between items-center pt-3 border-t border-[#cde5ff]">
+                    <div class="flex justify-between items-center pt-3 border-t border-sky-200/50">
                         <span class="text-xs font-bold text-slate-500 uppercase">Total a Pagar:</span>
                         <span id="lbl-monto" class="text-xl font-extrabold text-[#005d90]">$0.00</span>
                     </div>
@@ -274,7 +269,29 @@
             </form>
         </div>
     </div>
+
+    <div id="modal-populares" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center transition-all">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 relative">
+            <button onclick="document.getElementById('modal-populares').classList.add('hidden')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 transition-colors">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            
+            <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                <span class="material-symbols-outlined text-teal-600 bg-teal-50 p-1.5 rounded-lg">trending_up</span>
+                Tratamientos Más Solicitados
+            </h3>
+            
+            <div id="lista-populares" class="space-y-3 max-h-72 overflow-y-auto custom-scrollbar pr-2">
+                </div>
+        </div>
+    </div>
     
+    <style>
+        .custom-scrollbar::-webkit-scrollbar { height: 6px; width: 6px;}
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    </style>
+
     <script src="js/utils.js"></script>
     <script src="js/menu.js"></script>
     <script src="js/servicios.js"></script>

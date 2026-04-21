@@ -2,6 +2,12 @@ document.addEventListener("DOMContentLoaded", () => {
     
     const usuarioStr = localStorage.getItem("usuario");
     if (!usuarioStr) return; 
+    const usuario = JSON.parse(usuarioStr); 
+
+    const rolUsuario = usuario.rol.toLowerCase();
+    const esAdmin = rolUsuario === 'admin';
+    const esRecepcionista = rolUsuario === 'recepcionista';
+    const esDentista = rolUsuario === 'dentista'; 
 
     let todasLasCitas = [];
     const selectDoctor = document.getElementById("select-doctor");
@@ -30,11 +36,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function cargarDatosCalendario() {
         try {
-            const resCitas = await fetchConAuth("http://localhost:8080/api/citas/listar");
+            const urlCitas = esDentista 
+                ? "http://localhost:8080/api/citas/mis-citas" 
+                : "http://localhost:8080/api/citas/listar";
+
+            const resCitas = await fetchConAuth(urlCitas);
             if (!resCitas.ok) throw new Error("Error al descargar citas");
             
             todasLasCitas = await resCitas.json();
-            poblarFiltroDoctores(todasLasCitas);
+            
+            // Si no es dentista, poblar los nombres en el filtro
+            if (!esDentista) {
+                poblarFiltroDoctores(todasLasCitas);
+            }
+
             poblarFechasConCitas(todasLasCitas);
             aplicarFiltros(); 
         } catch (error) {
@@ -111,8 +126,12 @@ document.addEventListener("DOMContentLoaded", () => {
         finSemana.setHours(23,59,59,999);
 
         let citasFiltradas = todasLasCitas.filter(cita => {
-            const idDentistaCita = cita.dentista?.id_usuario || cita.dentista?.idUsuario;
-            const pasaFiltroDoctor = (idDoctorSeleccionado === "todos") || (idDentistaCita == idDoctorSeleccionado);
+            
+            let pasaFiltroDoctor = true;
+            if (!esDentista) {
+                const idDentistaCita = cita.dentista?.id_usuario || cita.dentista?.idUsuario;
+                pasaFiltroDoctor = (idDoctorSeleccionado === "todos") || (idDentistaCita == idDoctorSeleccionado);
+            }
 
             const fechaString = cita.fecha_hora || cita.fechaHora || cita.fecha_creacion;
             const fechaCita = parsearFechaSegura(fechaString);
@@ -177,7 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const apellidoDoc = cita.dentista?.apellido || "";
                 const textoDoctor = `Dr/a. ${nombreDoc} ${apellidoDoc}`;
 
-                const horaInicio = 9; 
+                const horaInicio = 8;
                 const minutosCita = fechaObj.getMinutes();
                 const horasDiferencia = horaCita - horaInicio; 
                 const posicionTop = (horasDiferencia * 112) + (minutosCita * 1.86) + 6; 
@@ -251,6 +270,15 @@ document.addEventListener("DOMContentLoaded", () => {
     selectDiasOcupados.addEventListener("change", (e) => {
         if(e.target.value) { fechaBase = new Date(e.target.value + "T12:00:00"); activarBotonTiempo("dia", btnDia); }
     });
+
+    if (esDentista) {
+        // Buscamos el div que contiene la palabra "Doctor:" y el select
+        const contenedorFiltroDoctor = selectDoctor.closest('.bg-white.px-5.py-2\\.5');
+        if (contenedorFiltroDoctor) {
+            contenedorFiltroDoctor.style.display = 'none';
+        }
+    }
+
 
     if(btnExportarPdf) {
         btnExportarPdf.addEventListener("click", async () => {

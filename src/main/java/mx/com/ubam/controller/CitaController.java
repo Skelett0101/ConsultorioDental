@@ -2,13 +2,14 @@ package mx.com.ubam.controller;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-
+import org.springframework.security.core.Authentication;
 import mx.com.ubam.model.Cita;
 import mx.com.ubam.repository.*;
 import mx.com.ubam.service.CitaService;
@@ -47,6 +48,16 @@ public class CitaController {
 		Page<Cita> pagina = Citaser.mostrarTodo(PageRequest.of(0, 1000)); 
 	    return ResponseEntity.ok(pagina.getContent());
 	}
+	
+	// Mostrar solo las citas del dentista logueado
+		@GetMapping("/mis-citas")
+		public ResponseEntity<List<Cita>> obtenerMisCitas(Authentication authentication) {
+			String dentistaUsername = authentication.getName();
+			
+			List<Cita> misCitas = Citaser.obtenerCitasPorDentista(dentistaUsername);
+			
+			return ResponseEntity.ok(misCitas);
+		}
 
 	@GetMapping("/hoy")
 	public ResponseEntity<List<Cita>> obtenerCitasHoy() {

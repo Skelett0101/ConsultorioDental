@@ -33,7 +33,11 @@ public class CitaService {
 		this.usuarioRepo = usuarioRepo;
 		this.servicioRepo = servicioRepo;
 	}
+    
 
+    public List<Cita> obtenerCitasPorDentista(String datoUsuario) {
+        return CitaeRepo.findByDentista_Email(datoUsuario); 
+    }
     public Cita agendarCita(Cita cita) {
 		Paciente pacienteExiste = pacienteRepo.findById(cita.getPaciente().getIdPaciente())
 	            .orElseThrow(() -> new RuntimeException("Paciente no encontrado"));

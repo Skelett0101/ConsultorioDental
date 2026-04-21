@@ -3,8 +3,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const usuarioStr = localStorage.getItem("usuario");
     if (!usuarioStr) return; 
     const usuario = JSON.parse(usuarioStr); 
-    const esAdmin = usuario.rol.toLowerCase() === 'admin';
-
+    
+    const rolUsuario = usuario.rol.toLowerCase();
+    const esAdmin = rolUsuario === 'admin';
+    const esDentista = rolUsuario === 'dentista'; 
+    
     const contenedorServicios = document.getElementById("contenedor-servicios");
     const tablaPagos = document.getElementById("tabla-pagos");
     const inputBuscarPaciente = document.getElementById("input-buscar-paciente");
@@ -23,7 +26,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let historialPagosCache = []; 
 
-    // Inicializar inputs con la fecha de HOY
     const hoy = new Date();
     const year = hoy.getFullYear();
     const month = String(hoy.getMonth() + 1).padStart(2, '0');
@@ -136,6 +138,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function cargarPagos(busqueda = "") {
+        if (esDentista) return; 
+
         if(!tablaPagos) return;
         try {
             tablaPagos.innerHTML = `<tr><td colspan="3" class="text-center py-6 text-slate-500 text-sm">Cargando historial de pagos...</td></tr>`;
@@ -424,6 +428,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+
+    // Ocultar Ingresos Financieros si NO es Admin
     if (!esAdmin) {
         const seccionFinanzas = document.getElementById("seccion-finanzas");
         const btnPopulares = document.getElementById("btn-servicios-populares");
@@ -431,6 +437,18 @@ document.addEventListener("DOMContentLoaded", () => {
         if (btnPopulares) btnPopulares.style.display = "none";
     }
 
+    if (esDentista) {
+        const btnNuevaFactura = document.getElementById("btn-nueva-factura");
+        const seccionHistorial = document.getElementById("tabla-pagos")?.closest("section"); 
+        
+        if (btnNuevaFactura) btnNuevaFactura.style.display = "none";
+        if (seccionHistorial) seccionHistorial.style.display = "none";
+        
+        const cabeceraTitulo = btnNuevaFactura?.closest(".flex.flex-col.md\\:flex-row");
+        if (cabeceraTitulo) cabeceraTitulo.style.display = "none";
+    }
+
     cargarServicios();
     cargarPagos(); 
+
 });

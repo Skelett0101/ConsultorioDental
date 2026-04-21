@@ -30,6 +30,31 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
 </head>
 
+<script>
+    (function() {
+        const usuarioStr = localStorage.getItem("usuario");
+        if (usuarioStr) {
+            const usuario = JSON.parse(usuarioStr);
+            const rol = usuario.rol.toUpperCase();
+            
+            let estilosOcultos = '';
+
+            if (rol !== "ADMIN") {
+                estilosOcultos += '#seccion-finanzas, #btn-servicios-populares { display: none !important; } ';
+            }
+
+            if (rol === "DENTISTA") {
+                estilosOcultos += '#btn-nueva-factura, #tabla-pagos, #input-buscar-paciente, #btn-buscar-paciente { display: none !important; } ';
+                
+            }
+
+            if (estilosOcultos !== '') {
+                document.write('<style>' + estilosOcultos + '</style>');
+            }
+        }
+    })();
+</script>
+
 <body class="bg-background text-on-surface">
     <div class="flex h-screen overflow-hidden">
 

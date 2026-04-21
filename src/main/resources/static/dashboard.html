@@ -173,11 +173,6 @@
 
                     <!----------------------------------- BOTONES DE ACCION PACIENTE Y CITA ------------------------------------------------------------------------>
                     <div class="flex items-center justify-end gap-4">
-                        <button
-                            class="flex items-center gap-2 px-5 py-3 rounded-xl secondary-container text-on-secondary-container font-semibold transition-all hover:scale-[1.02] active:scale-95 shadow-sm">
-                            <span class="material-symbols-outlined text-[20px]">person_add</span>
-                            <span>Añadir Paciente</span>
-                        </button>
                         <button id="MostrarFormCitas" type="button"
                             class="flex items-center gap-2 px-6 py-3 rounded-xl primary-gradient text-on-primary font-semibold transition-all hover:scale-[1.02] active:scale-95 shadow-lg shadow-primary/20">
                             <span class="material-symbols-outlined text-[20px]">calendar_today</span>
@@ -288,8 +283,8 @@
 
                         <p class="text-label-sm uppercase tracking-widest text-on-surface-variant mb-1 font-medium">
                             Nuevos Pacientes</p>
-                        <p class="text-4xl font-extrabold tracking-tight text-on-surface">28</p>
-                        <p class="text-xs text-on-surface-variant mt-2">72% de la meta mensual</p>
+                        <p id="uiDashboardPacientesNuevos" class="text-4xl font-extrabold tracking-tight text-on-surface">...</p>
+                        <p id="uiDashboardPacientesMeta" class="text-xs text-on-surface-variant mt-2">Calculando meta...</p>
                     </div>
                     <!----------------------------------- INGRESOS MENSUALES ------------------------------------------------------------------------>
                     <div

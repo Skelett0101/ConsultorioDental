@@ -6,21 +6,21 @@ let paginaActual = 0;
 document.addEventListener("DOMContentLoaded", () => {
     cargarPacientes(paginaActual);
     configurarBuscador();
-    actualizarInfoUsuario(); 
     configurarFormularioEdicion(); 
 
-    // restriccion de roles para eagregar paciente
+    // Restriccion de roles para agregar paciente
     const usuarioStr = localStorage.getItem("usuario");
     if (usuarioStr) {
         const usuario = JSON.parse(usuarioStr);
-        //si es dentissta,  el botón de neuvo paciente se desaparece
+        // Si es dentista, el botón de nuevo paciente desaparece
         if (usuario.rol.toUpperCase() === "DENTISTA") {
             const btnNuevo = document.getElementById("btnNuevoPaciente");
             if (btnNuevo) btnNuevo.style.display = "none";
         }
     }
 });
-// --- LISTAR PACIENTES (R13) ---
+
+// --- LISTAR PACIENTES Y ACTUALIZAR TARJETAS ---
 async function cargarPacientes(page) {
     paginaActual = page;
     try {
@@ -30,8 +30,38 @@ async function cargarPacientes(page) {
         const data = await resp.json();
         renderizarTabla(data.content);
         renderizarPaginacion(data);
+        
+        // Alimentar las tarjetas de arriba
+        actualizarMetricas(data.totalElements, data.content);
     } catch (error) {
         console.error("Error cargando pacientes:", error);
+        document.getElementById("uiTotalPacientes").textContent = "0";
+        document.getElementById("uiPacientesNuevos").textContent = "0";
+    }
+}
+
+// Lógica de las 2 Tarjetas
+function actualizarMetricas(totalPacientes, pacientesActuales) {
+    // Tarjeta 1: Total absoluto de la Base de Datos
+    const uiTotal = document.getElementById("uiTotalPacientes");
+    if (uiTotal) uiTotal.textContent = totalPacientes;
+
+    // Tarjeta 2: Contar cuántos pacientes visibles son de este mes
+    const uiNuevos = document.getElementById("uiPacientesNuevos");
+    if (uiNuevos && pacientesActuales) {
+        const mesActual = new Date().getMonth();
+        const anioActual = new Date().getFullYear();
+        let registradosEsteMes = 0;
+        
+        pacientesActuales.forEach(p => {
+            if (p.fechaCita) {
+                const fechaCita = new Date(p.fechaCita);
+                if (fechaCita.getMonth() === mesActual && fechaCita.getFullYear() === anioActual) {
+                    registradosEsteMes++;
+                }
+            }
+        });
+        uiNuevos.textContent = registradosEsteMes;
     }
 }
 
@@ -40,7 +70,6 @@ function renderizarTabla(pacientes) {
     if(!tbody) return;
     tbody.innerHTML = "";
 
-    // Obtenemos el rol del usuario logueado
     const usuarioStr = localStorage.getItem("usuario");
     const rolActual = usuarioStr ? JSON.parse(usuarioStr).rol.toUpperCase() : "";
 
@@ -54,14 +83,12 @@ function renderizarTabla(pacientes) {
               })
             : 'Sin fecha';
 
-        // 1. Botón de Historial: Lo ven TODOS (Admin, Recepcionista, Dentista)
         let botonesHTML = `
             <button onclick="verHistorial(${p.idPaciente})" class="w-8 h-8 flex items-center justify-center rounded-lg bg-slate-50 hover:bg-[#cde5ff] text-[#005d90] transition-colors" title="Ver Historial">
                 <span class="material-symbols-outlined text-lg">calendar_month</span>
             </button>
         `;
 
-        // 2. Botón de Editar: Lo ven todos EXCEPTO el Dentista (R12)
         if (rolActual !== "DENTISTA") {
             botonesHTML += `
                 <button onclick="abrirModalEditar(${p.idPaciente})" class="w-8 h-8 flex items-center justify-center rounded-lg bg-slate-50 hover:bg-slate-200 text-slate-600 transition-colors" title="Editar">
@@ -102,19 +129,16 @@ async function abrirModalEditar(id) {
         
         const p = await resp.json();
 
-        // Rellenar campos del modal
         document.getElementById('editIdPaciente').value = p.idPaciente;
         document.getElementById('editNombre').value = p.nombrePaciente;
         document.getElementById('editApellido').value = p.apellidoPaciente;
         document.getElementById('editTelefono').value = p.telefonoPaciente;
         document.getElementById('editEmail').value = p.emailPaciente;
         
-        // Formatear fecha para el input datetime-local
         if (p.fechaCita) {
             document.getElementById('editFechaCita').value = p.fechaCita.substring(0, 16);
         }
 
-        // Mostrar Modal
         document.getElementById('modalEditar').classList.remove('hidden');
     } catch (error) {
         alert("Error: " + error.message);
@@ -125,7 +149,7 @@ function cerrarModalEditar() {
     document.getElementById('modalEditar').classList.add('hidden');
 }
 
-// --- R12: EDITAR PACIENTE (Guardar cambios) ---
+// --- R12: EDITAR PACIENTE ---
 function configurarFormularioEdicion() {
     const form = document.getElementById('formEditarPaciente');
     if(!form) return;
@@ -150,7 +174,7 @@ function configurarFormularioEdicion() {
 
             if (res.ok) {
                 cerrarModalEditar();
-                cargarPacientes(paginaActual); // Recarga la tabla en la página que estabas
+                cargarPacientes(paginaActual); 
             } else {
                 const err = await res.json();
                 alert("Error al actualizar: " + (err.message || "Error desconocido"));
@@ -161,7 +185,7 @@ function configurarFormularioEdicion() {
     });
 }
 
-// --- BUSCADOR Y PAGINACIÓN (R14) ---
+// --- BUSCADOR Y PAGINACIÓN ---
 function configurarBuscador() {
     const input = document.getElementById("inputBusqueda");
     if(!input) return;
@@ -203,37 +227,23 @@ function renderizarPaginacion(data) {
     }
 }
 
-function actualizarInfoUsuario() {
-    const nombreNav = document.getElementById("uiNombreNav");
-    const rolNav = document.getElementById("uiRolNav");
-    
-    if(nombreNav) nombreNav.textContent = localStorage.getItem("nombre") || "Usuario";
-    if(rolNav) rolNav.textContent = localStorage.getItem("rol") || "Personal";
-}
-
-// R16: Historial de citas (Próximo paso)
 function verHistorial(id) {
     alert("Cargando historial de citas para el paciente #" + id + "...");
-    // Aquí implementaremos la lógica del R16
 }
 
-//REGISTRO INTERNO
-
-// 1. Escuchar el click en el botón azul (si existe en la pantalla)
+// --- REGISTRO INTERNO ---
 const btnNuevo = document.getElementById("btnNuevoPaciente");
 if (btnNuevo) {
     btnNuevo.addEventListener("click", () => {
-        document.getElementById("formCrearPacienteInterno").reset(); // Limpiar formulario
+        document.getElementById("formCrearPacienteInterno").reset(); 
         document.getElementById("modalCrear").classList.remove("hidden");
     });
 }
 
-// 2. Función para cerrar la ventana
 window.cerrarModalCrear = function() {
     document.getElementById("modalCrear").classList.add("hidden");
 };
 
-// 3. Enviar los datos a Spring Boot
 const formCrear = document.getElementById("formCrearPacienteInterno");
 if (formCrear) {
     formCrear.addEventListener("submit", async (e) => {
@@ -248,7 +258,6 @@ if (formCrear) {
         };
 
         try {
-            // Usamos fetchConAuth aunque el endpoint sea público, es buena práctica enviarlo
             const res = await fetchConAuth(`${API_BASE}`, {
                 method: 'POST',
                 body: JSON.stringify(nuevoPaciente)
@@ -256,7 +265,7 @@ if (formCrear) {
 
             if (res.ok) {
                 cerrarModalCrear();
-                cargarPacientes(paginaActual); // Recargamos la tabla para ver al nuevo paciente
+                cargarPacientes(0); 
                 alert("Paciente registrado con éxito en el sistema.");
             } else {
                 const err = await res.json();

@@ -36,7 +36,7 @@ public class DisponibilidadController {
     
     @GetMapping("/mia")
     public ResponseEntity<List<Disponibilidad>> listarMia(@RequestParam Integer idDentista) {
-        // Necesitarás crear este método en tu Repository
+
         return ResponseEntity.ok(dispoRepo.findByDentistaIdUsuario(idDentista));
     }
 	

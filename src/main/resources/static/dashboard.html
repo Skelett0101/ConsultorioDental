@@ -180,7 +180,7 @@
                         </button>
                         <button id="MostrarFormCitas" type="button"
                             class="flex items-center gap-2 px-6 py-3 rounded-xl primary-gradient text-on-primary font-semibold transition-all hover:scale-[1.02] active:scale-95 shadow-lg shadow-primary/20">
-                            <span  class="material-symbols-outlined text-[20px]">calendar_today</span>
+                            <span class="material-symbols-outlined text-[20px]">calendar_today</span>
                             <span>Nueva Cita</span>
                         </button>
                     </div>
@@ -188,60 +188,74 @@
 
                 <!----------------------------------- CITA ------------------------------------------------------------------------>
 
-                <div id="overlayCita" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-[100] p-4">
-    
-    <div class="modal-container bg-white rounded-3xl shadow-2xl overflow-hidden w-full max-w-lg">
-        <div class="modal-header p-6 flex justify-between items-center border-b border-slate-100">
-            <div class="header-title">
-                <h2 id="titulo-modal" class="text-xl font-bold text-slate-800">Agendar Cita Médica</h2>
-                <p class="text-sm text-slate-500">Ingreso manual por personal autorizado</p>
-            </div>
-            <button type="button" class="btn-close text-2xl text-slate-400 hover:text-slate-600">&times;</button>
-        </div>
+                <div id="overlayCita"
+                    class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-[100] p-4">
 
-        <form id="formAgendarCita" class="p-6 modal-body space-y-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="input-group flex flex-col gap-1">
-                    <label class="text-[10px] font-bold text-slate-400 uppercase">Paciente</label>
-                    <select id="pacienteId" class="border-b border-slate-200 py-2 outline-none focus:border-primary bg-transparent" required>
-                        <option value="">Seleccione paciente</option>
-                    </select>
+                    <div class="modal-container bg-white rounded-3xl shadow-2xl overflow-hidden w-full max-w-lg">
+                        <div class="modal-header p-6 flex justify-between items-center border-b border-slate-100">
+                            <div class="header-title">
+                                <h2 id="titulo-modal" class="text-xl font-bold text-slate-800">Agendar Cita Médica</h2>
+                                <p class="text-sm text-slate-500">Ingreso manual por personal autorizado</p>
+                            </div>
+                            <button type="button"
+                                class="btn-close text-2xl text-slate-400 hover:text-slate-600">&times;</button>
+                        </div>
+
+                        <form id="formAgendarCita" class="p-6 modal-body space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="input-group flex flex-col gap-1">
+                                    <label class="text-[10px] font-bold text-slate-400 uppercase">Paciente</label>
+                                    <select id="pacienteId"
+                                        class="border-b border-slate-200 py-2 outline-none focus:border-primary bg-transparent"
+                                        required>
+                                        <option value="">Seleccione paciente</option>
+                                    </select>
+                                </div>
+
+                                <div class="input-group flex flex-col gap-1">
+                                    <label class="text-[10px] font-bold text-slate-400 uppercase">Dentista</label>
+                                    <select id="dentistaId"
+                                        class="border-b border-slate-200 py-2 outline-none focus:border-primary bg-transparent"
+                                        required>
+                                        <option value="">Seleccione dentista</option>
+                                    </select>
+                                </div>
+
+                                <div class="input-group flex flex-col gap-1">
+                                    <label class="text-[10px] font-bold text-slate-400 uppercase">Servicio</label>
+                                    <select id="servicioId" required
+                                        class="w-full px-4 py-3 bg-slate-50 border border-transparent focus:border-primary/30 rounded-xl text-slate-800 focus:ring-2 focus:ring-primary/10 transition-all outline-none cursor-pointer">
+                                        <option value="">Seleccione un servicio</option>
+                                    </select>
+                                </div>
+
+                                <div class="input-group flex flex-col gap-1">
+                                    <label class="text-[10px] font-bold text-slate-400 uppercase">Fecha de Cita</label>
+                                    <input type="datetime-local" id="fechaHora"
+                                        class="border-b border-slate-200 py-2 outline-none focus:border-primary"
+                                        required>
+                                </div>
+                            </div>
+
+                            <div class="input-group flex flex-col gap-1">
+                                <label class="text-[10px] font-bold text-slate-400 uppercase">Notas Médicas /
+                                    Motivo</label>
+                                <textarea id="notas" rows="3"
+                                    class="border border-slate-100 rounded-xl p-3 outline-none focus:border-primary resize-none"
+                                    placeholder="Ej: Revisión de ortodoncia..."></textarea>
+                            </div>
+
+                            <div class="modal-footer flex justify-end gap-4 pt-4 border-t border-slate-50">
+                                <button type="button"
+                                    class="btn-close px-4 py-2 text-slate-500 font-semibold hover:text-slate-800">Cancelar</button>
+                                <button id="GuardarCita" type="submit"
+                                    class="bg-[#006050] text-white px-6 py-2.5 rounded-xl font-bold flex items-center gap-2 hover:scale-105 transition-all shadow-lg">
+                                    Agendar Cita
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-
-                <div class="input-group flex flex-col gap-1">
-                    <label class="text-[10px] font-bold text-slate-400 uppercase">Dentista</label>
-                    <select id="dentistaId" class="border-b border-slate-200 py-2 outline-none focus:border-primary bg-transparent" required>
-                        <option value="">Seleccione dentista</option>
-                    </select>
-                </div>
-
-                <div class="input-group flex flex-col gap-1">
-                    <label class="text-[10px] font-bold text-slate-400 uppercase">Servicio</label>
-                    <select id="servicioId" required class="w-full px-4 py-3 bg-slate-50 border border-transparent focus:border-primary/30 rounded-xl text-slate-800 focus:ring-2 focus:ring-primary/10 transition-all outline-none cursor-pointer">
-                        <option value="">Seleccione un servicio</option>
-                    </select>
-                </div>
-
-                <div class="input-group flex flex-col gap-1">
-                    <label class="text-[10px] font-bold text-slate-400 uppercase">Fecha de Cita</label>
-                    <input type="datetime-local" id="fechaHora" class="border-b border-slate-200 py-2 outline-none focus:border-primary" required>
-                </div>
-            </div>
-
-            <div class="input-group flex flex-col gap-1">
-                <label class="text-[10px] font-bold text-slate-400 uppercase">Notas Médicas / Motivo</label>
-                <textarea id="notas" rows="3" class="border border-slate-100 rounded-xl p-3 outline-none focus:border-primary resize-none" placeholder="Ej: Revisión de ortodoncia..."></textarea>
-            </div>
-
-            <div class="modal-footer flex justify-end gap-4 pt-4 border-t border-slate-50">
-                <button type="button" class="btn-close px-4 py-2 text-slate-500 font-semibold hover:text-slate-800">Cancelar</button>
-                <button id="GuardarCita" type="submit" class="bg-[#006050] text-white px-6 py-2.5 rounded-xl font-bold flex items-center gap-2 hover:scale-105 transition-all shadow-lg">
-                    Agendar Cita
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
 
                 <!----------------------------------- CANTIDADES MOSTRADAS ACTUALEDS ------------------------------------------------------------------------>
 
@@ -257,10 +271,10 @@
                         </div>
                         <p class="text-label-sm uppercase tracking-widest text-on-surface-variant mb-1 font-medium">
                             Carga de Hoy</p>
-                            <p class="text-4xl font-extrabold tracking-tight text-on-surface"> 
-                                <span id="uiCitasHoy" class="text-primary">0</span></p>
+                        <p class="text-4xl font-extrabold tracking-tight text-on-surface">
+                            <span id="uiCitasHoy2" class="text-primary">0</span>
+                        </p>
 
-                        <p class="text-xs text-on-surface-variant mt-2">4 limpiezas, 8 especializadas</p>
                     </div>
                     <!----------------------------------- NUEVOS PACIENTES ------------------------------------------------------------------------>
                     <div
@@ -311,72 +325,36 @@
                             <h3 class="text-xl font-extrabold text-on-surface tracking-tight">Próximas Citas</h3>
                             <button class="text-primary text-sm font-semibold hover:underline">Ver Calendario</button>
                         </div>
-                        <div class="space-y-4">
-                            <!----------------------------------- CITAS EN ESPERA Y POR LLEGAR ------------------------------------------------------------------------>
-
-                            <div
-                                class="bg-surface-container-lowest p-4 rounded-xl flex items-center gap-4 border-l-4 border-secondary shadow-sm">
-                                <div class="w-14 text-center">
-                                    <p class="text-xs font-bold text-on-surface-variant">10:30</p>
-                                    <p class="text-[10px] text-outline uppercase">AM</p>
-                                </div>
-                                <div class="h-10 w-[1px] bg-outline-variant/20"></div>
-                                <div class="flex-1">
-                                    <h4 class="font-bold text-on-surface">Sarah Henderson</h4>
-                                    <p class="text-xs text-on-surface-variant">Tratamiento de Conducto • Dra. Moore</p>
-                                </div>
-                                <span
-                                    class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-tertiary-container text-on-tertiary-container">En
-                                    Sillón</span>
-                                <button class="text-outline hover:bg-surface-container-high rounded-lg p-1"><span
-                                        class="material-symbols-outlined">more_vert</span></button>
-                            </div>
-
-                            <div
-                                class="bg-surface-container-lowest p-4 rounded-xl flex items-center gap-4 border-l-4 border-primary-fixed shadow-sm">
-                                <div class="w-14 text-center">
-                                    <p class="text-xs font-bold text-on-surface-variant">11:15</p>
-                                    <p class="text-[10px] text-outline uppercase">AM</p>
-                                </div>
-                                <div class="h-10 w-[1px] bg-outline-variant/20"></div>
-                                <div class="flex-1">
-                                    <h4 class="font-bold text-on-surface">Marcus Sterling</h4>
-                                    <p class="text-xs text-on-surface-variant">Chequeo de Rutina • Dr. Chen</p>
-                                </div>
-                                <span
-                                    class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-surface-container-high text-on-surface-variant">Registrado</span>
-                                <button class="text-outline hover:bg-surface-container-high rounded-lg p-1"><span
-                                        class="material-symbols-outlined">more_vert</span></button>
-                            </div>
+                        <!----------------------------------- CITAS EN ESPERA Y POR LLEGAR ------------------------------------------------------------------------>
+                        <div class="space-y-4" id="listaCitasHoy">
+                            <p class="text-sm text-on-surface-variant">Cargando citas...</p>
                         </div>
                     </div>
 
-                    <!----------------------------------- INFORMACIÓN CLÍNICA ------------------------------------------------------------------------>
+                    <!----------------------------------- DISPONIBILIDAD DE DOCTORES ------------------------------------------------------------------------>
 
-                    <div class="space-y-6">
-                        <div class="bg-white rounded-xl p-6 cloud-shadow border border-outline-variant/10">
-                            <h3 class="text-sm font-bold uppercase tracking-widest text-on-surface-variant mb-4">
-                                Información Clínica</h3>
-                            <div class="space-y-5">
-                                <div class="flex items-start gap-3">
-                                    <div class="w-2 h-2 rounded-full bg-secondary mt-1.5"></div>
-                                    <div>
-                                        <p class="text-sm font-semibold text-on-surface">Mantenimiento de Equipos</p>
-                                        <p class="text-xs text-on-surface-variant">Calibración láser Sala 4 en 2 días.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="flex items-start gap-3">
-                                    <div class="w-2 h-2 rounded-full bg-primary mt-1.5"></div>
-                                    <div>
-                                        <p class="text-sm font-semibold text-on-surface">Alerta de Inventario</p>
-                                        <p class="text-xs text-on-surface-variant">Bolsas de esterilización bajas.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <button
-                                class="w-full mt-6 py-2 border border-outline-variant/30 rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-surface-container-low transition-colors">Pedir
-                                Suministros</button>
+                    <div class="bg-white rounded-xl p-6 cloud-shadow border border-outline-variant/10">
+                        <h3 class="text-sm font-bold uppercase tracking-widest text-on-surface-variant mb-4">
+                            Disponibilidad de Doctores
+                        </h3>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="border-b border-slate-100">
+                                        <th class="py-3 text-[10px] font-bold text-slate-400 uppercase">Doctor</th>
+                                        <th class="py-3 text-[10px] font-bold text-slate-400 uppercase">Día</th>
+                                        <th class="py-3 text-[10px] font-bold text-slate-400 uppercase">Horario</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="horariosDentistas" class="divide-y divide-slate-50">
+                                    <tr>
+                                        <td colspan="3" class="py-4 text-center text-xs text-slate-400 animate-pulse">
+                                            Cargando horarios...
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

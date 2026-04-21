@@ -84,12 +84,18 @@ public class SecurityConfig {
                 //listar activos (admin, recepcionsita y dentista)
                 .requestMatchers(HttpMethod.GET, "/api/servicios").hasAnyRole("admin", "recepcionista", "dentista")
                 
-                
+                //mostrar citas todos
                 .requestMatchers("/api/citas/listar").hasAnyRole("admin", "recepcionista", "dentista")
 
+                //registrarsolo dos
                 .requestMatchers("/api/citas/registrar").hasAnyRole("admin", "recepcionista")
                 
+                //eliminar admin
                 .requestMatchers("/api/citas/eliminar").hasAnyRole("admin")
+                
+             //
+                .requestMatchers(HttpMethod.GET, "/api/usuarios/disponibilidad/mia").hasAnyRole("dentista", "admin")
+
 
              // 3. El resto de tus reglas de usuarios que ya corregiste
              .requestMatchers(HttpMethod.GET, "/api/usuarios").hasAnyRole("admin", "recepcionista", "dentista")

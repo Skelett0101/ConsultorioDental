@@ -60,34 +60,35 @@ public class CitaService {
 		
 		//Declarar variabe
 		Integer idDentista = cita.getDentista().getIdUsuario();
+		LocalDateTime inicio = cita.getFechaHora();
+	    LocalDateTime fin = inicio.plusHours(1);
 		LocalDateTime fechaCita = cita.getFechaHora();
-		LocalTime horaCita = cita.getFechaHora().toLocalTime();
-        Long diaSemanaDisponibles = (long) fechaCita.getDayOfWeek().getValue();
+		
         
         //comprobar
-        boolean tieneHorario = DispoRepo.existsByDentistaIdUsuarioAndDiaSemanaAndHoraInicioLessThanEqualAndHoraFinGreaterThanAndActivo(
+        boolean tieneHorario = DispoRepo.existsByDentistaIdUsuarioAndDiaSemanaAndHoraInicioLessThanEqualAndHoraFinGreaterThanEqualAndActivo(
                 idDentista, 
-                diaSemanaDisponibles, 
-                horaCita, 
-                horaCita,
+                (long) inicio.getDayOfWeek().getValue(),
+                inicio.toLocalTime(),
+                fin.toLocalTime(),
                 1L
             );
       //comprobar la disponibilidad del dentista 
         if (!tieneHorario) {
-            throw new RuntimeException("Error: El dentista no labora en ese horario o día.");
+            throw new RuntimeException("El horario está fuera de la Horario laboral del dentista");
         }
 
         
-        boolean ocupado = CitaeRepo.existsByDentistaIdUsuarioAndFechaHoraAndEstadoCitaNot(
-            idDentista, 
-            cita.getFechaHora(), 
-            "CANCELADA"
-        );
+        Integer resultadoOcupado = CitaeRepo.existeTraslape(idDentista, inicio);
+        boolean ocupado = (resultadoOcupado != null && resultadoOcupado > 0);
       //comprobar la disponibilidad del dentista 
         if (ocupado) {
         	if (cita.getId_cita() == null) {
-                throw new RuntimeException("Error: Ya existe una cita agendada en este horario.");
+                throw new RuntimeException("Las citas deben tener al menos 1 hora de diferencia entre ");
            }        }
+        if (inicio.isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("No puedes agendar citas en una fecha pasada.");
+        }
         
 	}
 	

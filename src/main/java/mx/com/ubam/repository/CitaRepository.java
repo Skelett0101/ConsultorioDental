@@ -25,4 +25,12 @@ public interface CitaRepository extends JpaRepository<Cita, Integer> {
         LocalDateTime fechaHora, 
         String estadoCita
     );
+    
+    @Query(value = "SELECT COUNT(*) > 0 FROM cita c WHERE c.id_dentista = :id " +
+            "AND c.estado <> 'CANCELADA' " +
+            "AND (:inicio < DATE_ADD(c.fecha_hora, INTERVAL 1 HOUR) " +
+            "AND DATE_ADD(:inicio, INTERVAL 1 HOUR) > c.fecha_hora)", 
+            nativeQuery = true)
+     Integer existeTraslape(@Param("id") Integer id, 
+                            @Param("inicio") LocalDateTime inicio);
 }

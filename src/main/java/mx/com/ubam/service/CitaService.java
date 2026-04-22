@@ -22,22 +22,26 @@ public class CitaService {
     private  PacienteRepository pacienteRepo;
     private  UsuarioRepository usuarioRepo;
     private  ServicioRepository servicioRepo;
+    private EmailService AvisoEmail;
 
     @Autowired
 	public CitaService(CitaRepository citaeRepo, DisponibilidadRepository dispoRepo, PacienteRepository pacienteRepo,
-			UsuarioRepository usuarioRepo, ServicioRepository servicioRepo) {
+			UsuarioRepository usuarioRepo, ServicioRepository servicioRepom, EmailService AvisoEmail) {
 		super();
 		CitaeRepo = citaeRepo;
 		DispoRepo = dispoRepo;
 		this.pacienteRepo = pacienteRepo;
 		this.usuarioRepo = usuarioRepo;
 		this.servicioRepo = servicioRepo;
-	}
+		this.AvisoEmail = AvisoEmail;
+	} 
     
 
     public List<Cita> obtenerCitasPorDentista(String datoUsuario) {
         return CitaeRepo.findByDentista_Email(datoUsuario); 
     }
+    
+    
     public Cita agendarCita(Cita cita) {
 		Paciente pacienteExiste = pacienteRepo.findById(cita.getPaciente().getIdPaciente())
 	            .orElseThrow(() -> new RuntimeException("Paciente no encontrado"));
@@ -48,16 +52,26 @@ public class CitaService {
 	        Servicio servicioExiste = servicioRepo.findById(cita.getServicio().getIdServicio())
 	            .orElseThrow(() -> new RuntimeException("Servicio no encontrado"));
 
+	        validacionesyCorrecciones(cita);
 	        
 	        cita.setPaciente(pacienteExiste);
 	        cita.setDentista(dentistaExiste);
 	        cita.setServicio(servicioExiste);
 
-	        validacionesyCorrecciones(cita);
-	        
 	        cita.setEstadoCita("PENDIENTE"); 
 	        cita.setFechaCreacion(LocalDateTime.now());
-	        return CitaeRepo.save(cita);
+	        
+	       
+	        Cita citaLista = CitaeRepo.save(cita);
+	        
+	        try {
+	            AvisoEmail.enviarConfirmacion(citaLista.getPaciente(), citaLista.getFechaHora());
+	        } catch (Exception e) {
+	           
+	            System.err.println("Error al enviar correo: " + e.getMessage());
+	        }
+	        
+	        return citaLista;
 	    }
 	
 	public void validacionesyCorrecciones(Cita cita) {

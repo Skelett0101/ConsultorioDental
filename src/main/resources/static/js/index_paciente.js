@@ -1,88 +1,132 @@
-// js/index_paciente.js
+
+// --------------------Agendar Cita desde el Portal Público solo los datos de Paciente--------------------
+const baseUrl = "http://localhost:8080";
+
+document.addEventListener("DOMContentLoaded", () => {
+    cargarServicios(); 
+});
+
+// 1. Escuchar cuando cambian la fecha
+document.getElementById('fechaCita').addEventListener('change', async (e) => {
+    const fecha = e.target.value;
+    const selectSlot = document.getElementById('slotDisponible');
+    
+    if (!fecha) return;
+
+    selectSlot.disabled = true;
+    selectSlot.innerHTML = '<option>Buscando disponibilidad...</option>';
+
+    try {
+        const response = await fetch(`${baseUrl}/api/disponibilidad/horariosDisponibles?fecha=${fecha}`);
+        
+        if (response.ok) {
+            const slots = await response.json();
+            selectSlot.innerHTML = '<option value="">Selecciona hora y doctor</option>';
+            
+            if (slots.length === 0) {
+                selectSlot.innerHTML = '<option value="">Sin citas disponibles</option>';
+            } else {
+                slots.forEach(s => {
+                    const option = document.createElement('option');
+                    option.value = JSON.stringify({ idDen: s.idDentista, hora: s.hora });
+                    option.textContent = `${s.hora} - con el Dr. ${s.nombreDentista}`;
+                    selectSlot.appendChild(option);
+                });
+                selectSlot.disabled = false;
+            }
+        } else {
+            // Si sale 403 o 404, mostramos el mensaje de error en el select
+            selectSlot.innerHTML = `<option value="">Error del servidor: ${response.status}</option>`;
+        }
+    } catch (error) {
+        selectSlot.innerHTML = '<option>Error de conexión</option>';
+        console.error(error);
+    }
+});
+
+// 2. Lógica del Botón "Confirmar Reserva"
 document.getElementById('formAgendar').addEventListener('submit', async function (e) {
     e.preventDefault();
-
     const btn = document.getElementById('btnReservar');
     const msg = document.getElementById('mensajeReserva');
+    
+    // Validación básica: ¿Eligió horario?
+    const slotValue = document.getElementById('slotDisponible').value;
+    if (!slotValue) {
+        alert("Por favor elige un horario.");
+        return;
+    }
 
-    // Bloquear botón y mostrar carga
+    const slotData = JSON.parse(slotValue);
+    const fechaBase = document.getElementById('fechaCita').value;
+    const idServicioSel = document.getElementById('servicioId').value; // <--- Jalar ID real del select
+
     btn.disabled = true;
-    btn.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span> Procesando su solicitud...';
+    btn.innerHTML = 'Procesando...';
 
-    const baseUrl = "http://localhost:8080";
-
-    // 1. Datos del Paciente
-    const datosPaciente = {
+    const payloadPaciente = {
         nombrePaciente: document.getElementById('nombre').value,
         apellidoPaciente: document.getElementById('apellido').value,
         emailPaciente: document.getElementById('email').value,
         telefonoPaciente: document.getElementById('telefono').value
     };
 
-    // 2. Datos base de la Cita
-    const idServicio = document.getElementById('servicio').value;
-    const fechaHora = document.getElementById('fecha').value;
-
     try {
-        // --- PASO 1: REGISTRAR AL PACIENTE ---
-        const resPaciente = await fetch(`${baseUrl}/api/pacientes`, {
+        // PASO 1: Guardar Paciente
+        const resPac = await fetch(`${baseUrl}/api/pacientes`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(datosPaciente)
+            body: JSON.stringify(payloadPaciente)
         });
+        const paciente = await resPac.json();
 
-        if (!resPaciente.ok) {
-            const errPac = await resPaciente.json();
-            throw new Error(errPac.message || "Error al registrar sus datos personales.");
-        }
-
-        const pacienteCreado = await resPaciente.json();
-        const idGenerado = pacienteCreado.idPaciente; // ID que nos devuelve Java
-
-        // --- PASO 2: REGISTRAR LA CITA ---
-        // Nota: Para citas públicas, solemos asignar un dentista por defecto (id: 1) 
-        // o dejar que el sistema lo asigne después.
+        // PASO 2: Guardar Cita
         const payloadCita = {
-            fechaHora: fechaHora,
-            notaCita: "Cita solicitada desde el portal web.",
-            dentista: { idUsuario: 1 }, // Cambia este ID por un dentista de valor por defecto
-            paciente: { idPaciente: idGenerado },
-            servicio: { idServicio: parseInt(idServicio) }
+            fechaHora: `${fechaBase}T${slotData.hora}:00`,
+            notaCita: "Cita desde portal web",
+            dentista: { idUsuario: slotData.idDen },
+            paciente: { idPaciente: paciente.idPaciente },
+            servicio: { idServicio: parseInt(idServicioSel) } // <--- Usamos el ID del select
         };
 
         const resCita = await fetch(`${baseUrl}/api/citas/registrar`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            // IMPORTANTE: En el portal público no enviamos Token de Authorization 
-            // a menos que el endpoint lo requiera. Asegúrate de que /registrar sea público en Java.
             body: JSON.stringify(payloadCita)
         });
 
         if (resCita.ok) {
-            // --- ÉXITO TOTAL ---
-            btn.innerHTML = '<span class="material-symbols-outlined">task_alt</span> ¡Cita Agendada!';
-            btn.classList.replace('from-primary', 'from-teal-600');
-            btn.classList.replace('to-primary-container', 'to-teal-500');
-
-            msg.textContent = "¡Listo! Recibirás un correo de confirmación en breve.";
-            msg.className = "text-sm font-bold text-center h-5 text-teal-600 animate-bounce";
-
+            msg.textContent = "¡Cita agendada! Revisa tu correo.";
+            msg.className = "text-sm font-bold text-teal-600 animate-bounce";
             this.reset();
-        } else {
-            const errCita = await resCita.json();
-            throw new Error(errCita.message || "Sus datos se guardaron, pero no pudimos agendar la cita.");
         }
-
     } catch (error) {
-        console.error("Error en el proceso:", error);
-        msg.textContent = error.message;
-        msg.className = "text-sm font-bold text-center h-5 text-red-600";
+        msg.textContent = "Error al agendar.";
+        msg.className = "text-sm font-bold text-red-600";
     } finally {
-        setTimeout(() => {
-            btn.disabled = false;
-            btn.innerHTML = 'Confirmar Reserva <span class="material-symbols-outlined">check_circle</span>';
-            btn.className = "w-full bg-gradient-to-r from-primary to-primary-container text-white py-4 rounded-xl font-headline font-bold text-lg shadow-lg shadow-primary/25 hover:shadow-xl active:scale-[0.98] transition-all flex justify-center items-center gap-2";
-            setTimeout(() => { msg.textContent = ""; }, 4000);
-        }, 5000);
+        btn.disabled = false;
+        btn.innerHTML = 'Confirmar Reserva';
     }
 });
+// ------------------------------------FUNCION PARA CARFAR SERVICIOS EN EL SELECT---------------------------------------
+async function cargarServicios() {
+    const selectServicio = document.getElementById("servicioId"); // Revisa que el ID coincida
+    if (!selectServicio) return;
+    const token = localStorage.getItem("token");
+
+    try {
+        const response = await fetch("http://localhost:8080/api/servicios", { // Ajusta tu ruta
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (response.ok) {
+            const servicios = await response.json();
+            selectServicio.innerHTML = '<option value="">Seleccione un servicio</option>';
+            servicios.forEach(s => {
+                const option = document.createElement("option");
+                option.value = s.idServicio;
+                option.textContent = s.nombreServicio;
+                selectServicio.appendChild(option);
+            });
+        }
+    } catch (error) { console.error("Error cargando servicios:", error); }
+}

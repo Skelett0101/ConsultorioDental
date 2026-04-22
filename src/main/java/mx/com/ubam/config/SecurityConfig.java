@@ -95,9 +95,13 @@ public class SecurityConfig {
                 //eliminar admin
                 .requestMatchers("/api/citas/eliminar").hasAnyRole("admin")
                 
+                .requestMatchers(HttpMethod.POST, "/api/citas/registrar").permitAll()
+                
              //
                 .requestMatchers(HttpMethod.GET, "/api/usuarios/disponibilidad/mia").hasAnyRole("dentista", "admin", "recepcionista")
 
+                .requestMatchers(HttpMethod.GET, "/api/disponibilidad/horariosDisponibles").permitAll()
+                
                 .requestMatchers(HttpMethod.GET, "/api/citas/contadorsemanas").hasAnyRole("admin", "recepcionista", "dentista")
 
              // 3. El resto de tus reglas de usuarios que ya corregiste

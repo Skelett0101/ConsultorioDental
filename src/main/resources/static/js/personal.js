@@ -130,7 +130,7 @@ document.getElementById("registroForm").addEventListener("submit", async (e) => 
         apellido: document.getElementById("apellidoNuevo").value,
         email: document.getElementById("emailNuevo").value,
         password: document.getElementById("passwordNuevo").value,
-        rol: { idRol: parseInt(document.getElementById("rolNuevo").value) }
+        rol: { idRol: parseInt(document.getElementById("rolEditar").value) }
     };
 
     try {

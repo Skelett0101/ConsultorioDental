@@ -107,6 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
     actualizarContadorCitas();
     renderizarCitasHoy();
     mostrarHorariosDentistas();
+    renderizarCitasHoy2();
 });
 
 // ------------------------------------FUNCION PARA CARFAR SERVICIOS EN EL SELECT---------------------------------------

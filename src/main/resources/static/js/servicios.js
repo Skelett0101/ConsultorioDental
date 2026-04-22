@@ -279,21 +279,17 @@ document.addEventListener("DOMContentLoaded", () => {
             const ordenados = Object.entries(conteoServicios).sort((a, b) => b[1] - a[1]);
 
             listaPopulares.innerHTML = "";
-            ordenados.forEach(([nombre, cantidad], index) => {
-                let medalla = '🔹';
-                let colorFondo = 'bg-slate-50';
-                
-                if(index === 0) { medalla = '🥇'; colorFondo = 'bg-amber-50 border-amber-100'; }
-                else if(index === 1) { medalla = '🥈'; colorFondo = 'bg-slate-100 border-slate-200'; }
-                else if(index === 2) { medalla = '🥉'; colorFondo = 'bg-orange-50 border-orange-100'; }
+			ordenados.forEach(([nombre, cantidad]) => {
+			                // Aplicamos el mismo color normal a TODOS los elementos
+			                let colorFondo = 'bg-slate-50 border-slate-100';
 
-                listaPopulares.innerHTML += `
-                    <div class="flex items-center justify-between p-3 rounded-xl border ${colorFondo} transition-all hover:scale-[1.02]">
-                        <span class="text-sm font-bold text-slate-700 flex items-center gap-2">${medalla} ${nombre}</span>
-                        <span class="text-[10px] font-extrabold text-white bg-[#005d90] px-2.5 py-1 rounded-full shadow-sm">${cantidad} cobros</span>
-                    </div>
-                `;
-            });
+			                listaPopulares.innerHTML += `
+			                    <div class="flex items-center justify-between p-3 rounded-xl border ${colorFondo} transition-all hover:scale-[1.02]">
+			                        <span class="text-sm font-bold text-slate-700">${nombre}</span>
+			                        <span class="text-[10px] font-extrabold text-white bg-[#005d90] px-2.5 py-1 rounded-full shadow-sm">${cantidad} cobros</span>
+			                    </div>
+			                `;
+			            });
 
             modalPopulares.classList.remove("hidden");
         });

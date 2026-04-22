@@ -280,7 +280,7 @@
 
                 <div id="div-digitos" class="hidden">
                     <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">16 Dígitos de la Tarjeta</label>
-                    <input type="text" maxlength="16" id="input-digitos" placeholder="Ej: 1234567890123456" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#005d90] outline-none text-sm font-bold text-slate-700">
+<input type="text" maxlength="16" id="input-digitos" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Ej: 1234567890123456" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#005d90] outline-none text-sm font-bold text-slate-700">
                 </div>
 
                 <div>

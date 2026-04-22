@@ -63,10 +63,8 @@ function renderizarTabla(empleados) {
         const textoRol = MAPA_ROLES[emp.idRol] || "DESCONOCIDO";
 
         // Pasamos el emp.idRol numérico a la función
-        const btnEditar = emp.activo 
-            ? `<button onclick="abrirModalEditar(${emp.idUsuario}, '${emp.nombreCompleto}', '${emp.email}', ${emp.idRol}, ${emp.activo})" class="text-xs font-bold text-primary bg-primary-fixed/30 hover:bg-primary-fixed/60 px-4 py-2 rounded-lg transition-colors opacity-0 group-hover:opacity-100">Editar Perfil</button>`
-            : `<span class="text-xs text-slate-400 italic">Deshabilitado</span>`;
-
+       // 🔥 ¡Adiós a la cárcel! El botón siempre sale para todos
+        const btnEditar = `<button onclick="abrirModalEditar(${emp.idUsuario}, '${emp.nombreCompleto}', '${emp.email}', ${emp.idRol}, ${emp.activo})" class="text-xs font-bold text-primary bg-primary-fixed/30 hover:bg-primary-fixed/60 px-4 py-2 rounded-lg transition-colors opacity-0 group-hover:opacity-100">Editar Perfil</button>`;
         const fila = `
             <div class="px-6 py-4 flex items-center justify-between hover:bg-slate-50/80 transition-colors group">
                 <div class="flex items-center gap-4">
@@ -142,7 +140,7 @@ document.getElementById("registroForm").addEventListener("submit", async (e) => 
         if (!response.ok) throw new Error("Error al registrar usuario");
 
         msj.classList.replace("text-red-500", "text-teal-600");
-        // AHORA (Elegante) ✅
+    
         mostrarAlerta("Empleado registrado con éxito", 'success');
         
         // Recargar la tabla y cerrar modal
@@ -199,7 +197,7 @@ function cerrarModalEditar() {
 document.getElementById("editarForm").addEventListener("submit", async (e) => {
     e.preventDefault();
     
-    // 1. Extraemos el ID del usuario oculto (¡El que nos faltaba!)
+    // 1. Extraemos el ID del usuario oculto 
     const idUsuario = document.getElementById("idEditar").value;
     
     // 2. TRUCO INFALIBLE: Buscamos el select SOLO dentro de ESTE formulario (e.target)

@@ -1,0 +1,70 @@
+/* ==========================================
+   SISTEMA DE ALERTAS FLOTANTES (TOASTS)
+   ========================================== */
+
+/* Contenedor invisible donde vivirán las alertas */
+#toast-container {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    pointer-events: none; /* Para que no estorbe clics cuando está invisible */
+}
+
+/* Diseño de la tarjetita */
+.toast-alert {
+    min-width: 300px;
+    max-width: 400px;
+    background-color: #ffffff;
+    color: #334155; /* slate-700 */
+    padding: 16px 20px;
+    border-radius: 16px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    
+    /* Estado inicial: escondido a la derecha */
+    transform: translateX(120%);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Animación de rebote suave */
+    border-left: 6px solid transparent;
+}
+
+/* Clase que se activa con JS para que entre a la pantalla */
+.toast-alert.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+/* Colores según el tipo de alerta */
+.toast-success {
+    border-left-color: #10b981; /* Verde esmeralda */
+}
+.toast-success .toast-icon {
+    color: #10b981;
+}
+
+.toast-error {
+    border-left-color: #ef4444; /* Rojo error */
+}
+.toast-error .toast-icon {
+    color: #ef4444;
+}
+
+.toast-info {
+    border-left-color: #0ea5e9; /* Azul info */
+}
+.toast-info .toast-icon {
+    color: #0ea5e9;
+}
+
+.toast-icon {
+    font-size: 24px !important; /* Tamaño del icono de Google */
+}

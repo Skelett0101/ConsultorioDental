@@ -142,7 +142,8 @@ document.getElementById("registroForm").addEventListener("submit", async (e) => 
         if (!response.ok) throw new Error("Error al registrar usuario");
 
         msj.classList.replace("text-red-500", "text-teal-600");
-        msj.textContent = "Empleado registrado con éxito ✅";
+        // AHORA (Elegante) ✅
+        mostrarAlerta("Empleado registrado con éxito", 'success');
         
         // Recargar la tabla y cerrar modal
         setTimeout(() => {

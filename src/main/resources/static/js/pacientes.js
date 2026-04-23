@@ -227,8 +227,77 @@ function renderizarPaginacion(data) {
     }
 }
 
-function verHistorial(id) {
-    alert("Cargando historial de citas para el paciente #" + id + "...");
+//funcion ver historial de citas pasadas y futuras
+async function verHistorial(id) {
+    const modal = document.getElementById('modalHistorial');
+    const tbody = document.getElementById('listaHistorialCitas');
+    const lblNombre = document.getElementById('nombrePacienteHistorial');
+    
+    // 1. Mostrar estado de carga
+    tbody.innerHTML = `<tr><td colspan="4" class="py-8 text-center text-slate-400 animate-pulse">Consultando historial...</td></tr>`;
+    modal.classList.remove('hidden');
+
+    try {
+        // 2. Obtener datos del paciente y todas las citas
+        const [resPaciente, resCitas] = await Promise.all([
+            fetchConAuth(`${API_BASE}/${id}`),
+            fetchConAuth(`http://localhost:8080/api/citas/listar`)
+        ]);
+
+        if (!resPaciente.ok || !resCitas.ok) throw new Error("Error al obtener datos");
+
+        const paciente = await resPaciente.json();
+        const todasCitas = await resCitas.json();
+        const usuarioActual = JSON.parse(localStorage.getItem("usuario"));
+
+        lblNombre.textContent = `Paciente: ${paciente.nombrePaciente} ${paciente.apellidoPaciente}`;
+
+        // 3. Filtrar historial según REQUISITO R16
+        // - Admin/Recepcionista: Ven todo el historial de este paciente.
+        // - Dentista: Solo ve las citas que ÉL mismo atendió a este paciente.
+        const historialFiltrado = todasCitas.filter(cita => {
+            const esMismoPaciente = (cita.paciente?.idPaciente || cita.paciente?.id_paciente) === id;
+            
+            if (usuarioActual.rol.toUpperCase() === "DENTISTA") {
+                return esMismoPaciente && cita.dentista?.idUsuario === usuarioActual.idUsuario;
+            }
+            return esMismoPaciente;
+        });
+
+        // 4. Renderizar resultados
+        if (historialFiltrado.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="4" class="py-8 text-center text-slate-500 font-medium">No hay registros de citas para mostrar.</td></tr>`;
+            return;
+        }
+
+        tbody.innerHTML = historialFiltrado.map(cita => {
+            const fecha = new Date(cita.fechaHora).toLocaleString('es-MX', { 
+                day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' 
+            });
+            const estadoColor = cita.estadoCita === "COMPLETADA" ? "text-green-600 bg-green-50" : "text-amber-600 bg-amber-50";
+            
+            return `
+                <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="py-4 text-sm font-medium text-slate-700">${fecha}</td>
+                    <td class="py-4 text-sm text-slate-600">${cita.servicio?.nombreServicio || 'Consulta'}</td>
+                    <td class="py-4 text-sm text-slate-600">Dr. ${cita.dentista?.nombre || 'No asignado'}</td>
+                    <td class="py-4">
+                        <span class="px-2 py-1 rounded-md text-[10px] font-bold uppercase ${estadoColor}">
+                            ${cita.estadoCita || 'PENDIENTE'}
+                        </span>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+
+    } catch (error) {
+        console.error(error);
+        tbody.innerHTML = `<tr><td colspan="4" class="py-8 text-center text-red-500">Error al cargar el historial.</td></tr>`;
+    }
+}
+
+function cerrarModalHistorial() {
+    document.getElementById('modalHistorial').classList.add('hidden');
 }
 
 // --- REGISTRO INTERNO ---

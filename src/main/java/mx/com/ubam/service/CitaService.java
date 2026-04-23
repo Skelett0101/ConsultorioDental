@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import mx.com.ubam.model.*;
 import mx.com.ubam.repository.*;
@@ -17,31 +18,25 @@ import mx.com.ubam.repository.*;
 @Service
 public class CitaService {
 	
+	@Autowired
 	private  CitaRepository CitaeRepo;
+	@Autowired
     private  DisponibilidadRepository DispoRepo;
+	@Autowired
     private  PacienteRepository pacienteRepo;
+	@Autowired
     private  UsuarioRepository usuarioRepo;
+	@Autowired
     private  ServicioRepository servicioRepo;
+	@Autowired
     private EmailService AvisoEmail;
-
-    @Autowired
-	public CitaService(CitaRepository citaeRepo, DisponibilidadRepository dispoRepo, PacienteRepository pacienteRepo,
-			UsuarioRepository usuarioRepo, ServicioRepository servicioRepom, EmailService AvisoEmail) {
-		super();
-		CitaeRepo = citaeRepo;
-		DispoRepo = dispoRepo;
-		this.pacienteRepo = pacienteRepo;
-		this.usuarioRepo = usuarioRepo;
-		this.servicioRepo = servicioRepo;
-		this.AvisoEmail = AvisoEmail;
-	} 
     
 
     public List<Cita> obtenerCitasPorDentista(String datoUsuario) {
         return CitaeRepo.findByDentista_Email(datoUsuario); 
     }
     
-    
+    @Transactional
     public Cita agendarCita(Cita cita) {
 		Paciente pacienteExiste = pacienteRepo.findById(cita.getPaciente().getIdPaciente())
 	            .orElseThrow(() -> new RuntimeException("Paciente no encontrado"));
@@ -59,7 +54,7 @@ public class CitaService {
 	        cita.setServicio(servicioExiste);
 
 	        cita.setEstadoCita("PENDIENTE"); 
-	        cita.setFechaCreacion(LocalDateTime.now());
+	        cita.setFecha_creacion(LocalDateTime.now());
 	        
 	       
 	        Cita citaLista = CitaeRepo.save(cita);

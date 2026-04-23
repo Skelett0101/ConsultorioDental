@@ -3,14 +3,17 @@
 const baseUrl = "http://localhost:8080";
 
 document.addEventListener("DOMContentLoaded", () => {
-    cargarServicios(); 
+    cargarServicios();
+    // Limitar fecha mínima a hoy
+    const hoy = new Date().toISOString().split("T")[0];
+    document.getElementById('fechaCita').setAttribute('min', hoy);
 });
 
 // 1. Escuchar cuando cambian la fecha
 document.getElementById('fechaCita').addEventListener('change', async (e) => {
     const fecha = e.target.value;
     const selectSlot = document.getElementById('slotDisponible');
-    
+
     if (!fecha) return;
 
     selectSlot.disabled = true;
@@ -18,11 +21,11 @@ document.getElementById('fechaCita').addEventListener('change', async (e) => {
 
     try {
         const response = await fetch(`${baseUrl}/api/disponibilidad/horariosDisponibles?fecha=${fecha}`);
-        
+
         if (response.ok) {
             const slots = await response.json();
             selectSlot.innerHTML = '<option value="">Selecciona hora y doctor</option>';
-            
+
             if (slots.length === 0) {
                 selectSlot.innerHTML = '<option value="">Sin citas disponibles</option>';
             } else {
@@ -35,7 +38,6 @@ document.getElementById('fechaCita').addEventListener('change', async (e) => {
                 selectSlot.disabled = false;
             }
         } else {
-            // Si sale 403 o 404, mostramos el mensaje de error en el select
             selectSlot.innerHTML = `<option value="">Error del servidor: ${response.status}</option>`;
         }
     } catch (error) {
@@ -49,7 +51,7 @@ document.getElementById('formAgendar').addEventListener('submit', async function
     e.preventDefault();
     const btn = document.getElementById('btnReservar');
     const msg = document.getElementById('mensajeReserva');
-    
+
     // Validación básica: ¿Eligió horario?
     const slotValue = document.getElementById('slotDisponible').value;
     if (!slotValue) {
@@ -59,7 +61,7 @@ document.getElementById('formAgendar').addEventListener('submit', async function
 
     const slotData = JSON.parse(slotValue);
     const fechaBase = document.getElementById('fechaCita').value;
-    const idServicioSel = document.getElementById('servicioId').value; // <--- Jalar ID real del select
+    const idServicioSel = document.getElementById('servicioId').value;  
 
     btn.disabled = true;
     btn.innerHTML = 'Procesando...';
@@ -72,15 +74,32 @@ document.getElementById('formAgendar').addEventListener('submit', async function
     };
 
     try {
-        // PASO 1: Guardar Paciente
+        // --- REGISTRAR AL PACIENTE PRIMERO---
         const resPac = await fetch(`${baseUrl}/api/pacientes`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payloadPaciente)
         });
-        const paciente = await resPac.json();
 
-        // PASO 2: Guardar Cita
+        if (!resPac.ok) {
+          
+            const errorData = await resPac.json();
+
+            // Mostrar que el correo ya existe
+            msg.textContent = errorData.message;
+            msg.className = "text-sm font-bold text-center text-red-600 animate-shake";
+
+            // Reactivamos el botón para que el usuario corrija el correo
+            btn.disabled = false;
+            btn.innerHTML = 'Confirmar Reserva <span class="material-symbols-outlined">check_circle</span>';
+
+            return; 
+        }
+
+        const paciente = await resPac.json();
+        console.log("Paciente registrado con éxito:", paciente.idPaciente);
+
+        // Guardar Cita ES LO SEGUNDO
         const payloadCita = {
             fechaHora: `${fechaBase}T${slotData.hora}:00`,
             notaCita: "Cita desde portal web",
@@ -112,11 +131,10 @@ document.getElementById('formAgendar').addEventListener('submit', async function
 async function cargarServicios() {
     const selectServicio = document.getElementById("servicioId"); // Revisa que el ID coincida
     if (!selectServicio) return;
-    const token = localStorage.getItem("token");
 
     try {
         const response = await fetch("http://localhost:8080/api/servicios", { // Ajusta tu ruta
-            headers: { 'Authorization': `Bearer ${token}` }
+
         });
         if (response.ok) {
             const servicios = await response.json();

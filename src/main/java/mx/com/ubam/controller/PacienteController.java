@@ -18,9 +18,16 @@ public class PacienteController {
 	
 	//registrar paciente
 	@PostMapping
-    public ResponseEntity<Paciente> registrar(@RequestBody Paciente paciente) {
-        return ResponseEntity.ok(pacienteService.guardarPaciente(paciente));
-    }
+	public ResponseEntity<?> registrar(@RequestBody Paciente paciente) {
+	    try {
+	        Paciente nuevoPaciente = pacienteService.guardarPaciente(paciente);
+	        return ResponseEntity.ok(nuevoPaciente);
+	    } catch (RuntimeException e) {
+	        // Enviamos un JSON con el mensaje: "El email ya está registrado"
+	        return ResponseEntity.badRequest()
+	            .body("{\"message\": \"" + e.getMessage() + "\"}");
+	    }
+	}
 	
 	//listar con paginación 
     @GetMapping

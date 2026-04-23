@@ -60,16 +60,53 @@ public class SecurityConfig {
                 //crear pacientes
                 .requestMatchers(HttpMethod.POST, "/api/pacientes").permitAll()
                 
+                //para que el usuario pueda registrar su cita
+                .requestMatchers(HttpMethod.POST, "/api/citas/registrar").permitAll()
+
+             // login y registro
+                .requestMatchers("/auth/login", "/api/usuarios/registro").permitAll()
+                
+                .requestMatchers(HttpMethod.GET, "/api/servicios").permitAll()
+
+                .requestMatchers(HttpMethod.GET, "/api/disponibilidad/horariosDisponibles").permitAll()
+
+                
                 //editar pacientes (admin y recepcionsita)
                 .requestMatchers(HttpMethod.PUT, "/api/pacientes/**").hasAnyRole("admin", "recepcionista")
                 
-                // login y registro
-                .requestMatchers("/auth/login", "/api/usuarios/registro").permitAll()
+
+                //listar activos (admin, recepcionsita y dentista)
+                .requestMatchers(HttpMethod.GET, "/api/servicios").hasAnyRole("admin", "recepcionista", "dentista")
+                
+                //mostrar citas todos
+                .requestMatchers("/api/citas/listar").hasAnyRole("admin", "recepcionista", "dentista")
+
+                //registrarsolo dos
+                .requestMatchers("/api/citas/registrar").hasAnyRole("admin", "recepcionista")
+                
+                //eliminar admin
+                .requestMatchers("/api/citas/eliminar").hasAnyRole("admin")                
+             //
+                .requestMatchers(HttpMethod.GET, "/api/usuarios/disponibilidad/mia").hasAnyRole("dentista", "admin", "recepcionista")
+
+                .requestMatchers(HttpMethod.GET, "/api/citas/contadorsemanas").hasAnyRole("admin", "recepcionista", "dentista")
+
+             .requestMatchers(HttpMethod.GET, "/api/usuarios").hasAnyRole("admin", "recepcionista", "dentista")
+                
+                //buscar
+                .requestMatchers("/api/servicios/buscar").hasAnyRole("admin", "recepcionista", "dentista")
+                
+             // citas dentista
+                .requestMatchers("/api/citas/listar").hasAnyRole("dentista")
+                
                 //personal
                 .requestMatchers( "/api/usuarios/personal").hasAnyRole("admin")
                 
+                // l resto de funciones (cobrar, ver recibos)
+                .requestMatchers("/api/pagos/**").hasAnyRole("admin", "recepcionista")
                 //crear servicios
                 .requestMatchers(HttpMethod.POST, "/api/servicios").hasRole("admin")
+                
                 
                 //editar informacion
                 .requestMatchers(HttpMethod.PUT, "/api/servicios/**").hasRole("admin")
@@ -82,36 +119,6 @@ public class SecurityConfig {
                 
                 //ver lista completa de usuarios (incluso inactivos)
                 .requestMatchers("/api/servicios/todos").hasRole("admin")
-
-                //listar activos (admin, recepcionsita y dentista)
-                .requestMatchers(HttpMethod.GET, "/api/servicios").hasAnyRole("admin", "recepcionista", "dentista")
-                
-                //mostrar citas todos
-                .requestMatchers("/api/citas/listar").hasAnyRole("admin", "recepcionista", "dentista")
-
-                //registrarsolo dos
-                .requestMatchers("/api/citas/registrar").hasAnyRole("admin", "recepcionista")
-                
-                //eliminar admin
-                .requestMatchers("/api/citas/eliminar").hasAnyRole("admin")
-                
-                .requestMatchers(HttpMethod.POST, "/api/citas/registrar").permitAll()
-                
-             //
-                .requestMatchers(HttpMethod.GET, "/api/usuarios/disponibilidad/mia").hasAnyRole("dentista", "admin", "recepcionista")
-
-                .requestMatchers(HttpMethod.GET, "/api/disponibilidad/horariosDisponibles").permitAll()
-                
-                .requestMatchers(HttpMethod.GET, "/api/citas/contadorsemanas").hasAnyRole("admin", "recepcionista", "dentista")
-
-             // 3. El resto de tus reglas de usuarios que ya corregiste
-             .requestMatchers(HttpMethod.GET, "/api/usuarios").hasAnyRole("admin", "recepcionista", "dentista")
-                
-                //buscar
-                .requestMatchers("/api/servicios/buscar").hasAnyRole("admin", "recepcionista", "dentista")
-                
-             // citas dentista
-                .requestMatchers("/api/citas/listar").hasAnyRole("dentista")
 
                 // solo admin
                 .requestMatchers("/api/usuarios/**").hasRole("admin")
@@ -129,9 +136,6 @@ public class SecurityConfig {
 
              // Los reportes financieros
              .requestMatchers("/api/pagos/ingresos/**").hasRole("admin")
-
-             // l resto de funciones (cobrar, ver recibos)
-             .requestMatchers("/api/pagos/**").hasAnyRole("admin", "recepcionista")
 
              // REGLAS DE PERFIL
              .requestMatchers("/api/perfil/**").authenticated()

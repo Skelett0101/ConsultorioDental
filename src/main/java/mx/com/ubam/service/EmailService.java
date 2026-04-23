@@ -15,18 +15,19 @@ public class EmailService {
 	@Autowired
     private JavaMailSender mailSender;
 
-    // 1. Envío Inmediato (Confirmación)
+    // ENVIAR EL MENSAJE DE SU CITA CONFIRMADA
     public void enviarConfirmacion(Paciente paciente, LocalDateTime fecha) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(paciente.getEmailPaciente());
         message.setSubject("Cita Agendada - Clinical Atelier");
         message.setText("Hola " + paciente.getNombrePaciente() + ",\n\n" +
                         "Tu cita ha sido registrada para el: " + fecha + ".\n" +
+        		"Por favor responda a este mensaje para confirmar"+
                         "¡Gracias por confiar en nosotros!");
         mailSender.send(message);
     }
 
-    // 2. Envío de Recordatorio (Día antes)
+    // Recordatorio UN DIA ANTES
     public void enviarRecordatorio(String email, String nombre, LocalDateTime fecha) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);

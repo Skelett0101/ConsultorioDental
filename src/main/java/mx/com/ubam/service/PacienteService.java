@@ -1,5 +1,6 @@
 package mx.com.ubam.service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ public class PacienteService {
 		if(pacienteRepository.findByEmailPaciente(paciente.getEmailPaciente()).isPresent()) {
 			throw new RuntimeException("El email ya está registrado");
 		}
+		paciente.setFechaCita(LocalDateTime.now());
 		return pacienteRepository.save(paciente);
 	}
 	

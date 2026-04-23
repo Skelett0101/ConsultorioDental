@@ -42,6 +42,7 @@ public class Cita {
 	@Column(name = "notas", nullable = false)
 	private String notaCita;
 	
+	@Column(name = "fecha_creacion")
 	private LocalDateTime fecha_creacion;
 	
 	// Getters y Setters
@@ -104,13 +105,15 @@ public class Cita {
 		this.notaCita = notaCita;
 	}
 
-	public LocalDateTime getFechaCreacion() {
+	public LocalDateTime getFecha_creacion() {
 		return fecha_creacion;
 	}
 
-	public void setFechaCreacion(LocalDateTime fecha_creacion) {
+	public void setFecha_creacion(LocalDateTime fecha_creacion) {
 		this.fecha_creacion = fecha_creacion;
 	}
+
+	
 	
 	
 	

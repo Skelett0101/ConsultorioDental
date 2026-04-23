@@ -1,7 +1,9 @@
 package mx.com.ubam.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.data.domain.Page;
@@ -41,16 +43,27 @@ public class DisponibilidadController {
         return ResponseEntity.ok(dispoRepo.findByDentistaIdUsuario(idDentista));
     }
     
+    
     @GetMapping("/horariosDisponibles")
     public ResponseEntity<List<DisponibleDTO>> obtenerHorariosLibres(@RequestParam String fecha) {
-        List<DisponibleDTO> slots = new ArrayList<>();
-        
-        
-        slots.add(new DisponibleDTO(1, "Mendoza", "09:00"));
-        slots.add(new DisponibleDTO(1, "Mendoza", "10:00"));
-        slots.add(new DisponibleDTO(2, "García", "11:00"));
-        
-        return ResponseEntity.ok(slots);
+        try {
+            LocalDate date = LocalDate.parse(fecha);
+            
+            Long diaNumerico = (long) date.getDayOfWeek().getValue(); 
+
+            List<Disponibilidad> lista = dispoRepo.buscarPorDiaYRol(diaNumerico, 2);
+
+            List<DisponibleDTO> dtos = lista.stream()
+                .map(d -> new DisponibleDTO(
+                    d.getDentista().getIdUsuario(), 
+                    d.getDentista().getNombre(), 
+                    d.getHoraInicio().toString()))
+                .collect(Collectors.toList());
+
+            return ResponseEntity.ok(dtos);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 	
 }

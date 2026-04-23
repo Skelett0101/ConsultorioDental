@@ -46,13 +46,13 @@ document.getElementById('fechaCita').addEventListener('change', async (e) => {
     }
 });
 
-// 2. Lógica del Botón "Confirmar Reserva"
+// Confirmar la cita
 document.getElementById('formAgendar').addEventListener('submit', async function (e) {
     e.preventDefault();
     const btn = document.getElementById('btnReservar');
     const msg = document.getElementById('mensajeReserva');
 
-    // Validación básica: ¿Eligió horario?
+    // Validación básica
     const slotValue = document.getElementById('slotDisponible').value;
     if (!slotValue) {
         alert("Por favor elige un horario.");
@@ -89,7 +89,7 @@ document.getElementById('formAgendar').addEventListener('submit', async function
             msg.textContent = errorData.message;
             msg.className = "text-sm font-bold text-center text-red-600 animate-shake";
 
-            // Reactivamos el botón para que el usuario corrija el correo
+            // mandar alerta al usuario de que el correo ya existe
             btn.disabled = false;
             btn.innerHTML = 'Confirmar Reserva <span class="material-symbols-outlined">check_circle</span>';
 

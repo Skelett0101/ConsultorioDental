@@ -40,10 +40,9 @@
             const rol = usuario.rol.toUpperCase();
 
             let estilosOcultos = '';
-
-            if (rol !== "ADMIN") {
-                estilosOcultos += '#seccion-finanzas, #btn-servicios-populares, #btn-exportar-pagos { display: none !important; } ';
-            }
+			            if (rol !== "ADMIN" && rol !== "RECEPCIONISTA") {
+			                estilosOcultos += '#seccion-finanzas, #btn-servicios-populares, #btn-exportar-pagos { display: none !important; } ';
+			            }
 
             if (rol === "DENTISTA") {
                 estilosOcultos += '#btn-nueva-factura, #tabla-pagos, #input-buscar-paciente, #btn-buscar-paciente { display: none !important; } ';

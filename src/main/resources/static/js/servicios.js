@@ -450,16 +450,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Ocultar Ingresos Financieros si NO es Admin
-    if (!esAdmin) {
-        const seccionFinanzas = document.getElementById("seccion-finanzas");
-        const btnPopulares = document.getElementById("btn-servicios-populares");
-        const btnExportarPagosHidden = document.getElementById("btn-exportar-pagos"); 
+	// Ocultar Ingresos Financieros
+	    if (!esAdmin && rolUsuario !== 'recepcionista') {
+	        const seccionFinanzas = document.getElementById("seccion-finanzas");
+	        const btnPopulares = document.getElementById("btn-servicios-populares");
+	        const btnExportarPagosHidden = document.getElementById("btn-exportar-pagos"); 
 
-        if (seccionFinanzas) seccionFinanzas.style.display = "none";
-        if (btnPopulares) btnPopulares.style.display = "none";
-        if (btnExportarPagosHidden) btnExportarPagosHidden.style.display = "none";
-    }
+	        if (seccionFinanzas) seccionFinanzas.style.display = "none";
+	        if (btnPopulares) btnPopulares.style.display = "none";
+	        if (btnExportarPagosHidden) btnExportarPagosHidden.style.display = "none";
+	    }
 
     if (esDentista) {
         const btnNuevaFactura = document.getElementById("btn-nueva-factura");

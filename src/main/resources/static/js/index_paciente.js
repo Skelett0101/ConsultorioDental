@@ -55,7 +55,7 @@ document.getElementById('formAgendar').addEventListener('submit', async function
     // Validación básica
     const slotValue = document.getElementById('slotDisponible').value;
     if (!slotValue) {
-        alert("Por favor elige un horario.");
+        mostrarAlerta("Por favor elige un horario.");
         return;
     }
 
@@ -133,7 +133,7 @@ async function cargarServicios() {
     if (!selectServicio) return;
 
     try {
-        const response = await fetch("http://localhost:8080/api/servicios", { // Ajusta tu ruta
+        const response = await fetch("http://localhost:8080/api/servicios", { // ruta del back
 
         });
         if (response.ok) {

@@ -75,44 +75,61 @@ public class UsuarioService {
     }
 
     public void actualizarUsuario(Integer id, UsuarioDTO dto) {
-        System.out.println("---- INICIANDO ACTUALIZACIÓN ----");
-        System.out.println("Buscando usuario con ID: " + id);
-        
+    Usuario usuario = usuarioRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+    if (dto.getNombreCompleto() != null && !dto.getNombreCompleto().isEmpty()) {
+        String[] partesNombre = dto.getNombreCompleto().trim().split(" ", 2);
+        usuario.setNombre(partesNombre[0]);
+        usuario.setApellido(partesNombre.length > 1 ? partesNombre[1] : "");
+    }
+
+    if (dto.getEmail() != null && !dto.getEmail().isEmpty()) {
+        usuario.setEmail(dto.getEmail());
+    }
+
+    if (dto.getActivo() != null) {
+        usuario.setActivo(dto.getActivo());
+    }
+
+    if (dto.getIdRol() != null) {
+        Rol nuevoRol = rolRepository.findById(dto.getIdRol())
+            .orElseThrow(() -> new RuntimeException("El rol especificado (" + dto.getIdRol() + ") no existe"));
+        usuario.setRol(nuevoRol);
+    }
+
+    usuarioRepository.save(usuario);
+}
+
+
+    public void cambiarPassword(Integer id, String passwordActual, String passwordNueva) {
+    // buscar usuario
+    Usuario usuario = usuarioRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Usuario no encontrado en la base de datos"));
+
+    // contraseña actual coincide
+    if (!passwordEncoder.matches(passwordActual, usuario.getPassword())) {
+        throw new RuntimeException("La contraseña actual es incorrecta");
+    }
+
+    // encripta la nueva y guarda
+    usuario.setPassword(passwordEncoder.encode(passwordNueva));
+    usuarioRepository.save(usuario);
+}
+    
+
+public void actualizarMiPerfil(Integer id, UsuarioDTO dto) {
         Usuario usuario = usuarioRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        System.out.println("Usuario encontrado: " + usuario.getNombre() + " - Rol actual: " + (usuario.getRol() != null ? usuario.getRol().getIdRol() : "Ninguno"));
-
+        // SOLO actualizamos Nombre y Apellidos
         if (dto.getNombreCompleto() != null && !dto.getNombreCompleto().isEmpty()) {
             String[] partesNombre = dto.getNombreCompleto().trim().split(" ", 2);
             usuario.setNombre(partesNombre[0]);
             usuario.setApellido(partesNombre.length > 1 ? partesNombre[1] : "");
         }
 
-        if (dto.getEmail() != null && !dto.getEmail().isEmpty()) {
-            usuario.setEmail(dto.getEmail());
-        }
-
-        if (dto.getActivo() != null) {
-            usuario.setActivo(dto.getActivo());
-        }
-
-       
-        System.out.println("ID Rol recibido del DTO: " + dto.getIdRol());
-        
-        if (dto.getIdRol() != null) {
-            Rol nuevoRol = rolRepository.findById(dto.getIdRol())
-                .orElseThrow(() -> new RuntimeException("El rol especificado (" + dto.getIdRol() + ") no existe"));
-                
-            System.out.println("Rol encontrado en BD: " + nuevoRol.getNombre());
-            usuario.setRol(nuevoRol); // asignar nwe roll
-            System.out.println("Rol asignado al usuario antes de guardar: " + usuario.getRol().getIdRol());
-        }
-
-        // guardar
         usuarioRepository.save(usuario);
-        System.out.println("---- ACTUALIZACIÓN TERMINADA ----");
     }
-    
     
 }

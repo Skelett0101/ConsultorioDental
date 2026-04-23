@@ -59,11 +59,11 @@ function renderizarTabla(empleados) {
             ? `<span class="bg-[#8ef4e9]/30 text-[#006f67] px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ml-2">Activo</span>`
             : `<span class="bg-slate-200 text-slate-500 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ml-2">Inactivo</span>`;
 
-        // 🔥 Traducimos el número a texto usando el diccionario
+        // Traducimos el número a texto usando el diccionario
         const textoRol = MAPA_ROLES[emp.idRol] || "DESCONOCIDO";
 
         // Pasamos el emp.idRol numérico a la función
-       // 🔥 ¡Adiós a la cárcel! El botón siempre sale para todos
+    
         const btnEditar = `<button onclick="abrirModalEditar(${emp.idUsuario}, '${emp.nombreCompleto}', '${emp.email}', ${emp.idRol}, ${emp.activo})" class="text-xs font-bold text-primary bg-primary-fixed/30 hover:bg-primary-fixed/60 px-4 py-2 rounded-lg transition-colors opacity-0 group-hover:opacity-100">Editar Perfil</button>`;
         const fila = `
             <div class="px-6 py-4 flex items-center justify-between hover:bg-slate-50/80 transition-colors group">
@@ -165,7 +165,7 @@ document.getElementById("registroForm").addEventListener("submit", async (e) => 
 const modalEditar = document.getElementById("modalEditar");
 const modalBoxEditar = document.getElementById("modalBoxEditar");
 
-// 🔥 Recibimos el idRol y lo asignamos directo al Select
+// Recibimos el idRol y lo asignamos directo al Select
 function abrirModalEditar(id, nombre, email, idRol, activo) {
     // Llenar campos
     document.getElementById("modalNombreDisplay").textContent = nombre;
@@ -193,7 +193,7 @@ function cerrarModalEditar() {
     setTimeout(() => modalEditar.classList.add("hidden"), 300);
 }
 
-// 🔥 LÓGICA REAL PARA ACTUALIZAR AL BACKEND 🔥
+//  LÓGICA REAL PARA ACTUALIZAR AL BACKEND 
 document.getElementById("editarForm").addEventListener("submit", async (e) => {
     e.preventDefault();
     

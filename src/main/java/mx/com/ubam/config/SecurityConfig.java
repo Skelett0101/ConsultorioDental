@@ -52,6 +52,7 @@ public class SecurityConfig {
                     "/index_paciente.html",
                     "/serviciosIndex.html",
                     "/nosotros.html",
+                    "/perfil.html",
                     "/css/**",
                     "/js/**",
                     "/error"
@@ -73,8 +74,11 @@ public class SecurityConfig {
                 
                 //editar pacientes (admin y recepcionsita)
                 .requestMatchers(HttpMethod.PUT, "/api/pacientes/**").hasAnyRole("admin", "recepcionista")
+                //editar perfil propio passwd
+                .requestMatchers(HttpMethod.PUT, "/api/usuarios/cambiar-password/{id}").hasAnyRole("admin", "recepcionista", "dentista")
+                //editar perfil propio
+                .requestMatchers("/api/usuarios/perfil/**").authenticated()
                 
-
                 //listar activos (admin, recepcionsita y dentista)
                 .requestMatchers(HttpMethod.GET, "/api/servicios").hasAnyRole("admin", "recepcionista", "dentista")
                 

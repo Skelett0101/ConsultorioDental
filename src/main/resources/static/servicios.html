@@ -42,12 +42,11 @@
             let estilosOcultos = '';
 
             if (rol !== "ADMIN") {
-                estilosOcultos += '#seccion-finanzas, #btn-servicios-populares { display: none !important; } ';
+                estilosOcultos += '#seccion-finanzas, #btn-servicios-populares, #btn-exportar-pagos { display: none !important; } ';
             }
 
             if (rol === "DENTISTA") {
                 estilosOcultos += '#btn-nueva-factura, #tabla-pagos, #input-buscar-paciente, #btn-buscar-paciente { display: none !important; } ';
-
             }
 
             if (estilosOcultos !== '') {
@@ -88,7 +87,6 @@
                 <a class="flex items-center gap-3 px-3 py-2 rounded-xl transition-colors text-slate-500 hover:bg-white/60 font-medium"
                     href="configuracion.html"><span class="material-symbols-outlined">settings</span><span
                         class="text-sm font-medium">Configuración</span></a>
-
             </div>
         </aside>
 
@@ -112,7 +110,6 @@
                             class="relative p-2 text-slate-400 hover:bg-slate-100 transition-colors rounded-full"><span
                                 class="material-symbols-outlined">notifications</span><span
                                 class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-white"></span></button>
-
                     </div>
 
                     <div class="h-8 w-[1px] bg-slate-200"></div>
@@ -234,6 +231,11 @@
                                     class="bg-teal-50 border border-teal-100 hover:bg-teal-100 text-teal-800 px-4 py-2 rounded-xl text-sm font-bold transition-colors flex items-center gap-1.5 shadow-sm">
                                     <span class="material-symbols-outlined text-[18px]">trending_up</span>
                                     Top Servicios
+                                </button>
+
+                                <button id="btn-exportar-pagos" class="bg-rose-50 border border-rose-100 hover:bg-rose-100 text-rose-800 px-4 py-2 rounded-xl text-sm font-bold transition-colors flex items-center gap-1.5 shadow-sm">
+                                    <span class="material-symbols-outlined text-[18px]">picture_as_pdf</span>
+                                    Pagos PDF
                                 </button>
                             </div>
                         </div>

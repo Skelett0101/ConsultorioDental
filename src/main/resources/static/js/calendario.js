@@ -24,6 +24,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnNext = document.getElementById("btn-next");
     const botonesFiltro = [btnSemana, btnDia, btnMes];
 
+
+    // boton completo 
+    if (rolUsuario !== "dentista") {
+        const btnAcciones = document.getElementById("btnAccionesCitaPrincipal");
+        
+        // ... escondemos el botón para que ni sepan que existe
+        if (btnAcciones) {
+            btnAcciones.style.display = "none";
+        }
+    }
+
     let filtroTiempoActual = "semana"; 
     let fechaBase = new Date(); 
     fechaBase.setHours(12, 0, 0, 0);
@@ -363,3 +374,150 @@ document.addEventListener("DOMContentLoaded", () => {
 
     cargarDatosCalendario();
 });
+
+
+// ==========================================
+// LÓGICA DEL MODAL DE CITAS
+// ==========================================
+
+async function abrirModalCompletar() {
+    const modalCita = document.getElementById("modalAccionesCita");
+    const fondoModalCita = document.getElementById("fondoModalCita");
+    const cajaModalCita = document.getElementById("cajaModalCita");
+
+    // 🔥 1. CAPTURAR DATOS DE LA SESIÓN 🔥
+    const usuarioStr = localStorage.getItem("usuario");
+    if (usuarioStr) {
+        const usuario = JSON.parse(usuarioStr);
+        
+        // Pintamos el nombre y rol en el modal
+        document.getElementById("nombreDoctorModal").textContent = `Dr. ${usuario.nombre} ${usuario.apellido}`;
+        document.getElementById("rolDoctorModal").textContent = usuario.rol;
+        
+        // Ponemos la primera letra de su nombre en el avatar
+        document.getElementById("avatarDoctorModal").textContent = usuario.nombre.charAt(0).toUpperCase();
+    }
+
+    // 2. Mostramos el modal visualmente
+    modalCita.classList.remove("hidden");
+    setTimeout(() => {
+        fondoModalCita.classList.remove("opacity-0");
+        cajaModalCita.classList.remove("opacity-0", "scale-95");
+        cajaModalCita.classList.add("opacity-100", "scale-100");
+    }, 10);
+
+    // 3. Ponemos el mensaje de carga
+    const contenedor = document.getElementById("contenedorCitasModal"); 
+    if (contenedor) {
+        contenedor.innerHTML = `
+            <div class="flex justify-center items-center py-8">
+                <span class="material-symbols-outlined animate-spin text-primary text-3xl">autorenew</span>
+                <span class="ml-2 text-slate-500 font-medium text-sm">Cargando tus citas...</span>
+            </div>
+        `;
+    }
+
+    // 4. Hacemos la petición a la API
+    try {
+        const response = await fetchConAuth('http://localhost:8080/api/citas/mis-citas');
+        
+        if (!response.ok) throw new Error("Error al cargar las citas");
+
+        const citas = await response.json();
+        
+        // Pintamos las citas
+        renderizarCitasEnModal(citas);
+
+    } catch (error) {
+        if (contenedor) {
+            contenedor.innerHTML = `<div class="text-red-500 text-center py-4 text-sm font-bold">${error.message}</div>`;
+        }
+    }
+}
+
+// Función para dibujar las tarjetas adentro del modal
+function renderizarCitasEnModal(citas) {
+    const contenedor = document.getElementById("contenedorCitasModal");
+    if (!contenedor) return;
+
+    contenedor.innerHTML = ""; // Limpiamos el loading
+
+    // Filtramos para mostrar solo las que se pueden completar/cancelar
+    const citasActivas = citas.filter(c => c.estado === "CONFIRMADA" || c.estado === "PENDIENTE");
+
+    if (citasActivas.length === 0) {
+        contenedor.innerHTML = `<div class="text-center py-6 text-slate-400 font-medium text-sm">No tienes citas pendientes para hoy. ¡A descansar!</div>`;
+        return;
+    }
+
+    citasActivas.forEach(cita => {
+        const nombrePaciente = cita.paciente ? cita.paciente.nombre : "Paciente";
+        
+        // Agregamos la tarjeta de la cita al modal
+        contenedor.innerHTML += `
+            <div class="flex items-center justify-between p-3 mb-2 bg-[#f8fafb] border border-slate-100 rounded-xl hover:border-primary/30 transition-colors">
+                <div>
+                    <h4 class="font-bold text-sm text-sky-900">${nombrePaciente}</h4>
+                    <p class="text-xs text-slate-500 font-medium">${cita.hora} • ${cita.fecha}</p>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="cambiarEstadoCita(${cita.idCita}, 'CANCELADA')" class="p-2 bg-red-50 text-red-500 rounded-lg hover:bg-red-100 transition-colors">
+                        <span class="material-symbols-outlined text-sm">close</span>
+                    </button>
+                    <button onclick="cambiarEstadoCita(${cita.idCita}, 'COMPLETADA')" class="p-2 bg-[#006a63] text-white rounded-lg hover:bg-[#00504a] shadow-md transition-colors">
+                        <span class="material-symbols-outlined text-sm">check</span>
+                    </button>
+                </div>
+            </div>
+        `;
+    });
+}
+
+// ==========================================
+// FUNCIÓN PARA ACTUALIZAR EL ESTADO (La que te faltaba)
+// ==========================================
+async function cambiarEstadoCita(idCita, nuevoEstado) {
+    try {
+        
+        const response = await fetch(`http://localhost:8080/api/citas/${idCita}/estado`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "text/plain", 
+                "Authorization": `Bearer ${localStorage.getItem("token")}` 
+            },
+            body: nuevoEstado // "COMPLETADA" o "CANCELADA"
+        });
+
+        if (!response.ok) {
+            throw new Error("No se pudo actualizar el estado de la cita");
+        }
+
+     
+        mostrarAlerta(`Cita ${nuevoEstado.toLowerCase()} exitosamente`, "success");
+        
+
+        abrirModalCompletar(); 
+
+    } catch (error) {
+        mostrarAlerta(error.message, "error");
+    }
+}
+
+// ==========================================
+// FUNCIÓN PARA CERRAR EL MODAL
+// ==========================================
+function cerrarModalCompletar() {
+    const modalCita = document.getElementById("modalAccionesCita");
+    const fondoModalCita = document.getElementById("fondoModalCita");
+    const cajaModalCita = document.getElementById("cajaModalCita");
+
+    // Hacemos la animación de salida (se hace pequeño y transparente)
+    fondoModalCita.classList.add("opacity-0");
+    cajaModalCita.classList.remove("opacity-100", "scale-100");
+    cajaModalCita.classList.add("opacity-0", "scale-95");
+    
+    // Esperamos 300ms a que termine la animación antes de esconderlo por completo
+    setTimeout(() => {
+        modalCita.classList.add("hidden");
+    }, 300);
+}

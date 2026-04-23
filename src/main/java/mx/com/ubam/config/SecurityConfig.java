@@ -85,6 +85,9 @@ public class SecurityConfig {
                 //mostrar citas todos
                 .requestMatchers("/api/citas/listar").hasAnyRole("admin", "recepcionista", "dentista")
 
+
+// cambiar estado de citas (doctor)
+                .requestMatchers(HttpMethod.PUT, "/api/citas/{id}/estado").hasRole("dentista")
                 //registrarsolo dos
                 .requestMatchers("/api/citas/registrar").hasAnyRole("admin", "recepcionista")
                 

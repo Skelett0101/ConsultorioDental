@@ -65,20 +65,22 @@ public class CitaController {
 	}
 
 	
-	@PutMapping("/{id}/cancelar")
-	public ResponseEntity<Cita> cancelar(@PathVariable Integer id) {
-	    return ResponseEntity.ok(Citaser.cambiarEstado(id, "CANCELADA"));
-	}
+// Ruta única para cualquier cambio de estado
+   @PutMapping("/{id}/estado")
+    public ResponseEntity<Void> actualizarEstadoCita(@PathVariable Integer id, @RequestBody String nuevoEstado) {
+        try {
+            // Spring Boot recibe directamente la palabra "COMPLETADA"
+            if (nuevoEstado == null || nuevoEstado.trim().isEmpty()) {
+                return ResponseEntity.badRequest().build();
+            }
 
-	@PutMapping("/{id}/confirmar")
-	public ResponseEntity<Cita> confirmar(@PathVariable Integer id) {
-	    return ResponseEntity.ok(Citaser.cambiarEstado(id, "CONFIRMADA"));
-	}
-	
-	@PutMapping("/{id}/completada")
-	public ResponseEntity<Cita> completar(@PathVariable Integer id) {
-	    return ResponseEntity.ok(Citaser.cambiarEstado(id, "COMPLETADA"));
-	}
+            Citaser.cambiarEstado(id, nuevoEstado.toUpperCase());
+            return ResponseEntity.ok().build(); 
+            
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build(); 
+        }
+    }
 	
 	// En CitaController.java
 	@GetMapping("/contadorsemanas")

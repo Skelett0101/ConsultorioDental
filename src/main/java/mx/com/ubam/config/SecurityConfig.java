@@ -77,7 +77,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.PUT, "/api/disponibilidad/**").hasAnyRole("admin", "recepcionista")
                 
                 .requestMatchers(HttpMethod.POST, "/api/disponibilidad/**").hasRole("admin")
-
+                
                 .requestMatchers(HttpMethod.DELETE, "/api/disponibilidad/**").hasRole("admin")
                 //listar activos (admin, recepcionsita y dentista)
                 .requestMatchers(HttpMethod.GET, "/api/servicios").hasAnyRole("admin", "recepcionista", "dentista")

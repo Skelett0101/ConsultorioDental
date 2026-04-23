@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horarios - Clinical Atelier</title>
+    <link rel="stylesheet" href="css/horarios.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+<div class="modal-overlay">
+    <div class="modal-content card-shadow">
+        <div class="modal-header">
+            <div class="header-info">
+                <div class="icon-box primary-gradient">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                </div>
+                <div class="text-box">
+                    <h2>Gestión de Disponibilidad</h2>
+                    <p>Configuración de horarios semanales por doctor</p>
+                </div>
+            </div>
+            <button class="close-btn">&times;</button>
+        </div>
+
+        <form id="horarioForm">
+            <div class="modal-body">
+                <div class="search-style-input">
+                    <label>NOMBRE COMPLETO DEL DOCTOR</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-user-md"></i>
+                        <input type="text" name="doctor_name" placeholder="Ej. Dr. Daniel Solis Tovar" required>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>DÍA</th>
+                                <th>ESTADO</th>
+                                <th>ENTRADA</th>
+                                <th>SALIDA</th>
+                                <th>ACCIONES</th>
+                            </tr>
+                        </thead>
+                        <tbody id="horarioBody">
+                            <script>
+                                // Solo hasta Sábado
+                                const dias = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+                                dias.forEach((dia) => {
+                                    document.write(`
+                                        <tr>
+                                            <td class="day-name"><strong>${dia.toUpperCase()}</strong></td>
+                                            <td>
+                                                <label class="switch">
+                                                    <input type="checkbox" name="activo_${dia}" checked onchange="toggleRow(this)">
+                                                    <span class="slider round"></span>
+                                                </label>
+                                            </td>
+                                            <td><input type="time" name="ini_${dia}" class="t-input" value="08:00"></td>
+                                            <td><input type="time" name="fin_${dia}" class="t-input" value="13:00"></td>
+                                            <td class="cell-action">
+                                                ${dia === 'Lunes' ? '<button type="button" class="btn-mini" onclick="replicar()">Replicar</button>' : ''}
+                                            </td>
+                                        </tr>
+                                    `);
+                                });
+                            </script>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn-flat">Cancelar</button>
+                <button type="submit" class="btn-main primary-gradient">
+                    Actualizar Horarios <i class="fa-solid fa-check-circle"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

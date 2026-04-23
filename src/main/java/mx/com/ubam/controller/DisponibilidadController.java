@@ -65,5 +65,18 @@ public class DisponibilidadController {
             return ResponseEntity.badRequest().build();
         }
     }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<?> editarDispo(@PathVariable Integer id, @RequestBody Disponibilidad datosNuevos) {
+        return dispoRepo.findById(id).map(dispo -> {
+            dispo.setDiaSemana(datosNuevos.getDiaSemana());
+            dispo.setHoraInicio(datosNuevos.getHoraInicio());
+            dispo.setHoraFin(datosNuevos.getHoraFin());
+            dispo.setActivo(datosNuevos.getActivo());
+            // No solemos cambiar el dentista de una disponibilidad, pero podrías si fuera necesario
+            Disponibilidad actualizada = dispoRepo.save(dispo);
+            return ResponseEntity.ok(actualizada);
+        }).orElse(ResponseEntity.notFound().build());
+    }
 	
 }

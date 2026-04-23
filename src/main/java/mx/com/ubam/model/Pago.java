@@ -45,10 +45,6 @@ public class Pago {
         }
     }
 
-    // ==========================================
-    //            GETTERS Y SETTERS
-    // ==========================================
-
     public Integer getIdPago() {
         return idPago;
     }

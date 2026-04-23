@@ -280,16 +280,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
             listaPopulares.innerHTML = "";
 			ordenados.forEach(([nombre, cantidad]) => {
-			                // Aplicamos el mismo color normal a TODOS los elementos
-			                let colorFondo = 'bg-slate-50 border-slate-100';
+                let colorFondo = 'bg-slate-50 border-slate-100';
 
-			                listaPopulares.innerHTML += `
-			                    <div class="flex items-center justify-between p-3 rounded-xl border ${colorFondo} transition-all hover:scale-[1.02]">
-			                        <span class="text-sm font-bold text-slate-700">${nombre}</span>
-			                        <span class="text-[10px] font-extrabold text-white bg-[#005d90] px-2.5 py-1 rounded-full shadow-sm">${cantidad} cobros</span>
-			                    </div>
-			                `;
-			            });
+                listaPopulares.innerHTML += `
+                    <div class="flex items-center justify-between p-3 rounded-xl border ${colorFondo} transition-all hover:scale-[1.02]">
+                        <span class="text-sm font-bold text-slate-700">${nombre}</span>
+                        <span class="text-[10px] font-extrabold text-white bg-[#005d90] px-2.5 py-1 rounded-full shadow-sm">${cantidad} cobros</span>
+                    </div>
+                `;
+            });
 
             modalPopulares.classList.remove("hidden");
         });
@@ -424,13 +423,42 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    const btnExportarPagos = document.getElementById("btn-exportar-pagos");
+    if (btnExportarPagos) {
+        btnExportarPagos.addEventListener("click", async () => {
+            try {
+                const contenidoOriginal = btnExportarPagos.innerHTML;
+                btnExportarPagos.innerHTML = `<span class="material-symbols-outlined text-[18px] animate-spin">sync</span> Generando...`;
+                btnExportarPagos.disabled = true;
+
+                const response = await fetchConAuth("http://localhost:8080/reportes/pagos/pdf");
+                
+                if (!response.ok) throw new Error("Error al generar PDF de pagos");
+
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                window.open(url, "_blank");
+
+                btnExportarPagos.innerHTML = contenidoOriginal;
+                btnExportarPagos.disabled = false;
+            } catch (error) {
+                console.error("Error PDF Pagos:", error);
+                alert("Hubo un error interno al generar el PDF de pagos.");
+                btnExportarPagos.innerHTML = `<span class="material-symbols-outlined text-[18px]">picture_as_pdf</span> Pagos PDF`;
+                btnExportarPagos.disabled = false;
+            }
+        });
+    }
 
     // Ocultar Ingresos Financieros si NO es Admin
     if (!esAdmin) {
         const seccionFinanzas = document.getElementById("seccion-finanzas");
         const btnPopulares = document.getElementById("btn-servicios-populares");
+        const btnExportarPagosHidden = document.getElementById("btn-exportar-pagos"); 
+
         if (seccionFinanzas) seccionFinanzas.style.display = "none";
         if (btnPopulares) btnPopulares.style.display = "none";
+        if (btnExportarPagosHidden) btnExportarPagosHidden.style.display = "none";
     }
 
     if (esDentista) {

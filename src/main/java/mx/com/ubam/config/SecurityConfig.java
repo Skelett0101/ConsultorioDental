@@ -102,8 +102,8 @@ public class SecurityConfig {
                 //personal
                 .requestMatchers( "/api/usuarios/personal").hasAnyRole("admin")
                 
-                // l resto de funciones (cobrar, ver recibos)
-                .requestMatchers("/api/pagos/**").hasAnyRole("admin", "recepcionista")
+                //cobrar, ver recibos
+                .requestMatchers("/api/pagos/**", "/reportes/pagos/pdf").hasAnyRole("admin", "recepcionista")
                 //crear servicios
                 .requestMatchers(HttpMethod.POST, "/api/servicios").hasRole("admin")
                 

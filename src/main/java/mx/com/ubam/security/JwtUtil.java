@@ -14,7 +14,7 @@ public class JwtUtil {
 	
 	// variables de la class que obtiene del aplicaction 
 	
-	// var de clave secreto (firma digital)
+	// var de clave secreto (firma digital) en applications
     @Value("${jwt.secret}")
     private String secret;
     
@@ -22,7 +22,7 @@ public class JwtUtil {
     @Value("${jwt.expiration}")
     private Long expiration;
     
-    // Convierte el String secreto en una clave criptográfica real
+    //  de string a secreto en una clave cripto 
     private Key getKey() {
         return Keys.hmacShaKeyFor(secret.getBytes());
     }

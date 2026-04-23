@@ -97,7 +97,7 @@ public class UsuarioService {
             usuario.setActivo(dto.getActivo());
         }
 
-        // 🔥 LA PARTE CRÍTICA DEL ROL 🔥
+       
         System.out.println("ID Rol recibido del DTO: " + dto.getIdRol());
         
         if (dto.getIdRol() != null) {
@@ -105,11 +105,11 @@ public class UsuarioService {
                 .orElseThrow(() -> new RuntimeException("El rol especificado (" + dto.getIdRol() + ") no existe"));
                 
             System.out.println("Rol encontrado en BD: " + nuevoRol.getNombre());
-            usuario.setRol(nuevoRol); // Asignamos el nuevo rol
+            usuario.setRol(nuevoRol); // asignar nwe roll
             System.out.println("Rol asignado al usuario antes de guardar: " + usuario.getRol().getIdRol());
         }
 
-        // Guardamos
+        // guardar
         usuarioRepository.save(usuario);
         System.out.println("---- ACTUALIZACIÓN TERMINADA ----");
     }

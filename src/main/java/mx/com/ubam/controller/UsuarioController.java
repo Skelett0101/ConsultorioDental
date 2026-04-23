@@ -31,7 +31,7 @@ public class UsuarioController {
     }
     
  
-    // Ruta: GET /api/usuarios/personal
+    // /api/usuarios/personal
     @GetMapping("/personal")
     public ResponseEntity<List<UsuarioDTO>> getPersonalCompleto() {
         List<UsuarioDTO> lista = usuarioService.obtenerTodoElPersonal();
@@ -39,7 +39,7 @@ public class UsuarioController {
     }
     
     
- // Ruta para actualizar: PUT /api/usuarios/actualizar/{id}
+ // /api/usuarios/actualizar/{id}
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<?> actualizarEmpleado(@PathVariable Integer id, @RequestBody UsuarioDTO dto) {
         try {

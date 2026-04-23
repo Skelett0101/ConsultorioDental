@@ -30,14 +30,14 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         
         try {
-            // Validar que los datos no sean nulos
+            // validar datos null
             if (request.getEmail() == null || request.getPassword() == null) {
                 Map<String, String> error = new HashMap<>();
                 error.put("error", "Email y contraseña son requeridos");
                 return ResponseEntity.badRequest().body(error);
             }
             
-            // Buscar usuario
+            // busqueda de usuario por email
             Usuario usuario = usuarioRepository.findByEmail(request.getEmail())
                 .orElse(null);
             

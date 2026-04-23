@@ -27,13 +27,16 @@
         };
     </script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
 </head>
 
 <body class="bg-background text-on-surface">
     <div class="flex h-screen overflow-hidden">
 
-        <aside class="hidden md:flex flex-col h-full py-6 px-4 bg-slate-50 h-screen w-64 border-r-0 font-['Manrope'] antialiased">
+        <aside
+            class="hidden md:flex flex-col h-full py-6 px-4 bg-slate-50 h-screen w-64 border-r-0 font-['Manrope'] antialiased">
             <div class="flex items-center gap-3 px-2 mb-10">
                 <div class="w-8 h-8 rounded-xl bg-primary flex items-center justify-center text-white font-bold">C</div>
                 <div>
@@ -43,36 +46,79 @@
             </div>
 
             <nav class="flex-1 space-y-1">
-                <a href="dashboard.html"><span class="material-symbols-outlined">dashboard</span><span class="text-sm">Panel de Control</span></a>
-                <a href="calendario.html" class="bg-white text-primary shadow-sm"><span class="material-symbols-outlined">calendar_month</span><span class="text-sm font-bold">Calendario</span></a>
-                <a id="navPersonal" href="personal.html"><span class="material-symbols-outlined">badge</span><span class="text-sm">Personal</span></a>
-                <a href="servicios.html"><span class="material-symbols-outlined">payments</span><span class="text-sm">Servicios</span></a>
-                <a href="pacientes.html"><span class="material-symbols-outlined">person</span><span class="text-sm">Pacientes</span></a>
+                <a href="dashboard.html"><span class="material-symbols-outlined">dashboard</span><span
+                        class="text-sm">Panel de Control</span></a>
+                <a href="calendario.html" class="bg-white text-primary shadow-sm"><span
+                        class="material-symbols-outlined">calendar_month</span><span
+                        class="text-sm font-bold">Calendario</span></a>
+                <a id="navPersonal" href="personal.html"><span class="material-symbols-outlined">badge</span><span
+                        class="text-sm">Personal</span></a>
+                <a id="navServicios" href="servicios.html"><span class="material-symbols-outlined">payments</span><span
+                        class="text-sm">Servicios</span></a>
+                <a href="pacientes.html"><span class="material-symbols-outlined">person</span><span
+                        class="text-sm">Pacientes</span></a>
             </nav>
 
             <div class="mt-auto space-y-1 pt-6 border-t border-slate-200">
-                <a class="flex items-center gap-3 px-3 py-2 rounded-xl transition-colors text-slate-500 hover:bg-white/60 font-medium" href="configuracion.html"><span class="material-symbols-outlined">settings</span><span class="text-sm font-medium">Configuración</span></a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-xl transition-colors text-slate-500 hover:bg-white/60 font-medium" href="soporte.html"><span class="material-symbols-outlined">help</span><span class="text-sm font-medium">Soporte</span></a>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-xl transition-colors text-slate-500 hover:bg-white/60 font-medium"
+                    href="configuracion.html"><span class="material-symbols-outlined">settings</span><span
+                        class="text-sm font-medium">Configuración</span></a>
+                
             </div>
         </aside>
 
         <main class="flex-1 flex flex-col overflow-hidden">
-            
-            <header class="w-full h-16 sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-100/50 flex items-center justify-between px-8 font-['Manrope'] font-medium">
-                <div class="flex items-center gap-4 flex-1"></div>
+
+           <header
+                class="w-full h-16 sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-100/50 flex items-center justify-between px-8 font-['Manrope'] font-medium">
+
+                <div class="flex items-center gap-4 flex-1">
+                    <div class="relative w-full max-w-md group">
+                        <span
+                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm group-hover:text-primary transition-colors">search</span>
+                        <input
+                            class="w-full pl-10 pr-4 py-2 bg-surface-container-high rounded-xl border-none text-sm focus:ring-2 focus:ring-primary/20 transition-all outline-none"
+                            placeholder="Buscar pacientes, registros..." type="text" />
+                    </div>
+                </div>
+
                 <div class="flex items-center gap-6">
+                    <div class="flex items-center gap-4">
+                        <button
+                            class="relative p-2 text-slate-400 hover:bg-surface-container-high transition-colors rounded-full">
+                            <span class="material-symbols-outlined">notifications</span>
+                            <span
+                                class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-white"></span>
+                        </button>
+
+                    </div>
+
+                    <div class="h-8 w-[1px] bg-slate-200"></div>
+
                     <div class="relative cursor-pointer" id="perfilDropdownBtn">
                         <div class="flex items-center gap-3 hover:bg-slate-50 p-2 rounded-xl transition-colors">
                             <div class="text-right hidden sm:block">
                                 <p id="uiNombreNav" class="text-sm font-bold text-on-surface">Cargando...</p>
-                                <p id="uiRolNav" class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">...</p>
+                                <p id="uiRolNav" class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">
+                                    ...</p>
                             </div>
-                            <div class="w-10 h-10 rounded-xl bg-blue-100 border-[1.5px] border-primary flex items-center justify-center text-primary font-bold"><span class="material-symbols-outlined">person</span></div>
+                            <div
+                                class="w-10 h-10 rounded-xl bg-primary-fixed border-[1.5px] border-primary flex items-center justify-center text-primary font-bold">
+                                <span class="material-symbols-outlined">person</span>
+                            </div>
                         </div>
-                        <div id="perfilMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-slate-100 overflow-hidden z-50">
-                            <a href="perfil.html" class="block px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-3 transition-colors"><span class="material-symbols-outlined text-lg">account_circle</span> Mi Perfil</a>
+
+                        <div id="perfilMenu"
+                            class="hidden absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-slate-100 overflow-hidden z-50">
+                            <a href="perfil.html"
+                                class="block px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-3 transition-colors">
+                                <span class="material-symbols-outlined text-lg">account_circle</span> Mi Perfil
+                            </a>
                             <div class="border-t border-slate-100"></div>
-                            <a href="#" onclick="logout()" class="block px-4 py-3 text-sm text-red-600 hover:bg-red-50 flex items-center gap-3 transition-colors"><span class="material-symbols-outlined text-lg">logout</span> Cerrar Sesión</a>
+                            <a href="#" onclick="logout()"
+                                class="block px-4 py-3 text-sm text-red-600 hover:bg-red-50 flex items-center gap-3 transition-colors">
+                                <span class="material-symbols-outlined text-lg">logout</span> Cerrar Sesión
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -80,59 +126,76 @@
 
             <div class="flex-1 overflow-y-auto bg-background p-8 space-y-6 custom-scrollbar">
 
-                <div class="flex flex-col md:flex-row md:items-end justify-between gap-5 bg-white p-6 rounded-2xl shadow-sm border border-slate-100 elevation-1">
+                <div
+                    class="flex flex-col md:flex-row md:items-end justify-between gap-5 bg-white p-6 rounded-2xl shadow-sm border border-slate-100 elevation-1">
                     <div>
                         <p class="text-xs font-bold text-primary tracking-widest uppercase mb-1">Calendario Clínico</p>
                         <h1 class="text-4xl font-extrabold tracking-tight text-slate-800">Agenda de Citas</h1>
                     </div>
-                    
+
                     <div class="flex flex-col items-end gap-3.5">
-                        
+
                         <div class="flex items-center gap-2.5 bg-background p-2 rounded-full border border-slate-200">
-                            <button id="btn-prev" class="p-1.5 rounded-full hover:bg-slate-100 text-slate-600 transition-colors"><span class="material-symbols-outlined text-sm">arrow_back_ios</span></button>
-                            
+                            <button id="btn-prev"
+                                class="p-1.5 rounded-full hover:bg-slate-100 text-slate-600 transition-colors"><span
+                                    class="material-symbols-outlined text-sm">arrow_back_ios</span></button>
+
                             <div class="relative group">
-                                <input type="date" id="input-fecha-libre" class="text-sm font-bold text-slate-700 border border-slate-200 bg-white rounded-full focus:ring-2 focus:ring-primary/20 cursor-pointer outline-none uppercase tracking-wide px-4 py-1.5 transition-all w-[160px]">
+                                <input type="date" id="input-fecha-libre"
+                                    class="text-sm font-bold text-slate-700 border border-slate-200 bg-white rounded-full focus:ring-2 focus:ring-primary/20 cursor-pointer outline-none uppercase tracking-wide px-4 py-1.5 transition-all w-[160px]">
                             </div>
-                            
-                            <button id="btn-next" class="p-1.5 rounded-full hover:bg-slate-100 text-slate-600 transition-colors"><span class="material-symbols-outlined text-sm">arrow_forward_ios</span></button>
-                            
+
+                            <button id="btn-next"
+                                class="p-1.5 rounded-full hover:bg-slate-100 text-slate-600 transition-colors"><span
+                                    class="material-symbols-outlined text-sm">arrow_forward_ios</span></button>
+
                             <div class="w-[1.5px] h-6 bg-slate-300 mx-1"></div>
-                            
-                            <div class="flex items-center gap-2 bg-slate-100 px-4 py-1.5 rounded-full border border-slate-200">
+
+                            <div
+                                class="flex items-center gap-2 bg-slate-100 px-4 py-1.5 rounded-full border border-slate-200">
                                 <span class="material-symbols-outlined text-primary text-base">search</span>
-                                <select id="select-dias-ocupados" class="text-xs font-bold text-primary border-none bg-transparent focus:ring-0 cursor-pointer outline-none pl-1 w-[160px]">
+                                <select id="select-dias-ocupados"
+                                    class="text-xs font-bold text-primary border-none bg-transparent focus:ring-0 cursor-pointer outline-none pl-1 w-[160px]">
                                     <option value="">Buscar días ocupados...</option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="flex items-center gap-3">
-                            <button id="btn-exportar-pdf" class="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 shadow-sm rounded-full text-xs font-bold text-slate-700 hover:text-[#005d90] hover:border-[#005d90]/30 hover:bg-sky-50 transition-all active:scale-95" title="Imprimir Toda la Agenda">
+                            <button id="btn-exportar-pdf"
+                                class="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 shadow-sm rounded-full text-xs font-bold text-slate-700 hover:text-[#005d90] hover:border-[#005d90]/30 hover:bg-sky-50 transition-all active:scale-95"
+                                title="Imprimir Toda la Agenda">
                                 <span class="material-symbols-outlined text-[16px] text-red-500">picture_as_pdf</span>
                                 General
                             </button>
 
-                            <button id="btn-exportar-pdf-semana" class="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 shadow-sm rounded-full text-xs font-bold text-slate-700 hover:text-[#005d90] hover:border-[#005d90]/30 hover:bg-sky-50 transition-all active:scale-95" title="Imprimir Semana Actual">
+                            <button id="btn-exportar-pdf-semana"
+                                class="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 shadow-sm rounded-full text-xs font-bold text-slate-700 hover:text-[#005d90] hover:border-[#005d90]/30 hover:bg-sky-50 transition-all active:scale-95"
+                                title="Imprimir Semana Actual">
                                 <span class="material-symbols-outlined text-[16px] text-blue-500">date_range</span>
                                 Semanal
                             </button>
 
                             <div class="flex bg-slate-100 border border-slate-200 p-1.5 rounded-full">
-                                <button id="btn-semana" class="px-5 py-2 text-xs font-bold text-slate-800 bg-white shadow-md rounded-full transition-all">Semana</button>
-                                <button id="btn-dia" class="px-5 py-2 text-xs font-bold text-slate-500 hover:text-slate-800 transition-all">Día</button>
-                                <button id="btn-mes" class="px-5 py-2 text-xs font-bold text-slate-500 hover:text-slate-800 transition-all">Mes</button>
+                                <button id="btn-semana"
+                                    class="px-5 py-2 text-xs font-bold text-slate-800 bg-white shadow-md rounded-full transition-all">Semana</button>
+                                <button id="btn-dia"
+                                    class="px-5 py-2 text-xs font-bold text-slate-500 hover:text-slate-800 transition-all">Día</button>
+                                <button id="btn-mes"
+                                    class="px-5 py-2 text-xs font-bold text-slate-500 hover:text-slate-800 transition-all">Mes</button>
                             </div>
                         </div>
 
                     </div>
                 </div>
-                
+
                 <div class="flex flex-wrap items-center justify-between gap-4 pt-2">
                     <div class="flex gap-4">
-                        <div class="flex items-center gap-2 bg-white px-5 py-2.5 rounded-full shadow-sm border border-slate-100">
+                        <div
+                            class="flex items-center gap-2 bg-white px-5 py-2.5 rounded-full shadow-sm border border-slate-100">
                             <span class="text-xs font-bold text-slate-400">Doctor:</span>
-                            <select id="select-doctor" class="bg-transparent border-none text-sm font-bold text-slate-700 p-0 pr-6 focus:ring-0 cursor-pointer outline-none">
+                            <select id="select-doctor"
+                                class="bg-transparent border-none text-sm font-bold text-slate-700 p-0 pr-6 focus:ring-0 cursor-pointer outline-none">
                                 <option value="todos">Todo el Personal</option>
                             </select>
                         </div>
@@ -140,82 +203,105 @@
                 </div>
 
                 <div class="bg-white rounded-2xl border border-slate-100 mt-4 relative shadow-md">
-                    <div id="calendario-scroll" class="overflow-x-auto cursor-grab select-none custom-scrollbar rounded-2xl">
-                        
-                        <div class="min-w-[1300px]"> 
+                    <div id="calendario-scroll"
+                        class="overflow-x-auto cursor-grab select-none custom-scrollbar rounded-2xl">
 
-                            <div class="grid grid-cols-[70px_repeat(6,1fr)] border-b-2 border-slate-200 text-center sticky top-0 bg-white z-20 rounded-t-2xl">
+                        <div class="min-w-[1300px]">
+
+                            <div
+                                class="grid grid-cols-[70px_repeat(6,1fr)] border-b-2 border-slate-200 text-center sticky top-0 bg-white z-20 rounded-t-2xl">
                                 <div class="py-5 border-r border-slate-100 bg-slate-50"></div>
                                 <div class="py-5 border-r border-slate-100 flex flex-col items-center gap-1.5">
                                     <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Lun</p>
-                                    <span id="date-1" class="text-lg font-bold text-slate-700 flex items-center justify-center w-8 h-8 rounded-full">..</span>
+                                    <span id="date-1"
+                                        class="text-lg font-bold text-slate-700 flex items-center justify-center w-8 h-8 rounded-full">..</span>
                                 </div>
                                 <div class="py-5 border-r border-slate-100 flex flex-col items-center gap-1.5">
                                     <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Mar</p>
-                                    <span id="date-2" class="text-lg font-bold text-slate-700 flex items-center justify-center w-8 h-8 rounded-full">..</span>
+                                    <span id="date-2"
+                                        class="text-lg font-bold text-slate-700 flex items-center justify-center w-8 h-8 rounded-full">..</span>
                                 </div>
                                 <div class="py-5 border-r border-slate-100 flex flex-col items-center gap-1.5">
                                     <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Mié</p>
-                                    <span id="date-3" class="text-lg font-bold text-slate-700 flex items-center justify-center w-8 h-8 rounded-full">..</span>
+                                    <span id="date-3"
+                                        class="text-lg font-bold text-slate-700 flex items-center justify-center w-8 h-8 rounded-full">..</span>
                                 </div>
                                 <div class="py-5 border-r border-slate-100 flex flex-col items-center gap-1.5">
                                     <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Jue</p>
-                                    <span id="date-4" class="text-lg font-bold text-slate-700 flex items-center justify-center w-8 h-8 rounded-full">..</span>
+                                    <span id="date-4"
+                                        class="text-lg font-bold text-slate-700 flex items-center justify-center w-8 h-8 rounded-full">..</span>
                                 </div>
                                 <div class="py-5 border-r border-slate-100 flex flex-col items-center gap-1.5">
                                     <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Vie</p>
-                                    <span id="date-5" class="text-lg font-bold text-slate-700 flex items-center justify-center w-8 h-8 rounded-full">..</span>
+                                    <span id="date-5"
+                                        class="text-lg font-bold text-slate-700 flex items-center justify-center w-8 h-8 rounded-full">..</span>
                                 </div>
                                 <div class="py-5 flex flex-col items-center gap-1.5 bg-slate-50">
                                     <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Sáb</p>
-                                    <span id="date-6" class="text-lg font-bold text-slate-700 flex items-center justify-center w-8 h-8 rounded-full">..</span>
+                                    <span id="date-6"
+                                        class="text-lg font-bold text-slate-700 flex items-center justify-center w-8 h-8 rounded-full">..</span>
                                 </div>
                             </div>
 
-							<div class="grid grid-cols-[70px_repeat(6,1fr)] bg-white relative min-h-[98rem]">
-							                                
-							                                <div class="border-r border-slate-100 flex flex-col text-center bg-slate-50 sticky left-0 z-10">
-							                                    <div class="h-28 flex items-start justify-center pt-3 border-b border-slate-100"><span class="text-[10px] font-bold text-slate-400">08:00 AM</span></div>
-							                                    <div class="h-28 flex items-start justify-center pt-3 border-b border-slate-100"><span class="text-[10px] font-bold text-slate-400">09:00 AM</span></div>
-							                                    <div class="h-28 flex items-start justify-center pt-3 border-b border-slate-100"><span class="text-[10px] font-bold text-slate-400">10:00 AM</span></div>
-							                                    <div class="h-28 flex items-start justify-center pt-3 border-b border-slate-100"><span class="text-[10px] font-bold text-slate-400">11:00 AM</span></div>
-							                                    <div class="h-28 flex items-start justify-center pt-3 border-b border-slate-100"><span class="text-[10px] font-bold text-slate-400">12:00 PM</span></div>
-							                                    <div class="h-28 flex items-start justify-center pt-3 border-b border-slate-100"><span class="text-[10px] font-bold text-slate-400">01:00 PM</span></div>
-							                                    <div class="h-28 flex items-start justify-center pt-3 border-b border-slate-100"><span class="text-[10px] font-bold text-slate-400">02:00 PM</span></div>
-							                                    <div class="h-28 flex items-start justify-center pt-3 border-b border-slate-100"><span class="text-[10px] font-bold text-slate-400">03:00 PM</span></div>
-							                                    <div class="h-28 flex items-start justify-center pt-3 border-b border-slate-100"><span class="text-[10px] font-bold text-slate-400">04:00 PM</span></div>
-							                                    <div class="h-28 flex items-start justify-center pt-3 border-b border-slate-100"><span class="text-[10px] font-bold text-slate-400">05:00 PM</span></div>
-							                                    <div class="h-28 flex items-start justify-center pt-3 border-b border-slate-100"><span class="text-[10px] font-bold text-slate-400">06:00 PM</span></div>
-							                                    <div class="h-28 flex items-start justify-center pt-3 border-b border-slate-100"><span class="text-[10px] font-bold text-slate-400">07:00 PM</span></div>
-							                                    <div class="h-28 flex items-start justify-center pt-3 border-b border-slate-100"><span class="text-[10px] font-bold text-slate-400">08:00 PM</span></div>
-							                                    <div class="h-28 flex items-start justify-center pt-3"><span class="text-[10px] font-bold text-slate-400">09:00 PM</span></div>
-							                                </div>
+                            <div class="grid grid-cols-[70px_repeat(6,1fr)] bg-white relative min-h-[98rem]">
 
-							                                <div class="absolute inset-0 left-[70px] grid grid-rows-[14] pointer-events-none z-0">
-							                                    <div class="border-b border-slate-100"></div>
-							                                    <div class="border-b border-slate-100"></div>
-							                                    <div class="border-b border-slate-100"></div>
-							                                    <div class="border-b border-slate-100"></div>
-							                                    <div class="border-b border-slate-100"></div>
-							                                    <div class="border-b border-slate-100"></div>
-							                                    <div class="border-b border-slate-100"></div>
-							                                    <div class="border-b border-slate-100"></div>
-							                                    <div class="border-b border-slate-100"></div>
-							                                    <div class="border-b border-slate-100"></div>
-							                                    <div class="border-b border-slate-100"></div>
-							                                    <div class="border-b border-slate-100"></div>
-							                                    <div class="border-b border-slate-100"></div>
-							                                    <div class="border-b border-slate-100"></div>
-							                                </div>
+                                <div
+                                    class="border-r border-slate-100 flex flex-col text-center bg-slate-50 sticky left-0 z-10">
+                                    <div class="h-28 flex items-start justify-center pt-3 border-b border-slate-100">
+                                        <span class="text-[10px] font-bold text-slate-400">08:00 AM</span></div>
+                                    <div class="h-28 flex items-start justify-center pt-3 border-b border-slate-100">
+                                        <span class="text-[10px] font-bold text-slate-400">09:00 AM</span></div>
+                                    <div class="h-28 flex items-start justify-center pt-3 border-b border-slate-100">
+                                        <span class="text-[10px] font-bold text-slate-400">10:00 AM</span></div>
+                                    <div class="h-28 flex items-start justify-center pt-3 border-b border-slate-100">
+                                        <span class="text-[10px] font-bold text-slate-400">11:00 AM</span></div>
+                                    <div class="h-28 flex items-start justify-center pt-3 border-b border-slate-100">
+                                        <span class="text-[10px] font-bold text-slate-400">12:00 PM</span></div>
+                                    <div class="h-28 flex items-start justify-center pt-3 border-b border-slate-100">
+                                        <span class="text-[10px] font-bold text-slate-400">01:00 PM</span></div>
+                                    <div class="h-28 flex items-start justify-center pt-3 border-b border-slate-100">
+                                        <span class="text-[10px] font-bold text-slate-400">02:00 PM</span></div>
+                                    <div class="h-28 flex items-start justify-center pt-3 border-b border-slate-100">
+                                        <span class="text-[10px] font-bold text-slate-400">03:00 PM</span></div>
+                                    <div class="h-28 flex items-start justify-center pt-3 border-b border-slate-100">
+                                        <span class="text-[10px] font-bold text-slate-400">04:00 PM</span></div>
+                                    <div class="h-28 flex items-start justify-center pt-3 border-b border-slate-100">
+                                        <span class="text-[10px] font-bold text-slate-400">05:00 PM</span></div>
+                                    <div class="h-28 flex items-start justify-center pt-3 border-b border-slate-100">
+                                        <span class="text-[10px] font-bold text-slate-400">06:00 PM</span></div>
+                                    <div class="h-28 flex items-start justify-center pt-3 border-b border-slate-100">
+                                        <span class="text-[10px] font-bold text-slate-400">07:00 PM</span></div>
+                                    <div class="h-28 flex items-start justify-center pt-3 border-b border-slate-100">
+                                        <span class="text-[10px] font-bold text-slate-400">08:00 PM</span></div>
+                                    <div class="h-28 flex items-start justify-center pt-3"><span
+                                            class="text-[10px] font-bold text-slate-400">09:00 PM</span></div>
+                                </div>
 
-							                                <div class="relative border-r border-slate-100 p-0 z-10" id="col-1"></div>
-							                                <div class="relative border-r border-slate-100 p-0 z-10" id="col-2"></div>
-							                                <div class="relative border-r border-slate-100 p-0 z-10" id="col-3"></div>
-							                                <div class="relative border-r border-slate-100 p-0 z-10" id="col-4"></div>
-							                                <div class="relative border-r border-slate-100 p-0 z-10" id="col-5"></div>
-							                                <div class="relative p-0 z-10" id="col-6"></div>
+                                <div class="absolute inset-0 left-[70px] grid grid-rows-[14] pointer-events-none z-0">
+                                    <div class="border-b border-slate-100"></div>
+                                    <div class="border-b border-slate-100"></div>
+                                    <div class="border-b border-slate-100"></div>
+                                    <div class="border-b border-slate-100"></div>
+                                    <div class="border-b border-slate-100"></div>
+                                    <div class="border-b border-slate-100"></div>
+                                    <div class="border-b border-slate-100"></div>
+                                    <div class="border-b border-slate-100"></div>
+                                    <div class="border-b border-slate-100"></div>
+                                    <div class="border-b border-slate-100"></div>
+                                    <div class="border-b border-slate-100"></div>
+                                    <div class="border-b border-slate-100"></div>
+                                    <div class="border-b border-slate-100"></div>
+                                    <div class="border-b border-slate-100"></div>
+                                </div>
 
-							                            </div>
+                                <div class="relative border-r border-slate-100 p-0 z-10" id="col-1"></div>
+                                <div class="relative border-r border-slate-100 p-0 z-10" id="col-2"></div>
+                                <div class="relative border-r border-slate-100 p-0 z-10" id="col-3"></div>
+                                <div class="relative border-r border-slate-100 p-0 z-10" id="col-4"></div>
+                                <div class="relative border-r border-slate-100 p-0 z-10" id="col-5"></div>
+                                <div class="relative p-0 z-10" id="col-6"></div>
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -224,14 +310,30 @@
     </div>
 
     <style>
-        .custom-scrollbar::-webkit-scrollbar { height: 10px; width: 10px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 5px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: #f8fafb; }
-        .date-active { background: #005d90; color: white; shadow: md; }
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 10px;
+            width: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 5px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f8fafb;
+        }
+
+        .date-active {
+            background: #005d90;
+            color: white;
+            shadow: md;
+        }
     </style>
 
     <script src="js/utils.js"></script>
     <script src="js/menu.js"></script>
     <script src="js/calendario.js"></script>
 </body>
+
 </html>

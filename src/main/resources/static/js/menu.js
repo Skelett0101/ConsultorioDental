@@ -23,8 +23,17 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- 3. PERMISOS VISUALES (Ocultar "Personal" si no es admin) ---
     if (rol === "dentista" || rol === "recepcionista") {
         const navPersonal = document.getElementById("navPersonal");
+       
         if (navPersonal) navPersonal.style.display = "none";
+       
     }
+
+     // --- extra PERMISOS VISUALES (Ocultar "servicios" si no es admin o recepcion) ---
+    if (rol === "dentista") {
+        const navServicios = document.getElementById("navServicios");
+        if (navServicios) navServicios.style.display = "none";
+    }
+
 
     // --- 4. ILUMINACIÓN INTELIGENTE DEL MENÚ LATERAL (Estado Activo) ---
     // Obtenemos el nombre del archivo actual (ej. "calendario.html")

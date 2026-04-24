@@ -375,30 +375,27 @@ document.addEventListener("DOMContentLoaded", () => {
     cargarDatosCalendario();
 });
 
+// Variable global para recordar qué cita seleccionó el doctor
+let citaSeleccionadaIdModal = null; 
 
 // ==========================================
-// LÓGICA DEL MODAL DE CITAS
+// 1. ABRIR Y CARGAR CITAS
 // ==========================================
-
 async function abrirModalCompletar() {
     const modalCita = document.getElementById("modalAccionesCita");
     const fondoModalCita = document.getElementById("fondoModalCita");
     const cajaModalCita = document.getElementById("cajaModalCita");
 
-    // 🔥 1. CAPTURAR DATOS DE LA SESIÓN 🔥
+    // Datos del Doctor en la sesión
     const usuarioStr = localStorage.getItem("usuario");
     if (usuarioStr) {
         const usuario = JSON.parse(usuarioStr);
-        
-        // Pintamos el nombre y rol en el modal
         document.getElementById("nombreDoctorModal").textContent = `Dr. ${usuario.nombre} ${usuario.apellido}`;
         document.getElementById("rolDoctorModal").textContent = usuario.rol;
-        
-        // Ponemos la primera letra de su nombre en el avatar
         document.getElementById("avatarDoctorModal").textContent = usuario.nombre.charAt(0).toUpperCase();
     }
 
-    // 2. Mostramos el modal visualmente
+    // Mostrar el modal con animación
     modalCita.classList.remove("hidden");
     setTimeout(() => {
         fondoModalCita.classList.remove("opacity-0");
@@ -406,28 +403,24 @@ async function abrirModalCompletar() {
         cajaModalCita.classList.add("opacity-100", "scale-100");
     }, 10);
 
-    // 3. Ponemos el mensaje de carga
+    // Poner ícono de carga en el HTML nuevo
     const contenedor = document.getElementById("contenedorCitasModal"); 
     if (contenedor) {
         contenedor.innerHTML = `
-            <div class="flex justify-center items-center py-8">
+            <div class="flex flex-col justify-center items-center py-6">
                 <span class="material-symbols-outlined animate-spin text-primary text-3xl">autorenew</span>
-                <span class="ml-2 text-slate-500 font-medium text-sm">Cargando tus citas...</span>
+                <span class="mt-2 text-slate-500 font-medium text-sm">Consultando agenda...</span>
             </div>
         `;
     }
 
-    // 4. Hacemos la petición a la API
+    // Traer las citas de la BD
     try {
         const response = await fetchConAuth('http://localhost:8080/api/citas/mis-citas');
-        
         if (!response.ok) throw new Error("Error al cargar las citas");
-
-        const citas = await response.json();
         
-        // Pintamos las citas
-        renderizarCitasEnModal(citas);
-
+        const citas = await response.json();
+        renderizarCitasEnModal(citas); // Las pintamos
     } catch (error) {
         if (contenedor) {
             contenedor.innerHTML = `<div class="text-red-500 text-center py-4 text-sm font-bold">${error.message}</div>`;
@@ -435,38 +428,37 @@ async function abrirModalCompletar() {
     }
 }
 
-// Función para dibujar las tarjetas adentro del modal
+// ==========================================
+// 2. DIBUJAR TARJETAS SELECCIONABLES
+// ==========================================
 function renderizarCitasEnModal(citas) {
     const contenedor = document.getElementById("contenedorCitasModal");
     if (!contenedor) return;
 
-    contenedor.innerHTML = ""; // Limpiamos el loading
+    contenedor.innerHTML = ""; // Quitamos el ícono de carga
+    citaSeleccionadaIdModal = null; // Reiniciamos selección
 
-    // Filtramos para mostrar solo las que se pueden completar/cancelar
+    // Filtramos para que no salgan las que ya están canceladas/completadas
     const citasActivas = citas.filter(c => c.estado === "CONFIRMADA" || c.estado === "PENDIENTE");
 
     if (citasActivas.length === 0) {
-        contenedor.innerHTML = `<div class="text-center py-6 text-slate-400 font-medium text-sm">No tienes citas pendientes para hoy. ¡A descansar!</div>`;
+        contenedor.innerHTML = `<div class="text-center py-6 text-slate-400 font-medium text-sm">No tienes citas pendientes para hoy.</div>`;
         return;
     }
 
+    // Dibujamos cada cita
     citasActivas.forEach(cita => {
-        const nombrePaciente = cita.paciente ? cita.paciente.nombre : "Paciente";
+        const nombrePaciente = cita.paciente ? cita.paciente.nombre : "Paciente Desconocido";
         
-        // Agregamos la tarjeta de la cita al modal
         contenedor.innerHTML += `
-            <div class="flex items-center justify-between p-3 mb-2 bg-[#f8fafb] border border-slate-100 rounded-xl hover:border-primary/30 transition-colors">
+            <div id="tarjetaCita_${cita.idCita}" onclick="seleccionarCita(${cita.idCita})" 
+                 class="tarjeta-cita cursor-pointer flex items-center justify-between p-3 mb-2 bg-white border-2 border-transparent rounded-xl shadow-sm hover:border-slate-200 transition-all">
                 <div>
                     <h4 class="font-bold text-sm text-sky-900">${nombrePaciente}</h4>
                     <p class="text-xs text-slate-500 font-medium">${cita.hora} • ${cita.fecha}</p>
                 </div>
-                <div class="flex gap-2">
-                    <button onclick="cambiarEstadoCita(${cita.idCita}, 'CANCELADA')" class="p-2 bg-red-50 text-red-500 rounded-lg hover:bg-red-100 transition-colors">
-                        <span class="material-symbols-outlined text-sm">close</span>
-                    </button>
-                    <button onclick="cambiarEstadoCita(${cita.idCita}, 'COMPLETADA')" class="p-2 bg-[#006a63] text-white rounded-lg hover:bg-[#00504a] shadow-md transition-colors">
-                        <span class="material-symbols-outlined text-sm">check</span>
-                    </button>
+                <div class="text-slate-300 transition-colors">
+                    <span id="iconoCheck_${cita.idCita}" class="material-symbols-outlined text-[20px]">radio_button_unchecked</span>
                 </div>
             </div>
         `;
@@ -474,50 +466,77 @@ function renderizarCitasEnModal(citas) {
 }
 
 // ==========================================
-// FUNCIÓN PARA ACTUALIZAR EL ESTADO (La que te faltaba)
+// 3. ILUMINAR TARJETA AL HACER CLIC
 // ==========================================
-async function cambiarEstadoCita(idCita, nuevoEstado) {
-    try {
-        
-        const response = await fetch(`http://localhost:8080/api/citas/${idCita}/estado`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "text/plain", 
-                "Authorization": `Bearer ${localStorage.getItem("token")}` 
-            },
-            body: nuevoEstado // "COMPLETADA" o "CANCELADA"
-        });
+function seleccionarCita(id) {
+    citaSeleccionadaIdModal = id; 
 
-        if (!response.ok) {
-            throw new Error("No se pudo actualizar el estado de la cita");
-        }
+    // Apagamos todas
+    document.querySelectorAll('.tarjeta-cita').forEach(tarjeta => {
+        tarjeta.classList.remove('border-primary', 'bg-sky-50');
+        tarjeta.classList.add('border-transparent', 'bg-white');
+    });
+    document.querySelectorAll('[id^="iconoCheck_"]').forEach(icono => {
+        icono.textContent = "radio_button_unchecked";
+        icono.classList.remove("text-primary");
+    });
 
-     
-        mostrarAlerta(`Cita ${nuevoEstado.toLowerCase()} exitosamente`, "success");
-        
+    // Prendemos la seleccionada
+    const tarjetaSeleccionada = document.getElementById(`tarjetaCita_${id}`);
+    const iconoSeleccionado = document.getElementById(`iconoCheck_${id}`);
 
-        abrirModalCompletar(); 
-
-    } catch (error) {
-        mostrarAlerta(error.message, "error");
+    if (tarjetaSeleccionada && iconoSeleccionado) {
+        tarjetaSeleccionada.classList.remove('border-transparent', 'bg-white');
+        tarjetaSeleccionada.classList.add('border-primary', 'bg-sky-50'); 
+        iconoSeleccionado.textContent = "radio_button_checked"; 
+        iconoSeleccionado.classList.add("text-primary");
     }
 }
 
 // ==========================================
-// FUNCIÓN PARA CERRAR EL MODAL
+// 4. CERRAR EL MODAL
 // ==========================================
 function cerrarModalCompletar() {
     const modalCita = document.getElementById("modalAccionesCita");
     const fondoModalCita = document.getElementById("fondoModalCita");
     const cajaModalCita = document.getElementById("cajaModalCita");
 
-    // Hacemos la animación de salida (se hace pequeño y transparente)
+    if(!modalCita) return; // Evita errores si no existe
+
     fondoModalCita.classList.add("opacity-0");
     cajaModalCita.classList.remove("opacity-100", "scale-100");
     cajaModalCita.classList.add("opacity-0", "scale-95");
     
-    // Esperamos 300ms a que termine la animación antes de esconderlo por completo
     setTimeout(() => {
         modalCita.classList.add("hidden");
     }, 300);
+}
+
+// ==========================================
+// 5. GUARDAR CAMBIO DE ESTADO
+// ==========================================
+async function cambiarEstadoCita(nuevoEstado) {
+    if (!citaSeleccionadaIdModal) {
+        mostrarAlerta("Selecciona una cita de la lista primero.", "info");
+        return;
+    }
+
+    try {
+        const response = await fetch(`http://localhost:8080/api/citas/${citaSeleccionadaIdModal}/estado`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "text/plain", 
+                "Authorization": `Bearer ${localStorage.getItem("token")}` 
+            },
+            body: nuevoEstado 
+        });
+
+        if (!response.ok) throw new Error("Error al actualizar la cita.");
+
+        mostrarAlerta(`Cita ${nuevoEstado.toLowerCase()} con éxito.`, "success");
+        abrirModalCompletar(); // Recarga la lista del modal
+
+    } catch (error) {
+        mostrarAlerta(error.message, "error");
+    }
 }

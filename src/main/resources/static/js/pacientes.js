@@ -1,5 +1,5 @@
 // js/pacientes.js
-
+const API_BASE2 = "http://localhost:8080/api/citas";
 const API_BASE = "http://localhost:8080/api/pacientes";
 let paginaActual = 0;
 
@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (btnNuevo) btnNuevo.style.display = "none";
         }
     }
+        actualizarContadorSemanal();
 });
 
 // --- LISTAR PACIENTES Y ACTUALIZAR TARJETAS ---
@@ -62,6 +63,28 @@ function actualizarMetricas(totalPacientes, pacientesActuales) {
             }
         });
         uiNuevos.textContent = registradosEsteMes;
+    }
+}
+
+// ------------------------------------FUNCIÓN PARA CONTADOR SEMANAL----------------------------------
+async function actualizarContadorSemanal() {
+    const uiSemana = document.getElementById("uiCitasSemana");
+    if (!uiSemana) return;
+
+    const token = localStorage.getItem("token");
+
+    try {
+        // Ajustamos la URL a la que tienes en el Controller de Java
+        const response = await fetch(`${API_BASE2}/contadorsemanas`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        if (response.ok) {
+            const cantidad = await response.json();
+            uiSemana.textContent = cantidad;
+        }
+    } catch (error) {
+        console.error("Error al cargar contador semanal:", error);
     }
 }
 

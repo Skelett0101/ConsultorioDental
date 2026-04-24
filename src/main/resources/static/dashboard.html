@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="css/dashboard.css" />
     <link rel="stylesheet" href="css/menu.css">
     <link rel="stylesheet" href="css/cita.css">
+    <link rel="stylesheet" href="css/horarios.css">
+
 
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 
@@ -74,10 +76,6 @@
                     <span class="material-symbols-outlined">person</span>
                     <span class="text-sm">Pacientes</span>
                 </a>
-                <a href="horarios.html">
-                    <span class="material-symbols-outlined">schedule</span>
-                    <span class="text-sm">Horarios Dentistas</span>
-                </a>
             </nav>
 
             <div class="mt-auto space-y-1 pt-6 border-t border-slate-200">
@@ -86,7 +84,7 @@
                     <span class="material-symbols-outlined">settings</span>
                     <span class="text-sm font-medium">Configuración</span>
                 </a>
-              
+
             </div>
         </aside>
 
@@ -117,7 +115,7 @@
                             <span
                                 class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-white"></span>
                         </button>
-                      
+
                     </div>
 
                     <div class="h-8 w-[1px] bg-slate-200"></div>
@@ -175,9 +173,86 @@
                             <span class="material-symbols-outlined text-[20px]">calendar_today</span>
                             <span>Nueva Cita</span>
                         </button>
+                        <button id="MostrarFormHorarios" type="button"
+                            class="flex items-center gap-2 px-6 py-3 rounded-xl primary-gradient text-on-primary font-semibold transition-all hover:scale-[1.02] active:scale-95 shadow-lg shadow-primary/20">
+                            <span class="material-symbols-outlined text-[20px]">calendar_today</span>
+                            <span>Modificar Horarios</span>
+                        </button>
                     </div>
                 </div>
+                <!----------------------------------- AGENDAR HORARIOS DENTISTAS ------------------------------------------------------------------------>
+                <div id="overlayHorarios"
+                    class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-[100] p-4">
+                    <div class="modal-content card-shadow">
+                        <div class="modal-header">
+                            <div class="header-info">
+                                <div class="icon-box primary-gradient">
+                                    <span class="material-symbols-outlined">schedule</span>
+                                </div>
+                                <div class="text-box">
+                                    <h2>Gestión de Disponibilidad</h2>
+                                    <p>Configuración de horarios semanales por doctor</p>
+                                </div>
+                            </div>
+                            <button type="button" class="close-btn">&times;</button>
+                        </div>
 
+                        <form id="formHorarios">
+                            <div class="modal-body">
+                                <div class="search-style-input">
+                                    <label>SELECCIONAR DOCTOR</label>
+                                    <div class="input-wrapper">
+                                        <span class="material-symbols-outlined text-slate-400 mr-2">person</span>
+                                        <select id="dentistaIdHorario" name="idUsuario" required
+                                            class="w-full bg-transparent outline-none py-2 text-sm text-sky-950 font-medium cursor-pointer">
+                                            <option value="">Cargando doctores...</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="table-container">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>DÍA</th>
+                                                <th>ESTADO</th>
+                                                <th>ENTRADA</th>
+                                                <th>SALIDA</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="horarioBody">
+                                            <script>
+                                                const dias = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+                                                dias.forEach((dia) => {
+                                                    document.write(`
+                                        <tr>
+                                            <td class="day-name"><strong>${dia.toUpperCase()}</strong></td>
+                                            <td>
+                                                <label class="switch">
+                                                    <input type="checkbox" name="activo_${dia}" checked onchange="toggleRow(this)">
+                                                    <span class="slider round"></span>
+                                                </label>
+                                            </td>
+                                            <td><input type="time" name="ini_${dia}" id="ini_${dia}" class="t-input" value="08:00"></td>
+                                            <td><input type="time" name="fin_${dia}" id="fin_${dia}"  class="t-input" value="13:00"></td>
+                                        </tr>
+                                    `);
+                                                });
+                                            </script>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn-flat">Cancelar</button>
+                                <button type="submit" class="btn-main primary-gradient">
+                                    Actualizar Horarios <span class="material-symbols-outlined">check_circle</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 <!----------------------------------- CITA ------------------------------------------------------------------------>
 
                 <div id="overlayCita"
@@ -280,8 +355,10 @@
 
                         <p class="text-label-sm uppercase tracking-widest text-on-surface-variant mb-1 font-medium">
                             Nuevos Pacientes</p>
-                        <p id="uiDashboardPacientesNuevos" class="text-4xl font-extrabold tracking-tight text-on-surface">...</p>
-                        <p id="uiDashboardPacientesMeta" class="text-xs text-on-surface-variant mt-2">Calculando meta...</p>
+                        <p id="uiDashboardPacientesNuevos"
+                            class="text-4xl font-extrabold tracking-tight text-on-surface">...</p>
+                        <p id="uiDashboardPacientesMeta" class="text-xs text-on-surface-variant mt-2">Calculando meta...
+                        </p>
                     </div>
                     <!----------------------------------- INGRESOS MENSUALES ------------------------------------------------------------------------>
                     <div
@@ -296,14 +373,15 @@
                                     <div class="w-1.5 h-10 bg-primary rounded-full"></div>
                                 </div>
                             </div>
-							<p class="text-label-sm uppercase tracking-widest text-on-surface-variant mb-1 font-medium">
-							                                Ingresos Mensuales</p>
-							                            <div class="flex items-baseline gap-3">
-							                                <p id="uiDashboardIngresos" class="text-4xl font-extrabold tracking-tight text-on-surface">$0.00</p>
-							                                <span class="text-secondary text-sm font-semibold flex items-center gap-0.5">
-							                                    <span class="material-symbols-outlined text-sm">trending_up</span> Mes Actual
-							                                </span>
-							                            </div>
+                            <p class="text-label-sm uppercase tracking-widest text-on-surface-variant mb-1 font-medium">
+                                Ingresos Mensuales</p>
+                            <div class="flex items-baseline gap-3">
+                                <p id="uiDashboardIngresos"
+                                    class="text-4xl font-extrabold tracking-tight text-on-surface">$0.00</p>
+                                <span class="text-secondary text-sm font-semibold flex items-center gap-0.5">
+                                    <span class="material-symbols-outlined text-sm">trending_up</span> Mes Actual
+                                </span>
+                            </div>
                             <p class="text-xs text-on-surface-variant mt-2">Mes de mayor rendimiento este trimestre</p>
                         </div>
                         <div class="absolute bottom-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mb-16"></div>
@@ -359,6 +437,7 @@
     <script src="js/dashboard.js"></script>
     <script src="js/menu.js"></script>
     <script src="js/citas.js"></script>
+    <script src="js/horarios.js"></script>
 
 </body>
 

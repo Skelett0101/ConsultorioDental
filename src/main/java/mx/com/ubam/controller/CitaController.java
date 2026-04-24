@@ -49,7 +49,7 @@ public class CitaController {
 	    return ResponseEntity.ok(pagina.getContent());
 	}
 	
-	// Mostrar solo las citas del dentista logueado
+	// Muestra solo las citas del dentista logueado
 		@GetMapping("/mis-citas")
 		public ResponseEntity<List<Cita>> obtenerMisCitas(Authentication authentication) {
 			String dentistaUsername = authentication.getName();
@@ -59,6 +59,7 @@ public class CitaController {
 			return ResponseEntity.ok(misCitas);
 		}
 
+	//Devuelve las sitas que tocan el dia doy
 	@GetMapping("/hoy")
 	public ResponseEntity<List<Cita>> obtenerCitasHoy() {
 	    return ResponseEntity.ok(Citaser.obtenerCitasHoy());

@@ -31,7 +31,7 @@ public class CitaService {
 	@Autowired
     private EmailService AvisoEmail;
     
-
+    // Este metodo busaca solo las sitas del dentista logueado  
     public List<Cita> obtenerCitasPorDentista(String datoUsuario) {
         return CitaeRepo.findByDentista_Email(datoUsuario); 
     }

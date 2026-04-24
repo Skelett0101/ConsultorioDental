@@ -34,6 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if(inputFiltroDia) inputFiltroDia.value = `${year}-${month}-${day}`;
     if(inputFiltroMes) inputFiltroMes.value = `${year}-${month}`;
 
+    // Descarga la lista de servicios disponibles
     async function cargarServicios() {
         if(!contenedorServicios) return;
         try {
@@ -137,6 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Descarga todos los pagos registrados
     async function cargarPagos(busqueda = "") {
         if (esDentista) return; 
 
@@ -165,7 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 tablaPagos.innerHTML = `<tr><td colspan="3" class="text-center py-6 text-slate-500 text-sm">No se encontraron pagos.</td></tr>`;
                 return;
             }
-
+            // Agrupa los pagos por paciente para mostrar menus desplegables
             const pagosAgrupados = pagosParaTabla.reduce((acc, pago) => {
                 const idPac = pago.cita.paciente.id_paciente || pago.cita.paciente.idPaciente;
                 if (!acc[idPac]) {
@@ -231,6 +233,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // Suma de Dinero 
     function calcularIngresos() {
         if(!historialPagosCache.length) return;
 
@@ -262,6 +265,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btnBuscarPaciente.addEventListener("click", () => { cargarPagos(inputBuscarPaciente.value); });
     }
 
+    //Top Servicios mas vendidos
     if(btnPopulares){
         btnPopulares.addEventListener("click", () => {
             if(historialPagosCache.length === 0) {
@@ -294,6 +298,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Cobreo nueva factura
     let citasPendientesCache = [];
     let montoActual = 0;
 
@@ -306,6 +311,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const selectCita = document.getElementById("select-cita");
     const divInfoCita = document.getElementById("info-cita-seleccionada");
 
+    // Filtro solo muestra citas que no han sido pagadas
     if(btnNuevaFactura){
         btnNuevaFactura.addEventListener("click", async () => {
             modalPago.classList.remove("hidden");
@@ -423,6 +429,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Funcion para descargar PDF de pagos
     const btnExportarPagos = document.getElementById("btn-exportar-pagos");
     if (btnExportarPagos) {
         btnExportarPagos.addEventListener("click", async () => {

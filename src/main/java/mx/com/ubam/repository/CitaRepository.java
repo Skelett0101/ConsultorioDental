@@ -21,7 +21,7 @@ public interface CitaRepository extends JpaRepository<Cita, Integer> {
 	@Query("SELECT c FROM Cita c WHERE c.dentista.idUsuario = :idD AND c.paciente.idPaciente = :idP")
 	List<Cita> buscarPorFiltro(@Param("idD") Integer idDentista, @Param("idP") Integer idP);
 	
-	// En tu CitaRepository.java
+	// Obtiene las citas de un dentista en especifico usando su email
 	List<Cita> findByDentista_Email(String email);
 	
 	

@@ -14,7 +14,7 @@ public class LoginResponse {
     private Integer idUsuario;
     private Long expiraEn;
 
-    // Getters y Setters
+  
     public String getToken() {
         return token;
     }

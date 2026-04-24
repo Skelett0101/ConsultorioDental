@@ -1,7 +1,7 @@
 package mx.com.ubam.dto;
 
 public class LoginRequest {
-	// uso para el logeuo de usuario
+	// uso para el logeo de usuario
 	// evita mandar todo los datos de un usuario sin ser necesarios
 	// y es el formato del jso que se manejra para la entrada y salida
 	// del front a back (solo en inicisio de seion)

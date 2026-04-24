@@ -30,17 +30,17 @@ public class UsuarioService {
 
         // email
         if (usuario.getEmail() == null || usuario.getEmail().trim().isEmpty()) {
-            throw new RuntimeException("El correo es obligatorio");
+            throw new RuntimeException("correo obligatorio");
         }
 
         // password
         if (usuario.getPassword() == null || usuario.getPassword().trim().isEmpty()) {
-            throw new RuntimeException("La contraseña es obligatoria");
+            throw new RuntimeException("contra obligatoria");
         }
 
         //duplicado
         if (usuarioRepository.findByEmail(usuario.getEmail()).isPresent()) {
-            throw new RuntimeException("El correo ya está registrado");
+            throw new RuntimeException("correo existente");
         }
 
         // bycryp contraseña
@@ -76,7 +76,7 @@ public class UsuarioService {
 
     public void actualizarUsuario(Integer id, UsuarioDTO dto) {
     Usuario usuario = usuarioRepository.findById(id)
-        .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        .orElseThrow(() -> new RuntimeException("no existe el usr"));
 
     if (dto.getNombreCompleto() != null && !dto.getNombreCompleto().isEmpty()) {
         String[] partesNombre = dto.getNombreCompleto().trim().split(" ", 2);
@@ -94,7 +94,7 @@ public class UsuarioService {
 
     if (dto.getIdRol() != null) {
         Rol nuevoRol = rolRepository.findById(dto.getIdRol())
-            .orElseThrow(() -> new RuntimeException("El rol especificado (" + dto.getIdRol() + ") no existe"));
+            .orElseThrow(() -> new RuntimeException("El rol (" + dto.getIdRol() + ") no existe"));
         usuario.setRol(nuevoRol);
     }
 
@@ -109,7 +109,7 @@ public class UsuarioService {
 
     // contraseña actual coincide
     if (!passwordEncoder.matches(passwordActual, usuario.getPassword())) {
-        throw new RuntimeException("La contraseña actual es incorrecta");
+        throw new RuntimeException("La contra es incorrecta");
     }
 
     // encripta la nueva y guarda
@@ -120,7 +120,7 @@ public class UsuarioService {
 
 public void actualizarMiPerfil(Integer id, UsuarioDTO dto) {
         Usuario usuario = usuarioRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+            .orElseThrow(() -> new RuntimeException("no existe el usr"));
 
         // SOLO actualizamos Nombre y Apellidos
         if (dto.getNombreCompleto() != null && !dto.getNombreCompleto().isEmpty()) {

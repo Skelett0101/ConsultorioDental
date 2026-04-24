@@ -70,7 +70,7 @@ public class UsuarioController {
         try {
             // datoss vacios
             if (dto.getPasswordActual() == null || dto.getPasswordNueva() == null) {
-                return ResponseEntity.badRequest().body("{\"error\": \"Faltan datos de contraseña\"}");
+                return ResponseEntity.badRequest().body("{\"error\": \"faltan datos de contra\"}");
             }
 
             // uso de dtopass y el servicio de cambio

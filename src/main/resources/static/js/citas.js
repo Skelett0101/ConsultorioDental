@@ -105,9 +105,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     actualizarContadorCitas();
+    actualizarContadorCitas2();
     renderizarCitasHoy();
     mostrarHorariosDentistas();
-    renderizarCitasHoy2();
 });
 
 // ------------------------------------FUNCION PARA CARFAR SERVICIOS EN EL SELECT---------------------------------------
@@ -228,7 +228,7 @@ async function actualizarContadorCitas() {
 }
 
 // ------------------------------------FUNCIÓN PARA ACTUALIZAR CONTADOR DE CITAS EN EL DASHBOARD2 id----------------------------------
-async function actualizarContadorCitas() {
+async function actualizarContadorCitas2() {
     const uiCitasHoy2 = document.getElementById("uiCitasHoy2");
     if (!uiCitasHoy2) return;
 
@@ -250,7 +250,7 @@ async function actualizarContadorCitas() {
 }
 
 
-// ------------------------------------FUNCIÓN PARA CONTADOR SEMANAL (7 DÍAS)----------------------------------
+// ------------------------------------FUNCIÓN PARA CONTADOR SEMANAL----------------------------------
 async function actualizarContadorSemanal() {
     const uiSemana = document.getElementById("uiCitasSemana");
     if (!uiSemana) return;
@@ -416,7 +416,7 @@ async function mostrarHorarioDentistas() {
         console.error("Error:", error);
     }
 }
-//------------------------------- FUNCIÓN PARA RENDERIZAR LAS CITAS DEL DIA EN EL DASHBOARD --------------------------------
+//------------------------------- FUNCIÓN PARA RENDERIZAR LAS CITAS DEL DIA EN EL RECUADRO --------------------------------
 async function renderizarCitasHoy() {
     const contenedor = document.getElementById("listaCitasHoy");
     if (!contenedor) return;
@@ -462,3 +462,4 @@ async function renderizarCitasHoy() {
         }
     } catch (e) { console.error("Error render citas:", e); }
 }
+

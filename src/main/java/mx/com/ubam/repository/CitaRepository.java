@@ -13,6 +13,7 @@ import mx.com.ubam.model.*;
 @Repository
 public interface CitaRepository extends JpaRepository<Cita, Integer> {
 
+	//estado de las cits
 	long countByFechaHoraBetweenAndEstadoCitaNot(LocalDateTime inicio, LocalDateTime fin, String estado);
 	// Para buscar citas de hoy
 	List<Cita> findByFechaHoraBetween(LocalDateTime inicio, LocalDateTime fin);
@@ -21,22 +22,24 @@ public interface CitaRepository extends JpaRepository<Cita, Integer> {
 	@Query("SELECT c FROM Cita c WHERE c.dentista.idUsuario = :idD AND c.paciente.idPaciente = :idP")
 	List<Cita> buscarPorFiltro(@Param("idD") Integer idDentista, @Param("idP") Integer idP);
 	
-	// En tu CitaRepository.java
+	// poara mandar el email
 	List<Cita> findByDentista_Email(String email);
 	
-	
+	//para el estado de la cita
     boolean existsByDentistaIdUsuarioAndFechaHoraAndEstadoCitaNot(
         Integer idUsuario, 
         LocalDateTime fechaHora, 
         String estadoCita
     );
     
+    //Aqui detectamos si ya existe una cita para no chocar se le coloco el rango de una hora de diferencia por cita
     @Query(value = "SELECT COUNT(*) FROM cita c WHERE c.id_dentista = :id " +
-    	       "AND c.id_cita <> :citaId " + // 👈 Ignoramos la cita actual
+    	       "AND c.id_cita <> :citaId " + 
     	       "AND c.estado <> 'CANCELADA' " +
     	       "AND (:inicio < DATE_ADD(c.fecha_hora, INTERVAL 1 HOUR) " +
     	       "AND DATE_ADD(:inicio, INTERVAL 1 HOUR) > c.fecha_hora)", 
     	       nativeQuery = true)
+    //se ignora 
     	Integer existeTraslapeIgnorandoActual(@Param("id") Integer id, 
     	                                      @Param("inicio") LocalDateTime inicio,
     	                                      @Param("citaId") Integer citaId);

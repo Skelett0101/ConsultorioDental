@@ -99,7 +99,9 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/citas/contadorsemanas").hasAnyRole("admin", "recepcionista", "dentista")
 
              .requestMatchers(HttpMethod.GET, "/api/usuarios").hasAnyRole("admin", "recepcionista", "dentista")
-                
+             
+             .requestMatchers(HttpMethod.GET, "/api/citas/contadorsemanas").hasAnyRole("admin", "recepcionista", "dentista")
+             
                 //buscar
                 .requestMatchers("/api/servicios/buscar").hasAnyRole("admin", "recepcionista", "dentista")
                 

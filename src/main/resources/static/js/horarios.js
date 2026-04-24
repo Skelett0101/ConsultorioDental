@@ -5,6 +5,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const formHorarios = document.getElementById("formHorarios");
     const selectDentista = document.getElementById("dentistaIdHorario");
 
+    //OCULTAR BOTONES DE ACCIÓN SI EL USUARIO ES DENTISTA
+    const usuarioStr = localStorage.getItem("usuario");
+    if (usuarioStr) {
+        const usuario = JSON.parse(usuarioStr);
+
+        // Si el rol es DENTISTA, escondemos los botones de acción
+        if (usuario.rol.toUpperCase() === "DENTISTA") {
+            const btnCitas = document.getElementById("MostrarFormCitas");
+            const btnHorarios = document.getElementById("MostrarFormHorarios");
+            const btnNuevoP = document.getElementById("btnNuevoPaciente"); // Por si lo tienes ahí
+
+            if (btnCitas) btnCitas.style.display = "none";
+            if (btnHorarios) btnHorarios.style.display = "none";
+            if (btnNuevoP) btnNuevoP.style.display = "none";
+        }
+    }
+
     // 1. ---------------------- MÉTODOS DE ABRIR y CERRAR FORMULARIO --------------------------
     if (btnAbrir && overlay) {
         btnAbrir.addEventListener("click", () => {

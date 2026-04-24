@@ -24,9 +24,17 @@ public class CitaController {
 	
 	//agregar citas
 	@PostMapping("/registrar")
-    public ResponseEntity<Cita> registrar(@RequestBody Cita cita) {
-        return ResponseEntity.ok(Citaser.agendarCita(cita));
-    }
+	public ResponseEntity<?> registrar(@RequestBody Cita cita) {
+	    try {
+	    	//se toma el metodo de servicios
+	        Cita guardada = Citaser.agendarCita(cita);
+	        //se devuelve el json por error en tipo de bd 
+	        return ResponseEntity.ok("{\"status\": \"success\", \"message\": \"Cita agendada correctamente\"}");
+	    } catch (Exception e) {
+	        // En caso de error nos regresa el mensaje
+	        return ResponseEntity.status(500).body("{\"status\": \"error\", \"message\": \"" + e.getMessage() + "\"}");
+	    }
+	}
 	
 	//modificar citas
 	@PutMapping("/editar")
@@ -42,7 +50,7 @@ public class CitaController {
 	    return ResponseEntity.ok("Cita eliminada correctamente");
 	}
 	
-	//mostrar listas
+	//mostrarlas citas de manera general
 	@GetMapping("/listar")
 	public ResponseEntity<List<Cita>> listar() {
 		Page<Cita> pagina = Citaser.mostrarTodo(PageRequest.of(0, 1000)); 
@@ -58,18 +66,18 @@ public class CitaController {
 			
 			return ResponseEntity.ok(misCitas);
 		}
-
+//mostrar las citas del dia de hoy
 	@GetMapping("/hoy")
 	public ResponseEntity<List<Cita>> obtenerCitasHoy() {
 	    return ResponseEntity.ok(Citaser.obtenerCitasHoy());
 	}
 
 	
-// Ruta única para cualquier cambio de estado
+// Rpara cambiar el estado de la cita 
    @PutMapping("/{id}/estado")
     public ResponseEntity<Void> actualizarEstadoCita(@PathVariable Integer id, @RequestBody String nuevoEstado) {
         try {
-            // Spring Boot recibe directamente la palabra "COMPLETADA"
+
             if (nuevoEstado == null || nuevoEstado.trim().isEmpty()) {
                 return ResponseEntity.badRequest().build();
             }
@@ -82,7 +90,7 @@ public class CitaController {
         }
     }
 	
-	// En CitaController.java
+	// para las citas de los proximos 7 dias en duda
 	@GetMapping("/contadorsemanas")
 	public ResponseEntity<Long> getContadorSemanal() {
 	    return ResponseEntity.ok(Citaser.obtenerContadorSemanal());

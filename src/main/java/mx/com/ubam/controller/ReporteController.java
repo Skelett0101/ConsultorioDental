@@ -30,7 +30,7 @@ public class ReporteController {
 
     @Autowired
     private PagoRepository pagoRepo;
-
+    // Genera el PDF con el historial completo delas citas.
     @GetMapping("/reportes/citas/pdf")
     public ResponseEntity<byte[]> generarPdfAgendaGeneral() {
         try {
@@ -43,6 +43,8 @@ public class ReporteController {
         }
     }
 
+    // Genera el PDF de la semanal
+    // Recibe fechas de inicio a fin filtrando las citas que el usiario este viendo
     @GetMapping("/reportes/agenda-semanal/pdf")
     public ResponseEntity<byte[]> generarPdfAgendaSemanal(
             @RequestParam(required = false) String inicio,
@@ -50,6 +52,7 @@ public class ReporteController {
         try {
             List<Cita> citas = Citaser.mostrarTodo(PageRequest.of(0, 1000)).getContent();
 
+            // Filtramos la lista
             if (inicio != null && fin != null) {
                 LocalDate fechaInicio = LocalDate.parse(inicio);
                 LocalDate fechaFin = LocalDate.parse(fin);
@@ -72,6 +75,7 @@ public class ReporteController {
         }
     }
 
+    // Genera el PDF de pagos
     @GetMapping("/reportes/pagos/pdf")
     @Transactional(readOnly = true)
     public ResponseEntity<byte[]> generarPdfPagos() {
@@ -85,19 +89,21 @@ public class ReporteController {
         }
     }
 
+    // Metodo para generar el PDF de pagos
     private byte[] generarPdfDePagos(List<Pago> pagos, String tituloTexto) throws Exception {
         Document document = new Document(PageSize.A4.rotate()); 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         PdfWriter.getInstance(document, out);
 
         document.open();
-
+        // Crea el titulo
         Font fontTitulo = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 22, new BaseColor(0, 93, 144));
         Paragraph titulo = new Paragraph(tituloTexto, fontTitulo);
         titulo.setAlignment(Element.ALIGN_CENTER);
         document.add(titulo);
         document.add(new Paragraph(" "));
 
+        // Configuracion del tamaño de las columnas
         PdfPTable table = new PdfPTable(7);
         table.setWidthPercentage(100);
         table.setWidths(new float[]{1.2f, 3.5f, 3f, 3.5f, 2.5f, 2f, 2f});
@@ -117,12 +123,14 @@ public class ReporteController {
         Font fontDatos = FontFactory.getFont(FontFactory.HELVETICA, 9, BaseColor.DARK_GRAY);
         DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
+        // Buscamos la informacion por las relaciones de la base de datos
         for (Pago p : pagos) {
             String ticket = p.getIdPago() != null ? String.valueOf(p.getIdPago()) : "S/N";
             String paciente = "Desconocido";
             String doctor = "No asignado";
             String servicio = "General";
-            
+
+            // Buscams atraves de pago acia cita y despues hacia paciente, doctor y servicio
             if (p.getCita() != null) {
                 if (p.getCita().getPaciente() != null) {
                     paciente = p.getCita().getPaciente().getNombrePaciente() + " " + p.getCita().getPaciente().getApellidoPaciente();
@@ -156,6 +164,7 @@ public class ReporteController {
 
         document.add(table);
         
+        // Dibuja el pie de pagina
         Paragraph footer = new Paragraph("\nDocumento generado el: " + LocalDate.now(), 
             FontFactory.getFont(FontFactory.HELVETICA, 8, BaseColor.LIGHT_GRAY));
         footer.setAlignment(Element.ALIGN_RIGHT);
@@ -164,7 +173,8 @@ public class ReporteController {
         document.close();
         return out.toByteArray();
     }
-
+    
+    // Metodo PDF de citas genral y semanal
     private byte[] generarPdf(List<Cita> citas, String tituloTexto) throws Exception {
         
         Document document = new Document(PageSize.A4.rotate());
@@ -241,6 +251,7 @@ public class ReporteController {
         return out.toByteArray();
     }
 
+    // Este método toma el PDF final y el navegador lo conbierte a un documento PDF y lo abre en una nueva pestaña
     private ResponseEntity<byte[]> crearRespuestaPdf(byte[] pdfBytes, String nombreArchivo) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);

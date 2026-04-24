@@ -21,14 +21,14 @@ public class RecordatorioTask {
     @Autowired
     private EmailService emailService;
 
-    // Se ejecuta todos los días a las 8:00 AM
+    // Se ejecuta todos los días a las 8:00 
     @Scheduled(cron = "0 0 8 * * *") 
     public void enviarRecordatoriosDiarios() {
-        // Calculamos el rango de "mañana"
+        // Calculamos el rango 
         LocalDateTime mañanaInicio = LocalDateTime.now().plusDays(1).with(LocalTime.MIN);
         LocalDateTime mañanaFin = LocalDateTime.now().plusDays(1).with(LocalTime.MAX);
 
-        // Buscamos citas de mañana que no estén canceladas
+        // Buscar citas de mañana que no estén canceladas
         List<Cita> citasDeMañana = citaRepo.findByFechaHoraBetween(mañanaInicio, mañanaFin);
 
         for (Cita cita : citasDeMañana) {

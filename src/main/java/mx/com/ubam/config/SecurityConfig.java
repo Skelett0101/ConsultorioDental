@@ -68,6 +68,20 @@ public class SecurityConfig {
 
                         .requestMatchers(HttpMethod.GET, "/api/disponibilidad/horariosDisponibles").permitAll()
 
+                
+                //editar pacientes (admin y recepcionsita)
+                .requestMatchers(HttpMethod.PUT, "/api/pacientes/**").hasAnyRole("admin", "recepcionista")
+                
+                .requestMatchers(HttpMethod.PUT, "/api/disponibilidad/**").hasAnyRole("admin", "recepcionista")
+                
+                .requestMatchers(HttpMethod.POST, "/api/disponibilidad/**").hasAnyRole("admin", "recepcionista")
+                
+                .requestMatchers(HttpMethod.DELETE, "/api/disponibilidad/**").hasRole("admin")
+                //listar activos (admin, recepcionsita y dentista)
+                .requestMatchers(HttpMethod.GET, "/api/servicios").hasAnyRole("admin", "recepcionista", "dentista")
+                
+                //mostrar citas todos
+                .requestMatchers("/api/citas/listar").hasAnyRole("admin", "recepcionista", "dentista")
                         // editar pacientes (admin y recepcionsita)
                         .requestMatchers(HttpMethod.PUT, "/api/pacientes/**").hasAnyRole("admin", "recepcionista")
 

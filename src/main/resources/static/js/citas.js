@@ -9,27 +9,29 @@ document.addEventListener("DOMContentLoaded", () => {
     const usuarioStr = localStorage.getItem("usuario");
     if (usuarioStr) {
         const usuario = JSON.parse(usuarioStr);
-        // Saludo 
-        if (document.getElementById("uiNombreSaludo")) {
-            document.getElementById("uiNombreSaludo").textContent = usuario.nombre;
-        }
-        // Restricción de botón para Dentista
+
+        // escondemos los botones de acción si el rol es DENTISTA
         if (usuario.rol.toUpperCase() === "DENTISTA") {
-            const btnNuevoP = document.getElementById("btnNuevoPaciente");
+            const btnCitas = document.getElementById("MostrarFormCitas");
+            const btnHorarios = document.getElementById("MostrarFormHorarios");
+            const btnNuevoP = document.getElementById("btnNuevoPaciente"); // Por si lo tienes ahí
+
+            if (btnCitas) btnCitas.style.display = "none";
+            if (btnHorarios) btnHorarios.style.display = "none";
             if (btnNuevoP) btnNuevoP.style.display = "none";
         }
     }
 
-    // 3. ---------------------- METODOS DE ABRIR y CERRAR FORMULARIO--------------------------
+    //  ---------------------- METODOS DE ABRIR y CERRAR FORMULARIO--------------------------
     if (btnAbrir && overlay) {
         btnAbrir.addEventListener("click", () => {
             overlay.classList.remove("hidden");
             overlay.classList.add("flex");
             if (formCita) formCita.reset();
-            // Inicializar el contador al cargar
+            // Inicializar funciones al cargar
             cargarPacientes();
             cargarServicios();
-            cargarDentistas();
+            cargarDentistasCita();
         });
     }
 
@@ -49,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // 1. Capturamos los valores
             const idPac = document.getElementById("pacienteId").value;
-            const idDen = document.getElementById("dentistaId").value;
+            const idDen = document.getElementById("dentistaIdCita").value;
             const idSer = document.getElementById("servicioId").value;
             const fHora = document.getElementById("fechaHora").value;
             const nota = document.getElementById("notas").value;
@@ -105,10 +107,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     actualizarContadorCitas();
+    actualizarContadorCitas2();
+    actualizarContadorSemanal();
     renderizarCitasHoy();
     mostrarHorariosDentistas();
-    renderizarCitasHoy2();
 });
+
 
 // ------------------------------------FUNCION PARA CARFAR SERVICIOS EN EL SELECT---------------------------------------
 async function cargarServicios() {
@@ -149,7 +153,7 @@ async function cargarPacientes() {
         if (response.ok) {
             const data = await response.json();
 
-            // 1. IMPORTANTE: Limpiar el select y dejar solo la opción por defecto
+            //  Limpiar el select y dejar solo la opción por defecto
             selectPaciente.innerHTML = '<option value="">Seleccione paciente</option>';
 
             const listaPacientes = data.content || data;
@@ -169,8 +173,8 @@ async function cargarPacientes() {
 
 
 // ------------------------------ FUNCIÓN PARA mostrar dentistas en el select -------------------------------------
-async function cargarDentistas() {
-    const selectDentista = document.getElementById("dentistaId");
+async function cargarDentistasCita() {
+    const selectDentista = document.getElementById("dentistaIdCita");
     if (!selectDentista) return;
 
     const token = localStorage.getItem("token");
@@ -185,18 +189,14 @@ async function cargarDentistas() {
             const data = await response.json();
             const listaUsuarios = data.content || data;
 
-            // 1. Limpiamos el select
             selectDentista.innerHTML = '<option value="">Seleccione dentista</option>';
 
-            const soloDentistas = listaUsuarios.filter(u => {
-                return u.rol && u.rol.idRol === 2;
-            });
+            const soloDentistas = listaUsuarios.filter(u => u.rol && u.rol.idRol === 2);
 
-            // 3. Llenamos el select con los filtrados
             soloDentistas.forEach(dentista => {
                 const option = document.createElement("option");
                 option.value = dentista.idUsuario;
-                option.textContent = `Dr. ${dentista.nombre} ${dentista.apellido}`;
+                option.textContent = `${dentista.nombre} ${dentista.apellido}`;
                 selectDentista.appendChild(option);
             });
         }
@@ -228,7 +228,7 @@ async function actualizarContadorCitas() {
 }
 
 // ------------------------------------FUNCIÓN PARA ACTUALIZAR CONTADOR DE CITAS EN EL DASHBOARD2 id----------------------------------
-async function actualizarContadorCitas() {
+async function actualizarContadorCitas2() {
     const uiCitasHoy2 = document.getElementById("uiCitasHoy2");
     if (!uiCitasHoy2) return;
 
@@ -250,7 +250,7 @@ async function actualizarContadorCitas() {
 }
 
 
-// ------------------------------------FUNCIÓN PARA CONTADOR SEMANAL (7 DÍAS)----------------------------------
+// ------------------------------------FUNCIÓN PARA CONTADOR SEMANAL----------------------------------
 async function actualizarContadorSemanal() {
     const uiSemana = document.getElementById("uiCitasSemana");
     if (!uiSemana) return;
@@ -258,7 +258,8 @@ async function actualizarContadorSemanal() {
     const token = localStorage.getItem("token");
 
     try {
-        const response = await fetch(`${API_BASE}/contador-semanal`, {
+        // Ajustamos la URL a la que tienes en el Controller de Java
+        const response = await fetch(`${API_BASE}/contadorsemanas`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
 
@@ -270,7 +271,6 @@ async function actualizarContadorSemanal() {
         console.error("Error al cargar contador semanal:", error);
     }
 }
-
 // ------------------------------------FUNCIÓN PARA MOSTRAR LOS HORARIOS DE LOS DOSTORES----------------------------------
 
 async function mostrarHorariosDentistas() {
@@ -292,20 +292,20 @@ async function mostrarHorariosDentistas() {
         ? `http://localhost:8080/api/disponibilidad/mia?idDentista=${user.idUsuario}`
         : `http://localhost:8080/api/disponibilidad/todas`;
 
-    console.log("Intentando fetch a:", url); // <--- DEBUG
+    console.log("Intentando fetch a:", url); 
 
     try {
         const response = await fetch(url, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
 
-        console.log("Status de la respuesta:", response.status); // <--- DEBUG
+        console.log("Status de la respuesta:", response.status); 
 
         if (response.ok) {
             const horarios = await response.json();
-            console.log("Datos recibidos:", horarios); // <--- DEBUG
+            console.log("Datos recibidos:", horarios);
 
-            // Limpiamos el "Cargando..."
+            // Limpiamos el contenedor antes de agregar nuevos datos
             contenedor.innerHTML = horarios.length === 0 
                 ? '<tr><td colspan="3" class="py-4 text-center text-xs text-slate-400">No hay horarios registrados.</td></tr>' 
                 : "";
@@ -319,7 +319,7 @@ async function mostrarHorariosDentistas() {
 
                 const nombreMostrar = (idrol === 2) 
                     ? `${user.nombre} ${user.apellido || ''}` 
-                    : `Dr. ${h.dentista?.nombre || ''} ${h.dentista?.apellido || ''}`;
+                    : ` ${h.dentista?.nombre || ''} ${h.dentista?.apellido || ''}`;
 
                 const fila = `
                     <tr class="hover:bg-slate-50/50 transition-colors border-b border-slate-50">
@@ -351,72 +351,7 @@ async function mostrarHorariosDentistas() {
     }
 }
 
-
-
-
-
-async function mostrarHorarioDentistas() {
-    const contenedor = document.getElementById("horariosDentistas");
-    if (!contenedor) return;
-
-    const usuarioStr = localStorage.getItem("usuario");
-
-    const token = localStorage.getItem("token");
-
-    if (!usuarioStr || !token) return;
-
-    const user = JSON.parse(usuarioStr);
-    const idrol = user.rol?.idRol || user.idRol; 
-    
-   
-    let url = "";
-    if (idrol === 2) {
-        url = `http://localhost:8080/api/usuarios/disponibilidad/mia?idDentista=${user.idUsuario}`;
-    } else {
-        url = `http://localhost:8080/api/usuarios/disponibilidad/todas`;
-    }
-
-    try {
-        const response = await fetch(url, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
-
-        if (response.ok) {
-            const horarios = await response.json();
-            contenedor.innerHTML = horarios.length === 0 ? '<tr><td colspan="3" class="py-4 text-center text-xs text-slate-400">No hay horarios registrados.</td></tr>' : "";
-
-            const diasSemana = ["", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
-
-            horarios.forEach(h => {
-                const horaI = h.horaInicio.substring(0, 5);
-                const horaF = h.horaFin.substring(0, 5);
-
-                const nombreMostrar = (idrol === 2) 
-                    ? `${user.nombre} ${user.apellido || ''}` 
-                    : `Dr. ${h.dentista?.nombre || ''} ${h.dentista?.apellido || ''}`;
-
-                const fila = `
-                    <tr class="hover:bg-slate-50/50 transition-colors border-b border-slate-50">
-                        <td class="py-3">
-                            <p class="text-xs font-bold text-slate-700">${nombreMostrar}</p>
-                        </td>
-                        <td class="py-3">
-                            <span class="text-[10px] text-primary uppercase font-medium">
-                                ${diasSemana[h.diaSemana] || 'S/D'}
-                            </span>
-                        </td>
-                        <td class="py-3">
-                            <p class="text-[10px] font-mono text-slate-500">${horaI} - ${horaF}</p>
-                        </td>
-                    </tr>`;
-                contenedor.innerHTML += fila;
-            });
-        }
-    } catch (error) {
-        console.error("Error:", error);
-    }
-}
-//------------------------------- FUNCIÓN PARA RENDERIZAR LAS CITAS DEL DIA EN EL DASHBOARD --------------------------------
+//------------------------------- FUNCIÓN PARA RENDERIZAR LAS CITAS DEL DIA EN EL RECUADRO --------------------------------
 async function renderizarCitasHoy() {
     const contenedor = document.getElementById("listaCitasHoy");
     if (!contenedor) return;
@@ -462,3 +397,4 @@ async function renderizarCitasHoy() {
         }
     } catch (e) { console.error("Error render citas:", e); }
 }
+

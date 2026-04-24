@@ -3,6 +3,7 @@ package mx.com.ubam.repository;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,8 +15,13 @@ import mx.com.ubam.model.Disponibilidad;
 @Repository
 public interface DisponibilidadRepository extends JpaRepository<Disponibilidad, Integer> {
 
+	//Obtiene todos los horarios para un solo rol
 	List<Disponibilidad> findByDentistaIdUsuario(Integer idUsuario);
 	
+	// buscar si el dentista tiene un horario para un dia
+	Optional<Disponibilidad> findByDentistaIdUsuarioAndDiaSemana(Integer idUsuario, Long diaSemana);
+	
+	//revisamos que todos los datos sean correctos y poder pasar a lo sigueinte
 	boolean existsByDentistaIdUsuarioAndDiaSemanaAndHoraInicioLessThanEqualAndHoraFinGreaterThanEqualAndActivo(
 	        Integer idUsuario, 
 	        Long diaSemana, 
@@ -23,6 +29,8 @@ public interface DisponibilidadRepository extends JpaRepository<Disponibilidad, 
 	        LocalTime horaCitaFin,
 	        Long activo
 	    );
+
+	//obtener a los usuarios con el rol dentista que trabajen un cia en especifico
 	@Query("SELECT d FROM Disponibilidad d " +
 		       "JOIN d.dentista u " +
 		       "WHERE u.rol.idRol = :idRol " + 

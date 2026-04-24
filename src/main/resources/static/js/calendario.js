@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const esRecepcionista = rolUsuario === 'recepcionista';
     const esDentista = rolUsuario === 'dentista'; 
 
-    let todasLasCitas = [];
+    let todasLasCitas = [];  // Guarda las citas aplicando los filtros 
     const selectDoctor = document.getElementById("select-doctor");
     const selectDiasOcupados = document.getElementById("select-dias-ocupados");
     const inputFechaLibre = document.getElementById("input-fecha-libre"); 
@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // Configuramos la vista inicial
     let filtroTiempoActual = "semana"; 
     let fechaBase = new Date(); 
     fechaBase.setHours(12, 0, 0, 0);
@@ -56,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
             
             todasLasCitas = await resCitas.json();
             
-            // Si no es dentista, poblar los nombres en el filtro
+            // Llenamos los filtros de doctores solo si no somos dentistas
             if (!esDentista) {
                 poblarFiltroDoctores(todasLasCitas);
             }
@@ -68,6 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // Revisa todas las citas extrae los nombres de los doctores y los pone en el select.
     function poblarFiltroDoctores(citas) {
         const doctoresMap = new Map();
         citas.forEach(cita => {
@@ -283,7 +285,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 	if (esDentista) {
-	        // Buscamos el div
+	        // Buscamos si es dentista para ocultar los botones
 	        const contenedorFiltroDoctor = selectDoctor.closest('.bg-white.px-5.py-2\\.5');
 	        if (contenedorFiltroDoctor) {
 	            contenedorFiltroDoctor.style.display = 'none';
@@ -298,7 +300,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	        }
 	    }
 
-
+    // Exportar PDFs
     if(btnExportarPdf) {
         btnExportarPdf.addEventListener("click", async () => {
             try {

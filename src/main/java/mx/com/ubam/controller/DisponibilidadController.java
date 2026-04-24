@@ -28,7 +28,22 @@ public class DisponibilidadController {
 	
 	@PostMapping("/registroDispo")
 	public ResponseEntity<Disponibilidad> guardarDispo(@RequestBody Disponibilidad dispo) {
-        return ResponseEntity.ok(dispoRepo.save(dispo));
+	    // 1. Buscamos si ya existe un horario para este dentista en este día de la semana
+	    return dispoRepo.findByDentistaIdUsuarioAndDiaSemana(
+	        dispo.getDentista().getIdUsuario(), 
+	        dispo.getDiaSemana()
+	    ).map(dispoExistente -> {
+	        // 2. Si existe, actualizamos los datos del registro encontrado
+	        dispoExistente.setHoraInicio(dispo.getHoraInicio());
+	        dispoExistente.setHoraFin(dispo.getHoraFin());
+	        dispoExistente.setActivo(dispo.getActivo());
+	        
+	        // Al guardar un objeto que YA TIENE ID, JPA hace un UPDATE automáticamente
+	        return ResponseEntity.ok(dispoRepo.save(dispoExistente));
+	    }).orElseGet(() -> {
+	        // 3. Si no existe, lo creamos como uno nuevo (INSERT)
+	        return ResponseEntity.ok(dispoRepo.save(dispo));
+	    });
 	}
 	
 	@GetMapping("/todas")

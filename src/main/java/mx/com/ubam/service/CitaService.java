@@ -31,13 +31,14 @@ public class CitaService {
 	@Autowired
     private EmailService AvisoEmail;
     
-
+    // Este metodo busaca solo las sitas del dentista logueado  
     public List<Cita> obtenerCitasPorDentista(String datoUsuario) {
         return CitaeRepo.findByDentista_Email(datoUsuario); 
     }
     
     @Transactional
     public Cita agendarCita(Cita cita) {
+    	// Excepciones principales por si no hay datos
 		Paciente pacienteExiste = pacienteRepo.findById(cita.getPaciente().getIdPaciente())
 	            .orElseThrow(() -> new RuntimeException("Paciente no encontrado"));
         
@@ -91,7 +92,7 @@ public class CitaService {
             throw new RuntimeException("El horario está fuera de la Horario laboral del dentista");
         }
 
-     // 2. Validar Traslapes
+     // Validar si existe una cita en el momento
         Integer citaId = (cita.getId_cita() == null) ? 0 : cita.getId_cita();
         Integer resultadoOcupado = CitaeRepo.existeTraslapeIgnorandoActual(idDentista, inicio, citaId);
 
@@ -99,6 +100,7 @@ public class CitaService {
         if (resultadoOcupado != null && resultadoOcupado > 0) {
             throw new RuntimeException("Conflicto de horario: Ya existe una cita agendada. Debe haber 1 hora de diferencia.");
         }   
+        //por si el usuario quiere agendar en fechas pasaDAS
         if (inicio.isBefore(LocalDateTime.now())) {
             throw new RuntimeException("No puedes agendar citas en fechas pasadas");
         }
@@ -114,10 +116,10 @@ public class CitaService {
 		}		
 	}
 	
-	// modificar
+	// modificar CITA 
 	public Cita editarCita(Cita cita) {
 		
-		
+		//verificamos si la cita exite, si no no se podea modificar, se comprueba con la bd
         if (cita.getId_cita() == null || !CitaeRepo.existsById(cita.getId_cita())) 
         {
         	throw new RuntimeException("No se puede editar una cita que no existe.");

@@ -282,13 +282,21 @@ document.addEventListener("DOMContentLoaded", () => {
         if(e.target.value) { fechaBase = new Date(e.target.value + "T12:00:00"); activarBotonTiempo("dia", btnDia); }
     });
 
-    if (esDentista) {
-        // Buscamos el div que contiene la palabra "Doctor:" y el select
-        const contenedorFiltroDoctor = selectDoctor.closest('.bg-white.px-5.py-2\\.5');
-        if (contenedorFiltroDoctor) {
-            contenedorFiltroDoctor.style.display = 'none';
-        }
-    }
+	if (esDentista) {
+	        // Buscamos el div
+	        const contenedorFiltroDoctor = selectDoctor.closest('.bg-white.px-5.py-2\\.5');
+	        if (contenedorFiltroDoctor) {
+	            contenedorFiltroDoctor.style.display = 'none';
+	        }
+	        
+	        // Ocultar los botones de PDF para el dentista
+	        if (btnExportarPdf) {
+	            btnExportarPdf.style.display = 'none';
+	        }
+	        if (btnExportarPdfSemana) {
+	            btnExportarPdfSemana.style.display = 'none';
+	        }
+	    }
 
 
     if(btnExportarPdf) {

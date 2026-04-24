@@ -144,7 +144,7 @@ async function enviarHorarios(datos) {
         alert("Hubo un fallo al guardar los horarios: " + error.message);
     }
 }
-
+// Cargar dentistas para el select 
 async function cargarDentistas() {
     const selectDentista = document.getElementById("dentistaIdHorario");
     if (!selectDentista) return;
